@@ -237,11 +237,19 @@ img {
 
 /* ---------- Home section ---------- */
 
+.home-section .section-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
 .home-heading-row {
     position: relative;
     display: flex;
-    align-items: flex-end;
-    gap: 32px;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
     padding-bottom: 40px;
 }
 
@@ -251,7 +259,7 @@ img {
     font-size: clamp(2.75rem, 7vw, 5.5rem);
     text-transform: uppercase;
     letter-spacing: 0.01em;
-    margin: 0;
+    margin: -12px 0 0;
     line-height: 0.95;
     color: var(--cp-text);
 }
@@ -285,8 +293,16 @@ img {
 
 .profile-photo--home {
     width: 160px;
-    height: 160px;
-    margin-bottom: -40px;
+    height: auto;
+    border-radius: 0;
+    background: none;
+    border: none;
+    box-shadow: none;
+}
+
+.profile-photo--home img {
+    height: auto;
+    object-fit: contain;
 }
 
 .profile-photo--about {
@@ -298,6 +314,8 @@ img {
 
 .home-bio {
     max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
     color: var(--cp-muted);
     font-size: 1.05rem;
     line-height: 1.7;
@@ -533,15 +551,6 @@ img {
 
     .nav-link.active {
         background: var(--cp-accent-soft);
-    }
-
-    .home-heading-row {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .profile-photo--home {
-        margin-bottom: 0;
     }
 
     .section-inner {

@@ -14,7 +14,6 @@ namespace _24_1444AdoteRonAdrian_Portfolio
 
         // Home hero heading — kept separate from SiteBrandName since wireframes show them differing.
         public const string HomeHeadingName = "Ron Adrian Adote";
-
         protected void Page_Load(object sender, EventArgs e)
         {
 
