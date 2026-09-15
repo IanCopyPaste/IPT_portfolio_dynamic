@@ -33,8 +33,16 @@ body {
         repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.035) 0px, rgba(255, 255, 255, 0.035) 1px, transparent 1px, transparent 42px);
     background-repeat: no-repeat, no-repeat, repeat;
     background-attachment: fixed, fixed, fixed;
+    background-position: 0 0, 0 0, 0 0;
+    animation: cp-grid-scroll 6s linear infinite;
     scroll-behavior: smooth;
     overflow-x: hidden;
+}
+
+@keyframes cp-grid-scroll {
+    to {
+        background-position: 0 0, 0 0, 59.4px 0;
+    }
 }
 
 img {
@@ -463,10 +471,13 @@ img {
 }
 
 .tech-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     background: var(--cp-surface-alt);
     border: 1px solid var(--cp-border);
     border-radius: 999px;
-    padding: 6px 16px;
+    padding: 6px 16px 6px 8px;
     font-size: 0.85rem;
     font-weight: 600;
     letter-spacing: 0.02em;
@@ -477,6 +488,16 @@ img {
 .tech-tag:hover {
     border-color: var(--cp-accent);
     color: var(--cp-accent);
+}
+
+.tech-tag-icon {
+    width: 20px;
+    height: 20px;
+    padding: 2px;
+    border-radius: 50%;
+    background: #ffffff;
+    object-fit: contain;
+    flex: 0 0 auto;
 }
 
 /* ---------- Contact section ---------- */
