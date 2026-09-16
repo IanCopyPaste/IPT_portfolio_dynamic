@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
-    <link href="/Assets/css/ContentPage/contentpage.css?v=11" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/contentpage.css?v=14" rel="stylesheet" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -112,7 +112,7 @@
                         <%-- Same cutout portrait treatment as the home hero, parked on the right.
                              Its delay lands it after the three panels have cascaded in. --%>
                         <div class="profile-photo profile-photo--about reveal" data-reveal-delay="450">
-                            <img src="/Assets/ContentPage/dev_photo.png" alt="<%= HomeHeadingName %>"
+                            <img src="/Assets/ContentPage/dev_photo2.png" alt="<%= HomeHeadingName %>"
                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
                             <div class="profile-photo-placeholder" aria-hidden="true">
                                 <span class="ph-head"></span>
@@ -127,18 +127,31 @@
                 <div class="section-inner">
                     <h2 class="section-heading">Projects</h2>
                     <div class="project-cards">
-                        <article class="project-card card-pastel-1">
-                            <h3>Library Management System</h3>
-                            <p>Placeholder description of the Library Management System project goes here.</p>
-                        </article>
-                        <article class="project-card card-pastel-2">
-                            <h3>Michael Jackson Player</h3>
-                            <p>Placeholder description of the Michael Jackson Player project goes here.</p>
-                        </article>
-                        <article class="project-card card-pastel-3">
-                            <h3>Event Management System</h3>
-                            <p>Placeholder description of the Event Management System project goes here.</p>
-                        </article>
+                        <%-- Placeholder hrefs: swap each one for that project's real link. --%>
+                        <a class="project-card card-pastel-1" href="https://github.com/IanCopyPaste/LibraryManagementSystem" target="_blank" rel="noopener noreferrer">
+                            <img class="project-card-image" src="/Assets/ContentPage/Library_Management_System.png" alt=""
+                                onerror="this.parentNode.classList.add('project-card--no-image'); this.style.display='none';" />
+                            <div class="project-card-overlay">
+                                <h3>Library Management System</h3>
+                                <p>Placeholder description of the Library Management System project goes here.</p>
+                            </div>
+                        </a>
+                        <a class="project-card card-pastel-2" href="https://mj-player.vercel.app/" target="_blank" rel="noopener noreferrer">
+                            <img class="project-card-image" src="/Assets/ContentPage/Michael_Jackson_Player.png" alt=""
+                                onerror="this.parentNode.classList.add('project-card--no-image'); this.style.display='none';" />
+                            <div class="project-card-overlay">
+                                <h3>Michael Jackson Player</h3>
+                                <p>Placeholder description of the Michael Jackson Player project goes here.</p>
+                            </div>
+                        </a>
+                        <a class="project-card card-pastel-3" href="https://github.com/IanCopyPaste/Event_Management_System" target="_blank" rel="noopener noreferrer">
+                            <img class="project-card-image" src="/Assets/ContentPage/Event_Management_System.png" alt=""
+                                onerror="this.parentNode.classList.add('project-card--no-image'); this.style.display='none';" />
+                            <div class="project-card-overlay">
+                                <h3>Event Management System</h3>
+                                <p>Placeholder description of the Event Management System project goes here.</p>
+                            </div>
+                        </a>
                     </div>
 
                     <div class="tech-stack-panel">
