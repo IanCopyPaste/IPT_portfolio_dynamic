@@ -146,9 +146,12 @@
 
             <section id="skills" class="section skills-section">
                 <div class="section-inner">
-                    <h2 class="section-heading">Projects</h2>
+                    <%-- Same hand-ordered cascade as the About section: heading, then the cards, then the
+                         panel. Each tag is observed on its own, so its delay is measured from when that
+                         tag scrolls in; the offsets hold the chips back until the panel has mostly landed. --%>
+                    <h2 class="section-heading reveal reveal--left" data-reveal-delay="0">Projects</h2>
                     <div class="project-cards">
-                        <a class="project-card" href="https://github.com/IanCopyPaste/LibraryManagementSystem" target="_blank" rel="noopener noreferrer">
+                        <a class="project-card reveal" data-reveal-delay="120" href="https://github.com/IanCopyPaste/LibraryManagementSystem" target="_blank" rel="noopener noreferrer">
                             <img class="project-card-image" src="/Assets/ContentPage/Library_Management_System.png" alt=""
                                 onerror="this.parentNode.classList.add('project-card--no-image'); this.style.display='none';" />
                             <div class="project-card-overlay">
@@ -156,7 +159,7 @@
                                 <p>Placeholder description of the Library Management System project goes here.</p>
                             </div>
                         </a>
-                        <a class="project-card" href="https://mj-player.vercel.app/" target="_blank" rel="noopener noreferrer">
+                        <a class="project-card reveal" data-reveal-delay="230" href="https://mj-player.vercel.app/" target="_blank" rel="noopener noreferrer">
                             <img class="project-card-image" src="/Assets/ContentPage/Michael_Jackson_Player.png" alt=""
                                 onerror="this.parentNode.classList.add('project-card--no-image'); this.style.display='none';" />
                             <div class="project-card-overlay">
@@ -164,7 +167,7 @@
                                 <p>Placeholder description of the Michael Jackson Player project goes here.</p>
                             </div>
                         </a>
-                        <a class="project-card" href="https://github.com/IanCopyPaste/Event_Management_System" target="_blank" rel="noopener noreferrer">
+                        <a class="project-card reveal" data-reveal-delay="340" href="https://github.com/IanCopyPaste/Event_Management_System" target="_blank" rel="noopener noreferrer">
                             <img class="project-card-image" src="/Assets/ContentPage/Event_Management_System.png" alt=""
                                 onerror="this.parentNode.classList.add('project-card--no-image'); this.style.display='none';" />
                             <div class="project-card-overlay">
@@ -174,7 +177,7 @@
                         </a>
                     </div>
 
-                    <div class="tech-stack-panel">
+                    <div class="tech-stack-panel reveal" data-reveal-delay="450">
                         <div class="tech-stack-bar" aria-hidden="true">
                             <span class="tech-stack-dot"></span>
                             <span class="tech-stack-dot"></span>
@@ -185,19 +188,19 @@
                             <h3>Tech Stack</h3>
                             <p class="tech-stack-prompt" aria-hidden="true">$ ls ./stack --all</p>
                             <div class="tech-tags">
-                                <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-html5.svg" alt="" />HTML</span>
-                                <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-css3.svg" alt="" />CSS</span>
-                                <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-javascript.svg" alt="" />JS</span>
-                                <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-react.svg" alt="" />React.js</span>
-                                <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-php.svg" alt="" />PHP</span>
-                                <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-dotnetcore.svg" alt="" />ASP.NET</span>
-                                <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-mssql.svg" alt="" />MSSQL</span>
-                                <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-mysql.svg" alt="" />MySQL</span>
-                                <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-git.svg" alt="" />Git</span>
-                                <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-github.svg" alt="" />GitHub</span>
-                                <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-csharp.svg" alt="" />C#</span>
-                                <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-java.svg" alt="" />Java</span>
-                                <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-vbnet.svg" alt="" />VB.NET</span>
+                                <span class="tech-tag reveal" data-reveal-delay="550"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-html5.svg" alt="" />HTML</span>
+                                <span class="tech-tag reveal" data-reveal-delay="590"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-css3.svg" alt="" />CSS</span>
+                                <span class="tech-tag reveal" data-reveal-delay="630"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-javascript.svg" alt="" />JS</span>
+                                <span class="tech-tag reveal" data-reveal-delay="670"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-react.svg" alt="" />React.js</span>
+                                <span class="tech-tag reveal" data-reveal-delay="710"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-php.svg" alt="" />PHP</span>
+                                <span class="tech-tag reveal" data-reveal-delay="750"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-dotnetcore.svg" alt="" />ASP.NET</span>
+                                <span class="tech-tag reveal" data-reveal-delay="790"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-mssql.svg" alt="" />MSSQL</span>
+                                <span class="tech-tag reveal" data-reveal-delay="830"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-mysql.svg" alt="" />MySQL</span>
+                                <span class="tech-tag reveal" data-reveal-delay="870"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-git.svg" alt="" />Git</span>
+                                <span class="tech-tag reveal" data-reveal-delay="910"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-github.svg" alt="" />GitHub</span>
+                                <span class="tech-tag reveal" data-reveal-delay="950"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-csharp.svg" alt="" />C#</span>
+                                <span class="tech-tag reveal" data-reveal-delay="990"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-java.svg" alt="" />Java</span>
+                                <span class="tech-tag reveal" data-reveal-delay="1030"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-vbnet.svg" alt="" />VB.NET</span>
                             </div>
                         </div>
                     </div>
