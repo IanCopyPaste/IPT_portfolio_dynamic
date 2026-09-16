@@ -9,8 +9,8 @@
     <title><%= SiteBrandName %> - Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet" />
-    <link href="/Assets/css/ContentPage/contentpage.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/contentpage.css?v=2" rel="stylesheet" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -45,6 +45,13 @@
                 <div class="section-inner">
                     <div class="home-heading-row">
                         <h1 class="home-heading"><%= HomeHeadingName %></h1>
+                    </div>
+                    <div class="home-stack">
+                        <p class="home-bio glitch-text" data-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        </p>
                         <div class="profile-photo profile-photo--home">
                             <img src="/Assets/ContentPage/dev_photo.png" alt="<%= HomeHeadingName %>"
                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
@@ -54,11 +61,6 @@
                             </div>
                         </div>
                     </div>
-                    <p class="home-bio">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    </p>
                 </div>
             </section>
 
