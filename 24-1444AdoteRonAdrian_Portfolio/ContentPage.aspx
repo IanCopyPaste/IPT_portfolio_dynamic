@@ -13,7 +13,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
-    <link href="/Assets/css/ContentPage/contentpage.css?v=14" rel="stylesheet" />
+    <%-- Order matters: tokens and base first, sections in page order, then the reveal
+         and responsive overrides, which have to win over the section rules. --%>
+    <link href="/Assets/css/ContentPage/contentpage.css?v=15" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/home.css?v=1" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/about.css?v=5" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/skills.css?v=1" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/contact.css?v=1" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/reveal.css?v=1" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/responsive.css?v=2" rel="stylesheet" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -81,23 +89,36 @@
                     <h2 class="section-heading reveal reveal--left" data-reveal-delay="0">Who am I?</h2>
                     <div class="about-content">
                         <div class="about-panels">
-                            <article class="about-panel card-pastel-1 reveal" data-reveal-delay="120">
-                                <h3>Personal Information</h3>
-                                <p>Age: <%= Age %> yrs Old</p>
-                                <p>Sex: Male</p>
-                                <p>Birthdate: April 16, 2006</p>
-                                <p>Nationality: Filipino</p>
-                                <p>From: Baesa, Quezon City</p>
-
+                            <article class="about-panel reveal" data-reveal-delay="120">
+                                <h3><span class="about-panel-index" aria-hidden="true">01</span>Personal Information</h3>
+                                <dl class="about-details">
+                                    <div class="about-detail"><dt>Age</dt><dd><%= Age %> yrs Old</dd></div>
+                                    <div class="about-detail"><dt>Sex</dt><dd>Male</dd></div>
+                                    <div class="about-detail"><dt>Birthdate</dt><dd>April 16, 2006</dd></div>
+                                    <div class="about-detail"><dt>Nationality</dt><dd>Filipino</dd></div>
+                                    <div class="about-detail about-detail--wide"><dt>From</dt><dd>Baesa, Quezon City</dd></div>
+                                </dl>
                             </article>
-                            <article class="about-panel card-pastel-2 reveal" data-reveal-delay="230">
-                                <h3>Educational Attainment</h3>
-                                <p>- JHS: Dr. Carlos S. Lanting College</p>
-                                <p>- SHS: Ismael Mathay Sr. High School</p>
-                                <p>- College: Quezon City University - BSIT</p>
+                            <article class="about-panel reveal" data-reveal-delay="230">
+                                <h3><span class="about-panel-index" aria-hidden="true">02</span>Educational Attainment</h3>
+                                <ol class="about-timeline">
+                                    <li class="about-timeline-item">
+                                        <abbr class="about-timeline-level" title="Junior High School">JHS</abbr>
+                                        <span class="about-timeline-school">Dr. Carlos S. Lanting College</span>
+                                    </li>
+                                    <li class="about-timeline-item">
+                                        <abbr class="about-timeline-level" title="Senior High School">SHS</abbr>
+                                        <span class="about-timeline-school">Ismael Mathay Sr. High School</span>
+                                    </li>
+                                    <li class="about-timeline-item">
+                                        <span class="about-timeline-level">College</span>
+                                        <span class="about-timeline-school">Quezon City University</span>
+                                        <abbr class="about-timeline-course" title="Bachelor of Science in Information Technology">BSIT</abbr>
+                                    </li>
+                                </ol>
                             </article>
-                            <article class="about-panel card-pastel-3 reveal" data-reveal-delay="340">
-                                <h3>Hobbies and Interest</h3>
+                            <article class="about-panel reveal" data-reveal-delay="340">
+                                <h3><span class="about-panel-index" aria-hidden="true">03</span>Hobbies and Interest</h3>
                                 <%-- Emoji go in as character references, not literal characters: this file
                                      carries no BOM and Web.config sets no fileEncoding, so ASP.NET reads it
                                      as the system codepage and raw UTF-8 emoji bytes would come out mangled. --%>
@@ -127,8 +148,7 @@
                 <div class="section-inner">
                     <h2 class="section-heading">Projects</h2>
                     <div class="project-cards">
-                        <%-- Placeholder hrefs: swap each one for that project's real link. --%>
-                        <a class="project-card card-pastel-1" href="https://github.com/IanCopyPaste/LibraryManagementSystem" target="_blank" rel="noopener noreferrer">
+                        <a class="project-card" href="https://github.com/IanCopyPaste/LibraryManagementSystem" target="_blank" rel="noopener noreferrer">
                             <img class="project-card-image" src="/Assets/ContentPage/Library_Management_System.png" alt=""
                                 onerror="this.parentNode.classList.add('project-card--no-image'); this.style.display='none';" />
                             <div class="project-card-overlay">
@@ -136,7 +156,7 @@
                                 <p>Placeholder description of the Library Management System project goes here.</p>
                             </div>
                         </a>
-                        <a class="project-card card-pastel-2" href="https://mj-player.vercel.app/" target="_blank" rel="noopener noreferrer">
+                        <a class="project-card" href="https://mj-player.vercel.app/" target="_blank" rel="noopener noreferrer">
                             <img class="project-card-image" src="/Assets/ContentPage/Michael_Jackson_Player.png" alt=""
                                 onerror="this.parentNode.classList.add('project-card--no-image'); this.style.display='none';" />
                             <div class="project-card-overlay">
@@ -144,7 +164,7 @@
                                 <p>Placeholder description of the Michael Jackson Player project goes here.</p>
                             </div>
                         </a>
-                        <a class="project-card card-pastel-3" href="https://github.com/IanCopyPaste/Event_Management_System" target="_blank" rel="noopener noreferrer">
+                        <a class="project-card" href="https://github.com/IanCopyPaste/Event_Management_System" target="_blank" rel="noopener noreferrer">
                             <img class="project-card-image" src="/Assets/ContentPage/Event_Management_System.png" alt=""
                                 onerror="this.parentNode.classList.add('project-card--no-image'); this.style.display='none';" />
                             <div class="project-card-overlay">
@@ -155,21 +175,30 @@
                     </div>
 
                     <div class="tech-stack-panel">
-                        <h3>Tech Stack</h3>
-                        <div class="tech-tags">
-                            <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-html5.svg" alt="" />HTML</span>
-                            <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-css3.svg" alt="" />CSS</span>
-                            <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-javascript.svg" alt="" />JS</span>
-                            <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-react.svg" alt="" />React.js</span>
-                            <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-php.svg" alt="" />PHP</span>
-                            <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-dotnetcore.svg" alt="" />ASP.NET</span>
-                            <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-mssql.svg" alt="" />MSSQL</span>
-                            <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-mysql.svg" alt="" />MySQL</span>
-                            <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-git.svg" alt="" />Git</span>
-                            <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-github.svg" alt="" />GitHub</span>
-                            <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-csharp.svg" alt="" />C#</span>
-                            <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-java.svg" alt="" />Java</span>
-                            <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-vbnet.svg" alt="" />VB.NET</span>
+                        <div class="tech-stack-bar" aria-hidden="true">
+                            <span class="tech-stack-dot"></span>
+                            <span class="tech-stack-dot"></span>
+                            <span class="tech-stack-dot"></span>
+                            <span class="tech-stack-path">~/portfolio/tech-stack</span>
+                        </div>
+                        <div class="tech-stack-body">
+                            <h3>Tech Stack</h3>
+                            <p class="tech-stack-prompt" aria-hidden="true">$ ls ./stack --all</p>
+                            <div class="tech-tags">
+                                <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-html5.svg" alt="" />HTML</span>
+                                <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-css3.svg" alt="" />CSS</span>
+                                <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-javascript.svg" alt="" />JS</span>
+                                <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-react.svg" alt="" />React.js</span>
+                                <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-php.svg" alt="" />PHP</span>
+                                <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-dotnetcore.svg" alt="" />ASP.NET</span>
+                                <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-mssql.svg" alt="" />MSSQL</span>
+                                <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-mysql.svg" alt="" />MySQL</span>
+                                <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-git.svg" alt="" />Git</span>
+                                <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-github.svg" alt="" />GitHub</span>
+                                <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-csharp.svg" alt="" />C#</span>
+                                <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-java.svg" alt="" />Java</span>
+                                <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-vbnet.svg" alt="" />VB.NET</span>
+                            </div>
                         </div>
                     </div>
                 </div>

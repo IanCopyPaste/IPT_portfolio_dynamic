@@ -104,7 +104,13 @@
     <Content Include="Assets\ContentPage\Event_Management_System.png" />
     <Content Include="Assets\ContentPage\Library_Management_System.png" />
     <Content Include="Assets\ContentPage\Michael_Jackson_Player.png" />
+    <Content Include="Assets\css\ContentPage\about.css" />
+    <Content Include="Assets\css\ContentPage\contact.css" />
     <Content Include="Assets\css\ContentPage\contentpage.css" />
+    <Content Include="Assets\css\ContentPage\home.css" />
+    <Content Include="Assets\css\ContentPage\responsive.css" />
+    <Content Include="Assets\css\ContentPage\reveal.css" />
+    <Content Include="Assets\css\ContentPage\skills.css" />
     <Content Include="Assets\js\ContentPage\contentpage.js" />
     <Content Include="ContentPage.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
