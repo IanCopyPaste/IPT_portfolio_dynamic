@@ -17,9 +17,10 @@ scaffold's conventions as this project's conventions.
 ## Visual language
 
 Dark "terminal / glitched CRT" aesthetic: near-black background, a single neon-green accent,
-generous glow, and deliberate instability (flicker, RGB split, character corruption). Cards get
-one accent stripe each from a small pastel set. Keep new work inside that language — it is the
-point of the design, not decoration to be sanded off.
+generous glow, and deliberate instability (flicker, RGB split, character corruption). Cards (the
+About panels, project cards, the tech-stack panel) deliberately carry no coloured stripe or
+coloured border — keep their edges neutral (`--cp-border`). Keep new work inside that language —
+it is the point of the design, not decoration to be sanded off.
 
 ## Design tokens
 
@@ -32,7 +33,8 @@ Every colour, radius, and font lives as a `--cp-*` custom property on `:root` at
 | Text | `--cp-text`, `--cp-muted` |
 | Accent | `--cp-accent` (`#39ff88`), `--cp-accent-soft` |
 | Borders | `--cp-border` |
-| Card stripes | `--cp-pastel-1` (red), `--cp-pastel-2` (cyan), `--cp-pastel-3` (green) |
+| Terminal title-bar dots | `--cp-pastel-1` (red), `--cp-pastel-2` (cyan), `--cp-pastel-3` (green) |
+| Form errors | `--cp-pastel-1` |
 | Radii | `--cp-radius-lg` (20px), `--cp-radius-md` (12px) |
 | Fonts | `--cp-font-display` (Anton), `--cp-font-mono` (Share Tech Mono) |
 | Navbar | `--cp-navbar-height` |
@@ -65,16 +67,25 @@ these have to be updated with it.
 
 ## Stylesheet organisation
 
-`contentpage.css` is ordered tokens → base → navbar → layout helpers → one block per section in
-page order → scroll reveal → responsive, with banner comments:
+The stylesheet is split into files under `Assets/css/ContentPage/`, linked from `ContentPage.aspx`
+in this order — the order is load-bearing, since later files override earlier ones:
+
+| File | Holds |
+| --- | --- |
+| `contentpage.css` | tokens → base → navbar → layout helpers, incl. the shared `.terminal-bar` |
+| `home.css`, `about.css`, `skills.css`, `contact.css` | one section each, in page order (the footer lives in the contact section and in `contact.css`) |
+| `reveal.css` | the scroll-reveal system and its reduced-motion override |
+| `responsive.css` | the responsive block; always last |
+
+Each file keeps its banner comment:
 
 ```css
 /* ---------- Home section ---------- */
 ```
 
-Add new rules inside the matching banner rather than appending to the end. All media queries live
-in the single `Responsive` block at the bottom, at exactly two breakpoints — **900px** and
-**720px**. Don't invent a third without a reason.
+Add new rules to the matching section file rather than to whichever file is open, and give a new
+section its own file linked in page order. All breakpoint media queries live in `responsive.css`,
+at exactly two breakpoints — **900px** and **720px**. Don't invent a third without a reason.
 
 ## Layout
 
@@ -126,13 +137,14 @@ effect, add it to `updateOnScroll` instead of registering a second listener.
 
 ```
 Assets/<PageName>/          images and logos for that page
-Assets/css/<PageName>/<pagename>.css
+Assets/css/<PageName>/<pagename>.css   tokens, base, navbar, layout
+Assets/css/<PageName>/<section>.css    one per section, plus reveal.css and responsive.css
 Assets/js/<PageName>/<pagename>.js
 ```
 
-Logo files are lowercase `logo-<tech>.svg`. Stylesheet and script are linked with a `?v=N`
-cache-busting query — **bump the number whenever you edit the file**, or the change won't show up
-for anyone with the old copy cached.
+Logo files are lowercase `logo-<tech>.svg`. Each stylesheet and the script is linked with its
+own `?v=N` cache-busting query — **bump that file's number whenever you edit it**, or the change
+won't show up for anyone with the old copy cached.
 
 ## Server-side
 

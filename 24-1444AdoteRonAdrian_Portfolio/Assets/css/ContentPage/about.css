@@ -1,0 +1,235 @@
+/* ContentPage — About section. Tokens and base styles live in contentpage.css, which loads first. */
+
+/* ---------- About section ---------- */
+
+/* The heading drops straight onto the panel column here, so it gives up the 40px
+   the other section headings keep between themselves and their content. */
+.about-section .section-heading {
+    margin-bottom: 0;
+}
+
+.about-content {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+}
+
+.about-panels {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* A plain card shell with no coloured stripe or border, kept short since three of these
+   stack in one column beside the portrait. The face carries the tech-stack terminal's
+   scanlines and corner glow, so both sections read as one system. */
+.about-panel {
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(360px circle at 100% 0%, rgba(57, 255, 136, 0.08), transparent 65%),
+        repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 0px, rgba(255, 255, 255, 0.02) 1px, transparent 1px, transparent 4px),
+        var(--cp-surface);
+    border: 1px solid var(--cp-border);
+    border-radius: var(--cp-radius-lg);
+    padding: 24px 26px 22px;
+    transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.about-panel:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55);
+}
+
+.about-panel h3 {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin: 0 0 12px;
+    font-family: var(--cp-font-display);
+    font-weight: 400;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--cp-text);
+}
+
+/* A terminal-style section number, flickering like the home bio. */
+.about-panel-index {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    font-family: var(--cp-font-mono);
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    color: var(--cp-accent);
+    text-shadow: 0 0 8px rgba(57, 255, 136, 0.6);
+    animation: cp-text-flicker 6s infinite steps(1);
+}
+
+.about-panel-index::before {
+    content: "// ";
+}
+
+/* Details sit in their own cells, label over value, so each one is read at a glance
+   instead of being picked out of a run of "Label: value" lines. The labels are in the
+   terminal face; the values keep the body face at full brightness, so they stand out. */
+.about-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+    margin: 0;
+}
+
+.about-detail {
+    padding: 8px 12px;
+    background: var(--cp-surface-alt);
+    border: 1px solid var(--cp-border);
+    border-radius: var(--cp-radius-md);
+    transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.about-detail:hover {
+    border-color: var(--cp-accent);
+    box-shadow: 0 0 14px rgba(57, 255, 136, 0.28);
+}
+
+/* The hometown is the longest value, so it takes a full row rather than wrapping in a cell. */
+.about-detail--wide {
+    grid-column: 1 / -1;
+}
+
+.about-detail dt,
+.about-timeline-level {
+    font-family: var(--cp-font-mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--cp-accent);
+    text-shadow: 0 0 8px rgba(57, 255, 136, 0.45);
+}
+
+.about-detail dt {
+    margin-bottom: 4px;
+}
+
+.about-detail dd {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--cp-text);
+}
+
+/* Schooling reads as a path rather than a list: a glowing rail with one node per stage. */
+.about-timeline {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.about-timeline::before {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--cp-accent), rgba(57, 255, 136, 0.15));
+    box-shadow: 0 0 8px rgba(57, 255, 136, 0.5);
+}
+
+.about-timeline-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 76px 1fr;
+    column-gap: 12px;
+    align-items: baseline;
+    padding-left: 28px;
+}
+
+.about-timeline-item::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 5px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--cp-bg);
+    border: 2px solid var(--cp-accent);
+    box-shadow: 0 0 10px rgba(57, 255, 136, 0.6);
+}
+
+/* The full names live in the title tooltip; the dotted underline would only add noise. */
+.about-timeline-level,
+.about-timeline-course {
+    text-decoration: none;
+}
+
+.about-timeline-level[title],
+.about-timeline-course[title] {
+    cursor: help;
+}
+
+.about-timeline-school {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--cp-text);
+}
+
+.about-timeline-course {
+    grid-column: 2;
+    font-family: var(--cp-font-mono);
+    font-size: 0.85rem;
+    color: var(--cp-muted);
+}
+
+/* Hobbies read as a row of tags rather than a stacked list. Same chip language as the
+   tech-stack tags, so the two sections stay recognisably one system; they wrap onto a
+   second line inside the panel rather than widening it. */
+.hobbies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.hobby-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--cp-surface-alt);
+    border: 1px solid var(--cp-border);
+    border-radius: 999px;
+    padding: 7px 16px 7px 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--cp-text);
+    transition: transform 200ms ease, border-color 200ms ease, color 200ms ease, box-shadow 200ms ease;
+}
+
+.hobby-tag:hover {
+    transform: translateY(-3px);
+    border-color: var(--cp-accent);
+    color: var(--cp-accent);
+    box-shadow: 0 0 14px rgba(57, 255, 136, 0.28);
+}
+
+/* Sized off the label rather than inheriting it, so the glyph reads as an icon
+   beside the word instead of as another character in it. */
+.hobby-tag-emoji {
+    font-size: 1.05rem;
+    line-height: 1;
+}
+
+/* Keeps the home hero's scale; only the placement — a column of its own — differs. */
+.profile-photo--about {
+    flex: 0 0 auto;
+    width: min(420px, 42vw);
+}

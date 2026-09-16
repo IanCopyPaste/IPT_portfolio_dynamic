@@ -1,0 +1,431 @@
+/* ContentPage — Contact section and the footer that closes it. Tokens and base styles live in contentpage.css, which loads first. */
+
+/* ---------- Contact section ---------- */
+
+/* The pitch and quick facts sit beside the form; the footer follows below both. */
+.contact-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 32px;
+    align-items: start;
+}
+
+/* No colour here: the hero gradient in home.css paints it, and this file loads later,
+   so a colour declared here would override that gradient's transparent fill. */
+.contact-lead {
+    margin: 0 0 12px;
+    font-family: var(--cp-font-display);
+    font-weight: 400;
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    line-height: 1.05;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.contact-intro {
+    margin: 0 0 28px;
+    color: var(--cp-muted);
+    line-height: 1.8;
+}
+
+.contact-facts {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 0;
+}
+
+.contact-fact {
+    padding: 12px 16px;
+    background: var(--cp-surface);
+    border: 1px solid var(--cp-border);
+    border-radius: var(--cp-radius-md);
+}
+
+.contact-fact dt,
+.contact-field label,
+.footer-heading {
+    font-family: var(--cp-font-mono);
+    font-size: 0.78rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--cp-accent);
+    text-shadow: 0 0 8px rgba(57, 255, 136, 0.45);
+}
+
+.contact-fact dt {
+    margin-bottom: 4px;
+}
+
+.contact-fact dd {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--cp-text);
+}
+
+/* A live "online" light: the one ambient loop in this block. */
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex: 0 0 auto;
+    background: var(--cp-accent);
+    box-shadow: 0 0 10px rgba(57, 255, 136, 0.8);
+    animation: cp-status-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes cp-status-pulse {
+    0%, 100% { box-shadow: 0 0 4px rgba(57, 255, 136, 0.6), 0 0 0 0 rgba(57, 255, 136, 0.45); }
+    50% { box-shadow: 0 0 12px rgba(57, 255, 136, 0.9), 0 0 0 6px rgba(57, 255, 136, 0); }
+}
+
+/* The form is dressed as the same terminal window as the tech-stack panel. */
+.contact-form-panel {
+    overflow: hidden;
+    background:
+        radial-gradient(520px circle at 100% 0%, rgba(57, 255, 136, 0.1), transparent 65%),
+        repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 0px, rgba(255, 255, 255, 0.02) 1px, transparent 1px, transparent 4px),
+        var(--cp-surface);
+    border: 1px solid var(--cp-border);
+    border-radius: var(--cp-radius-lg);
+    box-shadow: inset 0 0 60px rgba(57, 255, 136, 0.05), 0 16px 40px rgba(0, 0, 0, 0.45);
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 28px 32px 32px;
+}
+
+.contact-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.contact-field {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+}
+
+.contact-field input,
+.contact-field select,
+.contact-field textarea {
+    width: 100%;
+    padding: 12px 14px;
+    background: var(--cp-surface-alt);
+    border: 1px solid var(--cp-border);
+    border-radius: var(--cp-radius-md);
+    color: var(--cp-text);
+    font: inherit;
+    line-height: 1.5;
+    transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.contact-field textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+.contact-field input::placeholder,
+.contact-field textarea::placeholder {
+    color: var(--cp-muted);
+    opacity: 0.7;
+}
+
+.contact-field input:focus,
+.contact-field select:focus,
+.contact-field textarea:focus {
+    outline: none;
+    border-color: var(--cp-accent);
+    box-shadow: 0 0 0 3px var(--cp-accent-soft), 0 0 14px rgba(57, 255, 136, 0.28);
+}
+
+/* The native arrow ignores the theme, so it is replaced with a drawn chevron. */
+.contact-field select {
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 40px;
+    cursor: pointer;
+}
+
+.contact-field select option {
+    background: var(--cp-surface-alt);
+    color: var(--cp-text);
+}
+
+.contact-field--select::after {
+    content: "";
+    position: absolute;
+    right: 16px;
+    bottom: 20px;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid var(--cp-accent);
+    border-bottom: 2px solid var(--cp-accent);
+    transform: rotate(45deg);
+    pointer-events: none;
+}
+
+.contact-field.is-invalid input,
+.contact-field.is-invalid textarea {
+    border-color: var(--cp-pastel-1);
+    box-shadow: 0 0 0 3px rgba(255, 59, 92, 0.16);
+}
+
+.contact-error {
+    font-family: var(--cp-font-mono);
+    font-size: 0.8rem;
+    color: var(--cp-pastel-1);
+}
+
+.contact-error:empty {
+    display: none;
+}
+
+.contact-counter {
+    align-self: flex-end;
+    font-family: var(--cp-font-mono);
+    font-size: 0.78rem;
+    color: var(--cp-muted);
+}
+
+.contact-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.contact-send {
+    padding: 13px 28px;
+    border: none;
+    border-radius: 999px;
+    background: var(--cp-accent);
+    color: var(--cp-bg);
+    font-family: var(--cp-font-mono);
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    box-shadow: 0 0 18px rgba(57, 255, 136, 0.4);
+    transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.contact-send:hover,
+.contact-send:focus-visible {
+    transform: translateY(-3px);
+    box-shadow: 0 0 28px rgba(57, 255, 136, 0.7);
+}
+
+.contact-send:focus-visible {
+    outline: 2px solid var(--cp-text);
+    outline-offset: 3px;
+}
+
+/* Terminal output, prompt included. */
+.contact-status {
+    flex: 1 1 220px;
+    margin: 0;
+    font-family: var(--cp-font-mono);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--cp-accent);
+    text-shadow: 0 0 8px rgba(57, 255, 136, 0.45);
+}
+
+.contact-status:not(:empty)::before {
+    content: "> ";
+    content: "> " / "";
+}
+
+.contact-status.is-error {
+    color: var(--cp-pastel-1);
+    text-shadow: none;
+}
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+    margin-top: 72px;
+    padding-top: 40px;
+    border-top: 1px solid var(--cp-border);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 2fr) minmax(0, 6fr);
+    gap: 40px;
+}
+
+.footer-brand-name {
+    font-family: var(--cp-font-display);
+    font-size: 1.75rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cp-text);
+    text-decoration: none;
+    transition: color 250ms ease, text-shadow 250ms ease;
+}
+
+.footer-brand-name:hover {
+    color: var(--cp-accent);
+    text-shadow: 0 0 16px rgba(57, 255, 136, 0.55);
+}
+
+.footer-tagline {
+    margin: 12px 0 0;
+    color: var(--cp-muted);
+    line-height: 1.8;
+}
+
+.footer-heading {
+    margin: 0 0 16px;
+}
+
+.footer-nav ul,
+.social-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.footer-nav li + li {
+    margin-top: 10px;
+}
+
+.footer-link {
+    color: var(--cp-muted);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 200ms ease, text-shadow 200ms ease;
+}
+
+.footer-link:hover {
+    color: var(--cp-accent);
+    text-shadow: 0 0 12px rgba(57, 255, 136, 0.5);
+}
+
+.social-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    height: 100%;
+    padding: 12px 14px;
+    background: var(--cp-surface);
+    border: 1px solid var(--cp-border);
+    border-radius: var(--cp-radius-md);
+    color: var(--cp-text);
+    text-decoration: none;
+    transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+/* A glow rather than a coloured edge: cards on this page keep neutral borders. */
+.social-link:hover,
+.social-link:focus-visible {
+    transform: translateY(-3px);
+    box-shadow: 0 0 14px rgba(57, 255, 136, 0.28);
+}
+
+.social-link:focus-visible {
+    outline: 2px solid var(--cp-accent);
+    outline-offset: 3px;
+}
+
+/* The logos are used as masks so they take the text colour and can glow with the
+   accent on hover, which a plain <img> of a coloured SVG can't do. */
+.social-icon {
+    width: 22px;
+    height: 22px;
+    flex: 0 0 auto;
+    background-color: currentColor;
+    -webkit-mask: var(--social-logo) center / contain no-repeat;
+    mask: var(--social-logo) center / contain no-repeat;
+    transition: background-color 200ms ease, filter 200ms ease;
+}
+
+.social-link:hover .social-icon,
+.social-link:focus-visible .social-icon {
+    background-color: var(--cp-accent);
+    filter: drop-shadow(0 0 6px rgba(57, 255, 136, 0.7));
+}
+
+.social-icon--instagram {
+    --social-logo: url("/Assets/ContentPage/logo-instagram.svg");
+}
+
+.social-icon--facebook {
+    --social-logo: url("/Assets/ContentPage/logo-facebook.svg");
+}
+
+.social-icon--github {
+    --social-logo: url("/Assets/ContentPage/logo-github.svg");
+}
+
+.social-icon--linkedin {
+    --social-logo: url("/Assets/ContentPage/logo-linkedin.svg");
+}
+
+.social-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.social-name {
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.social-note {
+    font-family: var(--cp-font-mono);
+    font-size: 0.78rem;
+    color: var(--cp-muted);
+    line-height: 1.4;
+}
+
+.footer-bottom {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid var(--cp-border);
+    font-family: var(--cp-font-mono);
+    font-size: 0.82rem;
+    color: var(--cp-muted);
+}
+
+.footer-bottom p {
+    margin: 0;
+}
+
+.footer-top-link {
+    margin-left: auto;
+    color: var(--cp-accent);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    transition: text-shadow 200ms ease;
+}
+
+.footer-top-link:hover {
+    text-shadow: 0 0 12px rgba(57, 255, 136, 0.7);
+}
