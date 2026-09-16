@@ -81,7 +81,8 @@ in the single `Responsive` block at the bottom, at exactly two breakpoints — *
 - `.section` is `min-height: 100vh`, flex, vertically centred, `overflow: hidden`.
   That clipping is real: anything that animates sideways will shear against the section edge, so
   entrance motion travels vertically.
-- `.section-inner` caps content at `max-width: 1200px` with `padding: 96px 24px` (20px at 720px).
+- `.section-inner` caps content at `max-width: 1200px` with `padding: 96px 24px`, tightening to
+  `64px 20px` below 720px.
 - The navbar is `position: fixed` and does **not** occupy layout space — sections land flush with
   the top of the viewport, and the smooth-scroll code in `contentpage.js` assumes exactly that.
 
