@@ -613,6 +613,14 @@ img {
     opacity: 0;
 }
 
+/* An element's own looping animation would otherwise keep painting its keyframed
+   opacity over the line above — the home bio and portrait both flicker — and the
+   element would show at full strength until its reveal took over. Hold those
+   animations until the slide starts; they pick up again once the classes come off. */
+.js .reveal:not(.is-visible) {
+    animation: none;
+}
+
 .js .reveal.is-visible {
     animation: cp-reveal-up 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
@@ -638,6 +646,39 @@ img {
 @keyframes cp-reveal-right {
     from { opacity: 0; transform: translateX(52px); }
     to { opacity: 1; transform: none; }
+}
+
+/* The home block is the page's first impression, so it travels further and settles
+   slower than an in-page scroll reveal. The travel stays vertical on purpose: the
+   section clips its overflow, and a sideways slide would shear the bio's text
+   against the section edge on the way in. */
+.js .home-heading-row.is-visible,
+.js .home-bio.is-visible,
+.js .profile-photo--home.is-visible {
+    animation-name: cp-reveal-up-far;
+    animation-duration: 900ms;
+}
+
+@keyframes cp-reveal-up-far {
+    from { opacity: 0; transform: translateY(72px); }
+    to { opacity: 1; transform: none; }
+}
+
+/* Honour a reduced-motion preference: content still appears, it just doesn't travel. */
+@media (prefers-reduced-motion: reduce) {
+    .js .reveal.is-visible,
+    .js .reveal--left.is-visible,
+    .js .reveal--right.is-visible,
+    .js .home-heading-row.is-visible,
+    .js .home-bio.is-visible,
+    .js .profile-photo--home.is-visible {
+        animation: cp-reveal-fade 1ms linear both;
+    }
+
+    @keyframes cp-reveal-fade {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
 }
 
 /* ---------- Responsive ---------- */

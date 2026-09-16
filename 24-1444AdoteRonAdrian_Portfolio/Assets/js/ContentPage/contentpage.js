@@ -160,6 +160,18 @@
         return index;
     };
 
+    // data-reveal-delay wins over the sibling stagger, so a hand-authored sequence
+    // (the home block) can order elements that aren't siblings of one another.
+    var revealDelay = function (el) {
+        var authored = parseInt(el.getAttribute("data-reveal-delay"), 10);
+
+        if (!isNaN(authored)) {
+            return authored;
+        }
+
+        return Math.min(staggerIndex(el), 6) * 110;
+    };
+
     var clearReveal = function (el) {
         el.classList.remove("reveal");
         el.classList.remove("is-visible");
@@ -174,7 +186,7 @@
                 }
 
                 var el = entry.target;
-                el.style.animationDelay = Math.min(staggerIndex(el), 6) * 110 + "ms";
+                el.style.animationDelay = revealDelay(el) + "ms";
                 el.classList.add("is-visible");
                 revealObserver.unobserve(el);
             });
