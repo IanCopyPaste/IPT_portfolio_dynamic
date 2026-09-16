@@ -34,6 +34,7 @@ Every colour, radius, and font lives as a `--cp-*` custom property on `:root` at
 | Accent | `--cp-accent` (`#39ff88`), `--cp-accent-soft` |
 | Borders | `--cp-border` |
 | Terminal title-bar dots | `--cp-pastel-1` (red), `--cp-pastel-2` (cyan), `--cp-pastel-3` (green) |
+| Form errors | `--cp-pastel-1` |
 | Radii | `--cp-radius-lg` (20px), `--cp-radius-md` (12px) |
 | Fonts | `--cp-font-display` (Anton), `--cp-font-mono` (Share Tech Mono) |
 | Navbar | `--cp-navbar-height` |
@@ -71,8 +72,8 @@ in this order — the order is load-bearing, since later files override earlier 
 
 | File | Holds |
 | --- | --- |
-| `contentpage.css` | tokens → base → navbar → layout helpers |
-| `home.css`, `about.css`, `skills.css`, `contact.css` | one section each, in page order |
+| `contentpage.css` | tokens → base → navbar → layout helpers, incl. the shared `.terminal-bar` |
+| `home.css`, `about.css`, `skills.css`, `contact.css` | one section each, in page order (the footer lives in the contact section and in `contact.css`) |
 | `reveal.css` | the scroll-reveal system and its reduced-motion override |
 | `responsive.css` | the responsive block; always last |
 

@@ -74,7 +74,11 @@
     .project-card-overlay,
     .project-card:hover .project-card-image,
     .project-card:focus-visible .project-card-image,
-    .tech-tag:hover {
+    .tech-tag:hover,
+    .contact-send:hover,
+    .contact-send:focus-visible,
+    .social-link:hover,
+    .social-link:focus-visible {
         transform: none;
     }
 

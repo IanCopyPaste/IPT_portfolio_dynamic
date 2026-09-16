@@ -31,6 +31,18 @@
     .project-cards {
         grid-template-columns: 1fr;
     }
+
+    .contact-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-grid {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    }
+
+    .footer-brand {
+        grid-column: 1 / -1;
+    }
 }
 
 @media (max-width: 720px) {
@@ -93,5 +105,15 @@
 
     .about-timeline-course {
         grid-column: 1;
+    }
+
+    .contact-form {
+        padding: 22px 20px 24px;
+    }
+
+    .contact-form-row,
+    .footer-grid,
+    .social-list {
+        grid-template-columns: 1fr;
     }
 }

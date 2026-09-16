@@ -15,13 +15,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
     <%-- Order matters: tokens and base first, sections in page order, then the reveal
          and responsive overrides, which have to win over the section rules. --%>
-    <link href="/Assets/css/ContentPage/contentpage.css?v=15" rel="stylesheet" />
-    <link href="/Assets/css/ContentPage/home.css?v=1" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/contentpage.css?v=16" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/home.css?v=2" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/about.css?v=5" rel="stylesheet" />
-    <link href="/Assets/css/ContentPage/skills.css?v=1" rel="stylesheet" />
-    <link href="/Assets/css/ContentPage/contact.css?v=1" rel="stylesheet" />
-    <link href="/Assets/css/ContentPage/reveal.css?v=1" rel="stylesheet" />
-    <link href="/Assets/css/ContentPage/responsive.css?v=2" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/skills.css?v=2" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/contact.css?v=2" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/reveal.css?v=2" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/responsive.css?v=3" rel="stylesheet" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -178,11 +178,11 @@
                     </div>
 
                     <div class="tech-stack-panel reveal" data-reveal-delay="450">
-                        <div class="tech-stack-bar" aria-hidden="true">
-                            <span class="tech-stack-dot"></span>
-                            <span class="tech-stack-dot"></span>
-                            <span class="tech-stack-dot"></span>
-                            <span class="tech-stack-path">~/portfolio/tech-stack</span>
+                        <div class="terminal-bar" aria-hidden="true">
+                            <span class="terminal-dot"></span>
+                            <span class="terminal-dot"></span>
+                            <span class="terminal-dot"></span>
+                            <span class="terminal-path">~/portfolio/tech-stack</span>
                         </div>
                         <div class="tech-stack-body">
                             <h3>Tech Stack</h3>
@@ -207,16 +207,160 @@
                 </div>
             </section>
 
+            <%-- The footer lives inside the last section rather than after <main>: it closes out the
+                 contact screen instead of hanging below it as a separate strip. --%>
             <section id="contact" class="section contact-section">
                 <div class="section-inner">
-                    <h2 class="section-heading">Contact Me!</h2>
-                    <div class="contact-form-placeholder" aria-hidden="true"></div>
+                    <h2 class="section-heading reveal reveal--left" data-reveal-delay="0">Contact Me!</h2>
+                    <div class="contact-layout">
+                        <div class="contact-info reveal" data-reveal-delay="120">
+                            <p class="contact-lead">Let's build something.</p>
+                            <p class="contact-intro">
+                                Have a project in mind, an opening on your team, or just want to talk code?
+                                Drop a message and I'll get back to you as soon as I can.
+                            </p>
+                            <dl class="contact-facts">
+                                <div class="contact-fact">
+                                    <dt>Status</dt>
+                                    <dd><span class="status-dot" aria-hidden="true"></span>Open to internships &amp; freelance work</dd>
+                                </div>
+                                <div class="contact-fact">
+                                    <dt>Based in</dt>
+                                    <dd>Quezon City, Philippines</dd>
+                                </div>
+                                <div class="contact-fact">
+                                    <dt>Replies</dt>
+                                    <dd>Usually within 24&ndash;48 hours</dd>
+                                </div>
+                            </dl>
+                        </div>
+
+                        <%-- Plain inputs, not server controls, and a type="button" send: the whole page already
+                             sits inside the server <form>, so a real submit would post the page back. Sending
+                             isn't wired up yet — contentpage.js validates and reports that honestly. --%>
+                        <div class="contact-form-panel reveal" data-reveal-delay="230">
+                            <div class="terminal-bar" aria-hidden="true">
+                                <span class="terminal-dot"></span>
+                                <span class="terminal-dot"></span>
+                                <span class="terminal-dot"></span>
+                                <span class="terminal-path">~/portfolio/contact --new-message</span>
+                            </div>
+                            <div class="contact-form" id="contactForm">
+                                <div class="contact-form-row">
+                                    <div class="contact-field">
+                                        <label for="contactName">Name</label>
+                                        <input type="text" id="contactName" name="contactName" autocomplete="name"
+                                            placeholder="Juan Dela Cruz" maxlength="80" required="required" />
+                                        <span class="contact-error" id="contactNameError" aria-live="polite"></span>
+                                    </div>
+                                    <div class="contact-field">
+                                        <label for="contactEmail">Email</label>
+                                        <input type="email" id="contactEmail" name="contactEmail" autocomplete="email"
+                                            placeholder="you@example.com" maxlength="120" required="required" />
+                                        <span class="contact-error" id="contactEmailError" aria-live="polite"></span>
+                                    </div>
+                                </div>
+                                <div class="contact-field contact-field--select">
+                                    <label for="contactTopic">What's it about?</label>
+                                    <select id="contactTopic" name="contactTopic">
+                                        <option value="project">A project or freelance work</option>
+                                        <option value="job">A job or internship opportunity</option>
+                                        <option value="collab">A collaboration</option>
+                                        <option value="hello">Just saying hi</option>
+                                    </select>
+                                </div>
+                                <div class="contact-field">
+                                    <label for="contactMessage">Message</label>
+                                    <textarea id="contactMessage" name="contactMessage" rows="5" maxlength="1000"
+                                        placeholder="Tell me a bit about what you have in mind..." required="required"></textarea>
+                                    <span class="contact-error" id="contactMessageError" aria-live="polite"></span>
+                                    <span class="contact-counter" id="contactCounter" aria-hidden="true">0 / 1000</span>
+                                </div>
+                                <div class="contact-actions">
+                                    <button type="button" class="contact-send" id="contactSend">Send message</button>
+                                    <p class="contact-status" id="contactStatus" role="status" aria-live="polite"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <footer class="site-footer reveal" data-reveal-delay="340">
+                        <div class="footer-grid">
+                            <div class="footer-brand">
+                                <a class="footer-brand-name" href="#home" data-section="home"><%= SiteBrandName %></a>
+                                <p class="footer-tagline">
+                                    A student developer from Quezon City building web apps, systems and the
+                                    occasional music player &mdash; one commit at a time.
+                                </p>
+                            </div>
+
+                            <nav class="footer-nav" aria-label="Footer">
+                                <h3 class="footer-heading">Navigate</h3>
+                                <ul>
+                                    <li><a class="footer-link" href="#home" data-section="home">Home</a></li>
+                                    <li><a class="footer-link" href="#about" data-section="about">About</a></li>
+                                    <li><a class="footer-link" href="#skills" data-section="skills">Skills</a></li>
+                                    <li><a class="footer-link" href="#contact" data-section="contact">Contact</a></li>
+                                </ul>
+                            </nav>
+
+                            <div class="footer-socials">
+                                <h3 class="footer-heading">Find me on</h3>
+                                <%-- Placeholder hrefs: each points at the site's home page until the real profile
+                                     URL goes in. --%>
+                                <ul class="social-list">
+                                    <li>
+                                        <a class="social-link" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
+                                            <span class="social-icon social-icon--instagram" aria-hidden="true"></span>
+                                            <span class="social-text">
+                                                <span class="social-name">Instagram</span>
+                                                <span class="social-note">Snapshots &amp; behind the scenes</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="social-link" href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
+                                            <span class="social-icon social-icon--facebook" aria-hidden="true"></span>
+                                            <span class="social-text">
+                                                <span class="social-name">Facebook</span>
+                                                <span class="social-note">Say hello anytime</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="social-link" href="https://github.com/" target="_blank" rel="noopener noreferrer">
+                                            <span class="social-icon social-icon--github" aria-hidden="true"></span>
+                                            <span class="social-text">
+                                                <span class="social-name">GitHub</span>
+                                                <span class="social-note">Code, projects &amp; commits</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="social-link" href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">
+                                            <span class="social-icon social-icon--linkedin" aria-hidden="true"></span>
+                                            <span class="social-text">
+                                                <span class="social-name">LinkedIn</span>
+                                                <span class="social-note">Work &amp; experience</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="footer-bottom">
+                            <p class="footer-copy">&copy; <%= DateTime.Today.Year %> <%= HomeHeadingName %>. All rights reserved.</p>
+                            <p class="footer-built">Hand-built with ASP.NET, HTML, CSS &amp; JavaScript.</p>
+                            <a class="footer-top-link" href="#home" data-section="home">Back to top <span aria-hidden="true">&uarr;</span></a>
+                        </div>
+                    </footer>
                 </div>
             </section>
         </main>
 
     </div>
     </form>
-    <script src="/Assets/js/ContentPage/contentpage.js?v=4"></script>
+    <script src="/Assets/js/ContentPage/contentpage.js?v=5"></script>
 </body>
 </html>

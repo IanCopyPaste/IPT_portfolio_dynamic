@@ -45,10 +45,12 @@
     color: var(--cp-text);
 }
 
-/* The tech-stack title borrows this gradient so the Skills section reads as part of the hero's world. */
+/* The tech-stack title and the contact pitch line borrow this gradient so later sections
+   read as part of the hero's world. */
 @supports ((-webkit-background-clip: text) or (background-clip: text)) {
     .home-heading,
-    .tech-stack-panel h3 {
+    .tech-stack-panel h3,
+    .contact-lead {
         background: linear-gradient(100deg, #ffffff 0%, var(--cp-accent) 85%);
         -webkit-background-clip: text;
         background-clip: text;

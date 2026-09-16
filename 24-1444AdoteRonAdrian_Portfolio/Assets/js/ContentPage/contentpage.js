@@ -80,7 +80,12 @@
 
     // Smooth-scroll to a section. The navbar floats on top as an overlay (it doesn't
     // occupy layout space), so sections should land flush with the top of the viewport.
-    navLinks.forEach(function (link) {
+    // The footer's in-page links share the handler, so they glide instead of jumping.
+    var scrollLinks = navLinks.concat(
+        Array.prototype.slice.call(document.querySelectorAll(".site-footer a[data-section]"))
+    );
+
+    scrollLinks.forEach(function (link) {
         link.addEventListener("click", function (event) {
             var targetId = link.getAttribute("data-section");
             var target = document.getElementById(targetId);
@@ -205,6 +210,86 @@
         });
     } else {
         revealEls.forEach(clearReveal);
+    }
+
+    // Contact form. The fields sit inside the page-wide server <form>, so the send button is
+    // type="button" and everything is checked here instead of by a postback.
+    // TODO: nothing is delivered yet — hook the send up to a backend (SMTP from the code-behind,
+    // or a form service) and replace the "not connected" status below.
+    var contactSend = document.getElementById("contactSend");
+
+    if (contactSend) {
+        var contactStatus = document.getElementById("contactStatus");
+        var contactMessage = document.getElementById("contactMessage");
+        var contactCounter = document.getElementById("contactCounter");
+        var contactFields = [
+            { input: document.getElementById("contactName"), error: document.getElementById("contactNameError") },
+            { input: document.getElementById("contactEmail"), error: document.getElementById("contactEmailError") },
+            { input: contactMessage, error: document.getElementById("contactMessageError") }
+        ];
+
+        var fieldError = function (input) {
+            var value = input.value.trim();
+
+            if (!value) {
+                return "This field is required.";
+            }
+            if (input.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+                return "That doesn't look like an email address.";
+            }
+            if (input === contactMessage && value.length < 10) {
+                return "A little more detail, please (10 characters minimum).";
+            }
+            return "";
+        };
+
+        var showFieldError = function (field) {
+            var message = fieldError(field.input);
+            field.error.textContent = message;
+            field.input.parentNode.classList.toggle("is-invalid", !!message);
+            field.input.setAttribute("aria-invalid", message ? "true" : "false");
+            return !message;
+        };
+
+        var setStatus = function (text, isError) {
+            contactStatus.textContent = text;
+            contactStatus.classList.toggle("is-error", !!isError);
+        };
+
+        // Once a field has been flagged, re-check it as the visitor types so the error clears
+        // the moment it is fixed rather than on the next click.
+        contactFields.forEach(function (field) {
+            field.input.addEventListener("input", function () {
+                if (field.input.parentNode.classList.contains("is-invalid")) {
+                    showFieldError(field);
+                }
+            });
+        });
+
+        var updateCounter = function () {
+            contactCounter.textContent = contactMessage.value.length + " / " + contactMessage.maxLength;
+        };
+
+        contactMessage.addEventListener("input", updateCounter);
+        updateCounter();
+
+        contactSend.addEventListener("click", function () {
+            var firstInvalid = null;
+
+            contactFields.forEach(function (field) {
+                if (!showFieldError(field) && !firstInvalid) {
+                    firstInvalid = field.input;
+                }
+            });
+
+            if (firstInvalid) {
+                setStatus("fix the highlighted fields and try again.", true);
+                firstInvalid.focus();
+                return;
+            }
+
+            setStatus("message looks good, but sending isn't connected yet. please reach out through the socials below for now.", false);
+        });
     }
 
     // TODO: functionality TBD for the circular navbar icon button (#navIconBtn).
