@@ -520,6 +520,44 @@ img {
     line-height: 1.6;
 }
 
+/* Hobbies read as a row of tags rather than a stacked list. Same chip language as the
+   tech-stack tags, so the two sections stay recognisably one system; they wrap onto a
+   second line inside the panel rather than widening it. */
+.hobbies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.hobby-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--cp-surface-alt);
+    border: 1px solid var(--cp-border);
+    border-radius: 999px;
+    padding: 7px 16px 7px 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--cp-text);
+    transition: transform 200ms ease, border-color 200ms ease, color 200ms ease, box-shadow 200ms ease;
+}
+
+.hobby-tag:hover {
+    transform: translateY(-3px);
+    border-color: var(--cp-accent);
+    color: var(--cp-accent);
+    box-shadow: 0 0 14px rgba(57, 255, 136, 0.28);
+}
+
+/* Sized off the label rather than inheriting it, so the glyph reads as an icon
+   beside the word instead of as another character in it. */
+.hobby-tag-emoji {
+    font-size: 1.05rem;
+    line-height: 1;
+}
+
 /* Keeps the home hero's scale; only the placement — a column of its own — differs. */
 .profile-photo--about {
     flex: 0 0 auto;

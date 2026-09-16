@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
-    <link href="/Assets/css/ContentPage/contentpage.css?v=10" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/contentpage.css?v=11" rel="stylesheet" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -92,15 +92,21 @@
                             </article>
                             <article class="about-panel card-pastel-2 reveal" data-reveal-delay="230">
                                 <h3>Educational Attainment</h3>
-                                <p>- Junior High School: Dr. Carlos S. Lanting College</p>
-                                <p>- Senior High School: Ismael Mathay Sr. High School</p>
+                                <p>- JHS: Dr. Carlos S. Lanting College</p>
+                                <p>- SHS: Ismael Mathay Sr. High School</p>
                                 <p>- College: Quezon City University - BSIT</p>
                             </article>
                             <article class="about-panel card-pastel-3 reveal" data-reveal-delay="340">
                                 <h3>Hobbies and Interest</h3>
-                              <div class="hobbies">
-                                    <p>Travelling</p> <p>Driving</p> <p>Gaming</p> <p>Drinking</p> <p>Workaholism</p>
-                              </div>
+                                <%-- Emoji go in as character references, not literal characters: this file
+                                     carries no BOM and Web.config sets no fileEncoding, so ASP.NET reads it
+                                     as the system codepage and raw UTF-8 emoji bytes would come out mangled. --%>
+                                <div class="hobbies">
+                                    <span class="hobby-tag"><span class="hobby-tag-emoji" aria-hidden="true">&#x2708;&#xFE0F;</span>Travelling</span>
+                                    <span class="hobby-tag"><span class="hobby-tag-emoji" aria-hidden="true">&#x1F697;</span>Driving</span>
+                                    <span class="hobby-tag"><span class="hobby-tag-emoji" aria-hidden="true">&#x1F3AE;</span>Gaming</span>
+                                    <span class="hobby-tag"><span class="hobby-tag-emoji" aria-hidden="true">&#x1F4BC;</span>Workaholism</span>
+                                </div>
                             </article>
                         </div>
                         <%-- Same cutout portrait treatment as the home hero, parked on the right.
