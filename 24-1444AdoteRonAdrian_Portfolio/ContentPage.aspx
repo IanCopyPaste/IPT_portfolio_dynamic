@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
-    <link href="/Assets/css/ContentPage/contentpage.css?v=2" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/contentpage.css?v=3" rel="stylesheet" />
 </head>
 <body>
     <form id="form1" runat="server">

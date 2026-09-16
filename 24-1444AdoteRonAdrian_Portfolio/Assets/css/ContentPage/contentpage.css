@@ -324,18 +324,19 @@ img {
     background: none;
     border: none;
     box-shadow: none;
-    filter: drop-shadow(0 0 22px rgba(57, 255, 136, 0.55)) drop-shadow(0 0 60px rgba(57, 255, 136, 0.25));
+    filter:
+        drop-shadow(0 0 2px rgba(57, 255, 136, 0.95))
+        drop-shadow(0 0 10px rgba(57, 255, 136, 0.7))
+        drop-shadow(0 0 34px rgba(57, 255, 136, 0.45))
+        drop-shadow(0 0 70px rgba(57, 255, 136, 0.2));
     animation: cp-photo-flicker 7s infinite steps(1);
 }
 
 .profile-photo--home img {
     height: auto;
     object-fit: contain;
-    mix-blend-mode: screen;
-    opacity: 0.92;
-    filter: grayscale(0.35) contrast(1.15) brightness(1.05) saturate(1.2) sepia(0.25) hue-rotate(60deg);
-    -webkit-mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
-    mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 78%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 78%, transparent 100%);
 }
 
 .profile-photo--about {
