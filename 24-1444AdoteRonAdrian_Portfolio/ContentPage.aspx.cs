@@ -10,7 +10,7 @@ namespace _24_1444AdoteRonAdrian_Portfolio
     public partial class ContentPage : System.Web.UI.Page
     {
         // Single source of truth for the navbar brand text — swap here to change it everywhere it's used.
-        public const string SiteBrandName = "My Portfolio";
+        public const string SiteBrandName = "IAN ADOTE";
 
         public static readonly DateTime BirthDate = new DateTime(2006, 4, 16);
         public static int Age => DateTime.Today.Year - BirthDate.Year -

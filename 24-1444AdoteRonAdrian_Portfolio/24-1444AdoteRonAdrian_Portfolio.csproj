@@ -111,7 +111,9 @@
     <Content Include="Assets\css\ContentPage\responsive.css" />
     <Content Include="Assets\css\ContentPage\reveal.css" />
     <Content Include="Assets\css\ContentPage\skills.css" />
+    <Content Include="Assets\css\LoginPage\loginpage.css" />
     <Content Include="Assets\js\ContentPage\contentpage.js" />
+    <Content Include="Assets\js\LoginPage\loginpage.js" />
     <Content Include="ContentPage.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />

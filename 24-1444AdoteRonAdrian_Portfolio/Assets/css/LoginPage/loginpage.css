@@ -1,0 +1,516 @@
+/* LoginPage — sample sign-in screen. Tokens, base, navbar and the .terminal-bar come from
+   ContentPage/contentpage.css, which loads first; reveal.css loads after this file. */
+
+/* ---------- Navbar ---------- */
+
+.login-back-link {
+    margin-left: auto;
+    font-family: var(--cp-font-mono);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--cp-muted);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 250ms ease, text-shadow 250ms ease;
+}
+
+.login-back-link:hover,
+.login-back-link:focus-visible {
+    color: var(--cp-accent);
+    text-shadow: 0 0 14px rgba(57, 255, 136, 0.55);
+}
+
+/* ---------- Login section ---------- */
+
+/* A faint CRT sweep: one bright band rolling down the screen. Decorative, so it never takes clicks. */
+.login-section::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 140px;
+    background: linear-gradient(to bottom, transparent, rgba(57, 255, 136, 0.05), transparent);
+    pointer-events: none;
+    animation: cp-login-sweep 7s linear infinite;
+}
+
+@keyframes cp-login-sweep {
+    from { transform: translateY(-140px); }
+    to { transform: translateY(100vh); }
+}
+
+.login-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    gap: 56px;
+    align-items: center;
+}
+
+.login-kicker {
+    margin: 0 0 14px;
+    font-family: var(--cp-font-mono);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--cp-accent);
+    text-shadow: 0 0 8px rgba(57, 255, 136, 0.45);
+}
+
+/* The wrapper carries the type so its RGB-split ghosts wrap exactly like the heading does. */
+.login-heading-wrap {
+    position: relative;
+    font-family: var(--cp-font-display);
+    font-weight: 400;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 0.95;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+}
+
+.login-heading {
+    margin: 0;
+    font: inherit;
+    letter-spacing: inherit;
+    color: var(--cp-text);
+}
+
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    .login-heading {
+        background: linear-gradient(100deg, #ffffff 0%, var(--cp-accent) 85%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        filter: drop-shadow(0 0 28px rgba(57, 255, 136, 0.25));
+    }
+}
+
+/* Unlike the home bio's constant split, the heading only glitches in short bursts —
+   a title that never holds still is hard to read. */
+.login-heading-wrap::before,
+.login-heading-wrap::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    mix-blend-mode: screen;
+}
+
+.login-heading-wrap::before {
+    color: #ff2f6e;
+    animation: cp-login-glitch-1 4.2s infinite steps(1);
+}
+
+.login-heading-wrap::after {
+    color: #23d5ff;
+    animation: cp-login-glitch-2 4.2s infinite steps(1);
+}
+
+@keyframes cp-login-glitch-1 {
+    0%, 71%, 79%, 100% { opacity: 0; transform: none; clip-path: none; }
+    72% { opacity: 0.85; transform: translate(-4px, 1px); clip-path: inset(10% 0 60% 0); }
+    74% { opacity: 0.85; transform: translate(3px, -1px); clip-path: inset(55% 0 12% 0); }
+    76% { opacity: 0.85; transform: translate(-2px, 0); clip-path: inset(30% 0 40% 0); }
+}
+
+@keyframes cp-login-glitch-2 {
+    0%, 72%, 80%, 100% { opacity: 0; transform: none; clip-path: none; }
+    73% { opacity: 0.85; transform: translate(4px, -1px); clip-path: inset(60% 0 8% 0); }
+    75% { opacity: 0.85; transform: translate(-3px, 2px); clip-path: inset(5% 0 70% 0); }
+    77% { opacity: 0.85; transform: translate(2px, 1px); clip-path: inset(40% 0 35% 0); }
+}
+
+.login-intro-copy {
+    max-width: 480px;
+    margin: 22px 0 28px;
+    color: var(--cp-muted);
+    line-height: 1.8;
+}
+
+/* Boot output: monospace, prompt included, like the contact form's status line. */
+.login-log {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: var(--cp-font-mono);
+    font-size: 0.92rem;
+    line-height: 1.9;
+    color: var(--cp-accent);
+    text-shadow: 0 0 8px rgba(57, 255, 136, 0.45);
+}
+
+.login-log li::before {
+    content: "> ";
+    color: var(--cp-muted);
+    text-shadow: none;
+}
+
+.login-log-ok {
+    color: var(--cp-text);
+    text-shadow: none;
+}
+
+.login-cursor {
+    display: inline-block;
+    width: 0.6em;
+    height: 1.05em;
+    margin-left: 4px;
+    vertical-align: text-bottom;
+    background: var(--cp-accent);
+    box-shadow: 0 0 10px rgba(57, 255, 136, 0.8);
+    animation: cp-login-cursor 1.05s infinite steps(1);
+}
+
+@keyframes cp-login-cursor {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Same terminal window as the contact form panel. */
+.login-panel {
+    overflow: hidden;
+    background:
+        radial-gradient(520px circle at 100% 0%, rgba(57, 255, 136, 0.1), transparent 65%),
+        repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 0px, rgba(255, 255, 255, 0.02) 1px, transparent 1px, transparent 4px),
+        var(--cp-surface);
+    border: 1px solid var(--cp-border);
+    border-radius: var(--cp-radius-lg);
+    box-shadow: inset 0 0 60px rgba(57, 255, 136, 0.05), 0 16px 40px rgba(0, 0, 0, 0.45);
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 28px 32px 32px;
+}
+
+.login-title {
+    margin: 0;
+    font-family: var(--cp-font-display);
+    font-weight: 400;
+    font-size: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.login-demo-note {
+    margin: 6px 0 0;
+    font-family: var(--cp-font-mono);
+    font-size: 0.82rem;
+    color: var(--cp-muted);
+}
+
+.login-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+}
+
+.login-field label {
+    font-family: var(--cp-font-mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--cp-accent);
+    text-shadow: 0 0 8px rgba(57, 255, 136, 0.45);
+}
+
+.login-field input {
+    width: 100%;
+    padding: 12px 14px;
+    background: var(--cp-surface-alt);
+    border: 1px solid var(--cp-border);
+    border-radius: var(--cp-radius-md);
+    color: var(--cp-text);
+    font: inherit;
+    line-height: 1.5;
+    transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.login-field input::placeholder {
+    color: var(--cp-muted);
+    opacity: 0.7;
+}
+
+.login-field input:focus {
+    outline: none;
+    border-color: var(--cp-accent);
+    box-shadow: 0 0 0 3px var(--cp-accent-soft), 0 0 14px rgba(57, 255, 136, 0.28);
+}
+
+.login-field.is-invalid input {
+    border-color: var(--cp-pastel-1);
+    box-shadow: 0 0 0 3px rgba(255, 59, 92, 0.16);
+}
+
+/* The show/hide toggle sits inside the input's right edge. */
+.login-password {
+    position: relative;
+}
+
+.login-password input {
+    padding-right: 76px;
+}
+
+.login-reveal-btn {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+    padding: 6px 10px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--cp-muted);
+    font-family: var(--cp-font-mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: color 200ms ease, background-color 200ms ease;
+}
+
+.login-reveal-btn:hover,
+.login-reveal-btn:focus-visible,
+.login-reveal-btn[aria-pressed="true"] {
+    color: var(--cp-accent);
+    background: var(--cp-accent-soft);
+}
+
+.login-reveal-btn:focus-visible {
+    outline: 2px solid var(--cp-accent);
+    outline-offset: 1px;
+}
+
+.login-error,
+.login-hint {
+    font-family: var(--cp-font-mono);
+    font-size: 0.8rem;
+}
+
+.login-error {
+    color: var(--cp-pastel-1);
+}
+
+.login-hint {
+    color: var(--cp-pastel-2);
+}
+
+.login-error:empty,
+.login-hint:empty {
+    display: none;
+}
+
+.login-options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+}
+
+/* The native checkbox stays in the tab order and the accessibility tree; only its box is redrawn. */
+.login-check {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--cp-muted);
+    font-size: 0.92rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.login-check input {
+    position: absolute;
+    opacity: 0;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+}
+
+.login-check-box {
+    position: relative;
+    width: 18px;
+    height: 18px;
+    flex: 0 0 auto;
+    background: var(--cp-surface-alt);
+    border: 1px solid var(--cp-border);
+    border-radius: 5px;
+    transition: border-color 200ms ease, box-shadow 200ms ease, background-color 200ms ease;
+}
+
+.login-check-box::after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 1px;
+    width: 5px;
+    height: 10px;
+    border-right: 2px solid var(--cp-bg);
+    border-bottom: 2px solid var(--cp-bg);
+    transform: rotate(45deg) scale(0);
+    transition: transform 200ms ease;
+}
+
+.login-check input:checked + .login-check-box {
+    background: var(--cp-accent);
+    border-color: var(--cp-accent);
+    box-shadow: 0 0 10px rgba(57, 255, 136, 0.5);
+}
+
+.login-check input:checked + .login-check-box::after {
+    transform: rotate(45deg) scale(1);
+}
+
+.login-check input:focus-visible + .login-check-box {
+    box-shadow: 0 0 0 3px var(--cp-accent-soft), 0 0 14px rgba(57, 255, 136, 0.28);
+}
+
+.login-text-btn {
+    padding: 0;
+    border: none;
+    background: none;
+    color: var(--cp-accent);
+    font: inherit;
+    font-size: 0.92rem;
+    cursor: pointer;
+    transition: text-shadow 200ms ease;
+}
+
+.login-text-btn:hover,
+.login-text-btn:focus-visible {
+    text-shadow: 0 0 12px rgba(57, 255, 136, 0.7);
+}
+
+.login-submit {
+    width: 100%;
+    margin-top: 4px;
+    padding: 14px 28px;
+    border: none;
+    border-radius: 999px;
+    background: var(--cp-accent);
+    color: var(--cp-bg);
+    font-family: var(--cp-font-mono);
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    cursor: pointer;
+    box-shadow: 0 0 18px rgba(57, 255, 136, 0.4);
+    transition: transform 200ms ease, box-shadow 200ms ease, opacity 200ms ease;
+}
+
+.login-submit:hover,
+.login-submit:focus-visible {
+    transform: translateY(-3px);
+    box-shadow: 0 0 28px rgba(57, 255, 136, 0.7);
+}
+
+.login-submit:focus-visible {
+    outline: 2px solid var(--cp-text);
+    outline-offset: 3px;
+}
+
+/* Set by loginpage.js while the sample "authenticates". */
+.login-submit.is-busy {
+    opacity: 0.7;
+    cursor: progress;
+    transform: none;
+    animation: cp-login-busy 900ms ease-in-out infinite;
+}
+
+@keyframes cp-login-busy {
+    0%, 100% { box-shadow: 0 0 12px rgba(57, 255, 136, 0.3); }
+    50% { box-shadow: 0 0 32px rgba(57, 255, 136, 0.8); }
+}
+
+.login-status {
+    min-height: 1.5em;
+    margin: 0;
+    font-family: var(--cp-font-mono);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--cp-accent);
+    text-shadow: 0 0 8px rgba(57, 255, 136, 0.45);
+}
+
+.login-status:not(:empty)::before {
+    content: "> ";
+    content: "> " / "";
+}
+
+.login-status.is-error {
+    color: var(--cp-pastel-1);
+    text-shadow: none;
+}
+
+.login-footnote {
+    margin: 48px 0 0;
+    padding-top: 20px;
+    border-top: 1px solid var(--cp-border);
+    font-family: var(--cp-font-mono);
+    font-size: 0.82rem;
+    color: var(--cp-muted);
+}
+
+.login-footnote a {
+    color: var(--cp-accent);
+    text-decoration: none;
+    transition: text-shadow 200ms ease;
+}
+
+.login-footnote a:hover,
+.login-footnote a:focus-visible {
+    text-shadow: 0 0 12px rgba(57, 255, 136, 0.7);
+}
+
+/* ---------- Reduced motion ---------- */
+
+/* Nothing on this page needs to travel: the sweep and the heading glitch are dropped, and
+   the reveals are already reduced to a fade by reveal.css. */
+@media (prefers-reduced-motion: reduce) {
+    .login-section::before,
+    .login-heading-wrap::before,
+    .login-heading-wrap::after {
+        animation: none;
+        display: none;
+    }
+
+    .login-submit:hover,
+    .login-submit:focus-visible {
+        transform: none;
+    }
+}
+
+/* ---------- Responsive ---------- */
+
+/* Same two breakpoints as the portfolio. */
+@media (max-width: 900px) {
+    .login-layout {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .login-intro-copy {
+        max-width: none;
+    }
+}
+
+@media (max-width: 720px) {
+    .section-inner {
+        padding: 64px 20px;
+    }
+
+    /* The fixed navbar floats over the section, so the stacked layout needs room beneath it. */
+    .login-section .section-inner {
+        padding-top: calc(var(--cp-navbar-height) + 16px);
+    }
+
+    .login-form {
+        padding: 22px 20px 24px;
+    }
+}
