@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
-    <link href="/Assets/css/ContentPage/contentpage.css?v=6" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/contentpage.css?v=11" rel="stylesheet" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -77,23 +77,41 @@
 
             <section id="about" class="section about-section">
                 <div class="section-inner">
-                    <h2 class="section-heading">Who am I?</h2>
+                    <%-- Hand-ordered so the heading slides in first and the column cascades behind it. --%>
+                    <h2 class="section-heading reveal reveal--left" data-reveal-delay="0">Who am I?</h2>
                     <div class="about-content">
-                        <div class="about-text">
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua.
-                            </p>
-                            <p>
-                                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.
-                            </p>
-                            <p>
-                                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                                deserunt mollit anim id est laborum.
-                            </p>
+                        <div class="about-panels">
+                            <article class="about-panel card-pastel-1 reveal" data-reveal-delay="120">
+                                <h3>Personal Information</h3>
+                                <p>Age: <%= Age %> yrs Old</p>
+                                <p>Sex: Male</p>
+                                <p>Birthdate: April 16, 2006</p>
+                                <p>Nationality: Filipino</p>
+                                <p>From: Baesa, Quezon City</p>
+
+                            </article>
+                            <article class="about-panel card-pastel-2 reveal" data-reveal-delay="230">
+                                <h3>Educational Attainment</h3>
+                                <p>- JHS: Dr. Carlos S. Lanting College</p>
+                                <p>- SHS: Ismael Mathay Sr. High School</p>
+                                <p>- College: Quezon City University - BSIT</p>
+                            </article>
+                            <article class="about-panel card-pastel-3 reveal" data-reveal-delay="340">
+                                <h3>Hobbies and Interest</h3>
+                                <%-- Emoji go in as character references, not literal characters: this file
+                                     carries no BOM and Web.config sets no fileEncoding, so ASP.NET reads it
+                                     as the system codepage and raw UTF-8 emoji bytes would come out mangled. --%>
+                                <div class="hobbies">
+                                    <span class="hobby-tag"><span class="hobby-tag-emoji" aria-hidden="true">&#x2708;&#xFE0F;</span>Travelling</span>
+                                    <span class="hobby-tag"><span class="hobby-tag-emoji" aria-hidden="true">&#x1F697;</span>Driving</span>
+                                    <span class="hobby-tag"><span class="hobby-tag-emoji" aria-hidden="true">&#x1F3AE;</span>Gaming</span>
+                                    <span class="hobby-tag"><span class="hobby-tag-emoji" aria-hidden="true">&#x1F4BC;</span>Workaholism</span>
+                                </div>
+                            </article>
                         </div>
-                        <div class="profile-photo profile-photo--about">
+                        <%-- Same cutout portrait treatment as the home hero, parked on the right.
+                             Its delay lands it after the three panels have cascaded in. --%>
+                        <div class="profile-photo profile-photo--about reveal" data-reveal-delay="450">
                             <img src="/Assets/ContentPage/dev_photo.png" alt="<%= HomeHeadingName %>"
                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
                             <div class="profile-photo-placeholder" aria-hidden="true">

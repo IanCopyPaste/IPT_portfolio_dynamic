@@ -50,6 +50,7 @@ img {
     max-width: 100%;
 }
 
+
 /* ---------- Navbar ---------- */
 
 .navbar {
@@ -197,12 +198,17 @@ img {
 
 /* ---------- Layout helpers ---------- */
 
+/* The section owns the centring on both axes. Zooming out grows 100vh in CSS pixels
+   while the content keeps its size, so the slack has to split evenly above and below
+   on its own — any section that pins its inner block to one edge stops centring the
+   moment the viewport outgrows the content. */
 .section {
     position: relative;
     width: 100%;
     min-height: 100vh;
     display: flex;
     align-items: center;
+    justify-content: center;
     overflow: hidden;
     box-sizing: border-box;
     border-bottom: 1px solid var(--cp-border);
@@ -216,7 +222,6 @@ img {
 .section-inner {
     width: 100%;
     max-width: 1200px;
-    margin: 0 auto;
     padding: 96px 24px;
 }
 
@@ -316,9 +321,11 @@ img {
     object-fit: cover;
 }
 
-.profile-photo--home {
-    z-index: 2;
-    width: min(420px, 60vw);
+/* The cutout portrait treatment: no frame at all, just the subject standing against the
+   page behind a neon rim glow. The about portrait reuses it, so the shared half lives
+   here where it was authored and each variant only sets its own size and placement. */
+.profile-photo--home,
+.profile-photo--about {
     height: auto;
     border-radius: 0;
     background: none;
@@ -332,18 +339,18 @@ img {
     animation: cp-photo-flicker 7s infinite steps(1);
 }
 
-.profile-photo--home img {
+.profile-photo--home img,
+.profile-photo--about img {
     height: auto;
     object-fit: contain;
     -webkit-mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
     mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
 }
 
-.profile-photo--about {
-    width: 260px;
-    height: 260px;
-    border-radius: var(--cp-radius-lg);
-    flex: 0 0 260px;
+/* Shares a grid cell with the bio, so it has to stack above the text. */
+.profile-photo--home {
+    z-index: 2;
+    width: min(420px, 60vw);
 }
 
 .home-bio {
@@ -452,17 +459,109 @@ img {
 
 /* ---------- About section ---------- */
 
+/* The heading drops straight onto the panel column here, so it gives up the 40px
+   the other section headings keep between themselves and their content. */
+.about-section .section-heading {
+    margin-bottom: 0;
+}
+
 .about-content {
     display: flex;
     align-items: center;
     gap: 48px;
 }
 
-.about-text {
+.about-panels {
     flex: 1 1 auto;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Same card shell as the project cards — the pastel stripe classes are shared — but
+   shorter, since three of these stack in one column beside the portrait. */
+.about-panel {
+    position: relative;
+    overflow: hidden;
+    background: var(--cp-surface);
+    border: 1px solid var(--cp-border);
+    border-radius: var(--cp-radius-lg);
+    padding: 24px 26px 22px;
+    transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+}
+
+.about-panel::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+}
+
+.about-panel:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55);
+}
+
+.about-panel h3 {
+    margin: 0 0 8px;
+    font-family: var(--cp-font-display);
+    font-weight: 400;
+    font-size: 1.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--cp-text);
+}
+
+.about-panel p {
+    margin: 0;
     color: var(--cp-muted);
-    line-height: 1.8;
+    line-height: 1.6;
+}
+
+/* Hobbies read as a row of tags rather than a stacked list. Same chip language as the
+   tech-stack tags, so the two sections stay recognisably one system; they wrap onto a
+   second line inside the panel rather than widening it. */
+.hobbies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.hobby-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--cp-surface-alt);
+    border: 1px solid var(--cp-border);
+    border-radius: 999px;
+    padding: 7px 16px 7px 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--cp-text);
+    transition: transform 200ms ease, border-color 200ms ease, color 200ms ease, box-shadow 200ms ease;
+}
+
+.hobby-tag:hover {
+    transform: translateY(-3px);
+    border-color: var(--cp-accent);
+    color: var(--cp-accent);
+    box-shadow: 0 0 14px rgba(57, 255, 136, 0.28);
+}
+
+/* Sized off the label rather than inheriting it, so the glyph reads as an icon
+   beside the word instead of as another character in it. */
+.hobby-tag-emoji {
+    font-size: 1.05rem;
+    line-height: 1;
+}
+
+/* Keeps the home hero's scale; only the placement — a column of its own — differs. */
+.profile-photo--about {
+    flex: 0 0 auto;
+    width: min(420px, 42vw);
 }
 
 /* ---------- Skills section ---------- */
@@ -692,10 +791,12 @@ img {
         flex-direction: column;
     }
 
+    .about-panels {
+        width: 100%;
+    }
+
     .profile-photo--about {
-        width: 220px;
-        height: 220px;
-        flex-basis: auto;
+        width: min(320px, 74vw);
     }
 
     .project-cards {
