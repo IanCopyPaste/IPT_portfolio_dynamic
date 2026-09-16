@@ -10,7 +10,7 @@ namespace _24_1444AdoteRonAdrian_Portfolio
     public partial class ContentPage : System.Web.UI.Page
     {
         // Single source of truth for the navbar brand text — swap here to change it everywhere it's used.
-        public const string SiteBrandName = "Ron Adrian";
+        public const string SiteBrandName = "My Portfolio";
 
         // Home hero heading — kept separate from SiteBrandName since wireframes show them differing.
         public const string HomeHeadingName = "Ron Adrian Adote";

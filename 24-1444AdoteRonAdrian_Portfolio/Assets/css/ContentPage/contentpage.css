@@ -16,6 +16,7 @@
     --cp-radius-lg: 20px;
     --cp-radius-md: 12px;
     --cp-font-display: "Anton", Impact, "Arial Narrow Bold", sans-serif;
+    --cp-font-mono: "Share Tech Mono", "Courier New", monospace;
 }
 
 * {
@@ -33,8 +34,16 @@ body {
         repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.035) 0px, rgba(255, 255, 255, 0.035) 1px, transparent 1px, transparent 42px);
     background-repeat: no-repeat, no-repeat, repeat;
     background-attachment: fixed, fixed, fixed;
+    background-position: 0 0, 0 0, 0 0;
+    animation: cp-grid-scroll 6s linear infinite;
     scroll-behavior: smooth;
     overflow-x: hidden;
+}
+
+@keyframes cp-grid-scroll {
+    to {
+        background-position: 0 0, 0 0, 59.4px 0;
+    }
 }
 
 img {
@@ -250,7 +259,23 @@ img {
     flex-direction: column;
     align-items: center;
     gap: 12px;
-    padding-bottom: 40px;
+    padding-bottom: 8px;
+}
+
+/* Bio text and portrait share the same grid cell so the cutout photo
+   stands directly on top of the glowing terminal text behind it. */
+.home-stack {
+    position: relative;
+    display: grid;
+    width: 100%;
+    max-width: 1080px;
+    margin: 0 auto;
+    justify-items: center;
+    align-items: center;
+}
+
+.home-stack > * {
+    grid-area: 1 / 1;
 }
 
 .home-heading {
@@ -292,17 +317,26 @@ img {
 }
 
 .profile-photo--home {
-    width: 160px;
+    z-index: 2;
+    width: min(420px, 60vw);
     height: auto;
     border-radius: 0;
     background: none;
     border: none;
     box-shadow: none;
+    filter:
+        drop-shadow(0 0 2px rgba(57, 255, 136, 0.95))
+        drop-shadow(0 0 10px rgba(57, 255, 136, 0.7))
+        drop-shadow(0 0 34px rgba(57, 255, 136, 0.45))
+        drop-shadow(0 0 70px rgba(57, 255, 136, 0.2));
+    animation: cp-photo-flicker 7s infinite steps(1);
 }
 
 .profile-photo--home img {
     height: auto;
     object-fit: contain;
+    -webkit-mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
 }
 
 .profile-photo--about {
@@ -313,12 +347,79 @@ img {
 }
 
 .home-bio {
-    max-width: 720px;
+    position: relative;
+    z-index: 1;
+    max-width: 1000px;
     margin-left: auto;
     margin-right: auto;
-    color: var(--cp-muted);
+    padding: 80px 16px 40px;
+    color: var(--cp-accent);
+    font-family: var(--cp-font-mono);
     font-size: 1.05rem;
-    line-height: 1.7;
+    line-height: 1.8;
+    letter-spacing: 0.01em;
+    text-shadow:
+        0 0 4px rgba(57, 255, 136, 0.85),
+        0 0 14px rgba(57, 255, 136, 0.55),
+        0 0 30px rgba(57, 255, 136, 0.3);
+    animation: cp-text-flicker 6s infinite steps(1);
+}
+
+/* RGB-split ghost copies of the same text, clipped to shifting
+   horizontal bands and nudged independently — a classic CSS glitch. */
+.home-bio.glitch-text::before,
+.home-bio.glitch-text::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    padding: 80px 16px 40px;
+    background: transparent;
+    pointer-events: none;
+}
+
+.home-bio.glitch-text::before {
+    color: #ff2f6e;
+    mix-blend-mode: screen;
+    animation: cp-glitch-shift-1 3.4s infinite linear;
+}
+
+.home-bio.glitch-text::after {
+    color: #23d5ff;
+    mix-blend-mode: screen;
+    animation: cp-glitch-shift-2 2.6s infinite linear reverse;
+}
+
+@keyframes cp-glitch-shift-1 {
+    0% { transform: translate(0, 0); clip-path: inset(8% 0 78% 0); }
+    15% { transform: translate(-3px, 1px); clip-path: inset(55% 0 10% 0); }
+    30% { transform: translate(2px, -2px); clip-path: inset(20% 0 55% 0); }
+    45% { transform: translate(-2px, 2px); clip-path: inset(70% 0 5% 0); }
+    60% { transform: translate(3px, -1px); clip-path: inset(5% 0 80% 0); }
+    75% { transform: translate(-1px, 1px); clip-path: inset(40% 0 30% 0); }
+    90% { transform: translate(2px, 2px); clip-path: inset(65% 0 15% 0); }
+    100% { transform: translate(0, 0); clip-path: inset(8% 0 78% 0); }
+}
+
+@keyframes cp-glitch-shift-2 {
+    0% { transform: translate(0, 0); clip-path: inset(60% 0 10% 0); }
+    20% { transform: translate(3px, -1px); clip-path: inset(15% 0 60% 0); }
+    40% { transform: translate(-2px, 2px); clip-path: inset(45% 0 25% 0); }
+    60% { transform: translate(2px, 1px); clip-path: inset(3% 0 85% 0); }
+    80% { transform: translate(-3px, -2px); clip-path: inset(75% 0 5% 0); }
+    100% { transform: translate(0, 0); clip-path: inset(60% 0 10% 0); }
+}
+
+@keyframes cp-text-flicker {
+    0%, 3%, 6%, 62%, 64%, 100% { opacity: 1; }
+    4% { opacity: 0.55; }
+    5% { opacity: 0.9; }
+    63% { opacity: 0.35; }
+}
+
+@keyframes cp-photo-flicker {
+    0%, 4%, 6%, 40%, 42%, 100% { opacity: 1; }
+    5% { opacity: 0.85; }
+    41% { opacity: 0.92; }
 }
 
 /* Placeholder "keyhole" silhouette shown when the photo is missing */
@@ -463,10 +564,13 @@ img {
 }
 
 .tech-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     background: var(--cp-surface-alt);
     border: 1px solid var(--cp-border);
     border-radius: 999px;
-    padding: 6px 16px;
+    padding: 6px 16px 6px 8px;
     font-size: 0.85rem;
     font-weight: 600;
     letter-spacing: 0.02em;
@@ -477,6 +581,16 @@ img {
 .tech-tag:hover {
     border-color: var(--cp-accent);
     color: var(--cp-accent);
+}
+
+.tech-tag-icon {
+    width: 20px;
+    height: 20px;
+    padding: 2px;
+    border-radius: 50%;
+    background: #ffffff;
+    object-fit: contain;
+    flex: 0 0 auto;
 }
 
 /* ---------- Contact section ---------- */
@@ -490,9 +604,90 @@ img {
     box-shadow: inset 0 0 60px rgba(57, 255, 136, 0.05);
 }
 
+/* ---------- Scroll reveal ---------- */
+
+/* Gated on .js so the page still renders if scripting is off, and driven by an
+   animation rather than a transition so it never competes with an element's own
+   hover transition. contentpage.js strips both classes once the slide finishes. */
+.js .reveal {
+    opacity: 0;
+}
+
+/* An element's own looping animation would otherwise keep painting its keyframed
+   opacity over the line above — the home bio and portrait both flicker — and the
+   element would show at full strength until its reveal took over. Hold those
+   animations until the slide starts; they pick up again once the classes come off. */
+.js .reveal:not(.is-visible) {
+    animation: none;
+}
+
+.js .reveal.is-visible {
+    animation: cp-reveal-up 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.js .reveal--left.is-visible {
+    animation-name: cp-reveal-left;
+}
+
+.js .reveal--right.is-visible {
+    animation-name: cp-reveal-right;
+}
+
+@keyframes cp-reveal-up {
+    from { opacity: 0; transform: translateY(34px); }
+    to { opacity: 1; transform: none; }
+}
+
+@keyframes cp-reveal-left {
+    from { opacity: 0; transform: translateX(-52px); }
+    to { opacity: 1; transform: none; }
+}
+
+@keyframes cp-reveal-right {
+    from { opacity: 0; transform: translateX(52px); }
+    to { opacity: 1; transform: none; }
+}
+
+/* The home block is the page's first impression, so it travels further and settles
+   slower than an in-page scroll reveal. The travel stays vertical on purpose: the
+   section clips its overflow, and a sideways slide would shear the bio's text
+   against the section edge on the way in. */
+.js .home-heading-row.is-visible,
+.js .home-bio.is-visible,
+.js .profile-photo--home.is-visible {
+    animation-name: cp-reveal-up-far;
+    animation-duration: 900ms;
+}
+
+@keyframes cp-reveal-up-far {
+    from { opacity: 0; transform: translateY(72px); }
+    to { opacity: 1; transform: none; }
+}
+
+/* Honour a reduced-motion preference: content still appears, it just doesn't travel. */
+@media (prefers-reduced-motion: reduce) {
+    .js .reveal.is-visible,
+    .js .reveal--left.is-visible,
+    .js .reveal--right.is-visible,
+    .js .home-heading-row.is-visible,
+    .js .home-bio.is-visible,
+    .js .profile-photo--home.is-visible {
+        animation: cp-reveal-fade 1ms linear both;
+    }
+
+    @keyframes cp-reveal-fade {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+}
+
 /* ---------- Responsive ---------- */
 
 @media (max-width: 900px) {
+    .profile-photo--home {
+        width: min(320px, 74vw);
+    }
+
     .about-content {
         flex-direction: column;
     }

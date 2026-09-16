@@ -4,13 +4,16 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+    <%-- Marks the document as scripted before the first paint, so the reveal styles
+         only ever hide elements on browsers that can slide them back in. --%>
+    <script>document.documentElement.className += " js";</script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= SiteBrandName %> - Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet" />
-    <link href="/Assets/css/ContentPage/contentpage.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/contentpage.css?v=6" rel="stylesheet" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -43,9 +46,24 @@
         <main>
             <section id="home" class="section home-section">
                 <div class="section-inner">
-                    <div class="home-heading-row">
+                    <%-- The home block is in view on load, so its reveals fire immediately;
+                         the delays stage them into a name → bio → portrait sequence. --%>
+                    <div class="home-heading-row reveal" data-reveal-delay="0">
                         <h1 class="home-heading"><%= HomeHeadingName %></h1>
-                        <div class="profile-photo profile-photo--home">
+                    </div>
+                    <div class="home-stack">
+                        <%-- data-text drives the CSS glitch layers; contentpage.js keeps it in sync with the text below. --%>
+                        <p class="home-bio glitch-text reveal" data-reveal-delay="160">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                            irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                            deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error
+                            sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa quae
+                            ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+                        </p>
+                        <div class="profile-photo profile-photo--home reveal" data-reveal-delay="320">
                             <img src="/Assets/ContentPage/dev_photo.png" alt="<%= HomeHeadingName %>"
                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
                             <div class="profile-photo-placeholder" aria-hidden="true">
@@ -54,11 +72,6 @@
                             </div>
                         </div>
                     </div>
-                    <p class="home-bio">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    </p>
                 </div>
             </section>
 
@@ -113,19 +126,19 @@
                     <div class="tech-stack-panel">
                         <h3>Tech Stack</h3>
                         <div class="tech-tags">
-                            <span class="tech-tag">HTML</span>
-                            <span class="tech-tag">CSS</span>
-                            <span class="tech-tag">JS</span>
-                            <span class="tech-tag">React.js</span>
-                            <span class="tech-tag">PHP</span>
-                            <span class="tech-tag">ASP.NET</span>
-                            <span class="tech-tag">MSSQL</span>
-                            <span class="tech-tag">MySQL</span>
-                            <span class="tech-tag">Git</span>
-                            <span class="tech-tag">GitHub</span>
-                            <span class="tech-tag">C#</span>
-                            <span class="tech-tag">Java</span>
-                            <span class="tech-tag">VB.NET</span>
+                            <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-html5.svg" alt="" />HTML</span>
+                            <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-css3.svg" alt="" />CSS</span>
+                            <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-javascript.svg" alt="" />JS</span>
+                            <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-react.svg" alt="" />React.js</span>
+                            <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-php.svg" alt="" />PHP</span>
+                            <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-dotnetcore.svg" alt="" />ASP.NET</span>
+                            <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-mssql.svg" alt="" />MSSQL</span>
+                            <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-mysql.svg" alt="" />MySQL</span>
+                            <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-git.svg" alt="" />Git</span>
+                            <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-github.svg" alt="" />GitHub</span>
+                            <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-csharp.svg" alt="" />C#</span>
+                            <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-java.svg" alt="" />Java</span>
+                            <span class="tech-tag"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-vbnet.svg" alt="" />VB.NET</span>
                         </div>
                     </div>
                 </div>
@@ -141,6 +154,6 @@
 
     </div>
     </form>
-    <script src="/Assets/js/ContentPage/contentpage.js"></script>
+    <script src="/Assets/js/ContentPage/contentpage.js?v=4"></script>
 </body>
 </html>
