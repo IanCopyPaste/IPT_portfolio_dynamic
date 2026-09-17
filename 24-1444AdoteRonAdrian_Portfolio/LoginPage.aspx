@@ -15,7 +15,7 @@
     <%-- The portfolio's tokens, base, navbar and terminal bar are reused rather than copied, so the
          two pages can't drift apart. reveal.css loads after the login rules so its hidden state wins. --%>
     <link href="/Assets/css/ContentPage/contentpage.css?v=17" rel="stylesheet" />
-    <link href="/Assets/css/LoginPage/loginpage.css?v=3" rel="stylesheet" />
+    <link href="/Assets/css/LoginPage/loginpage.css?v=4" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/reveal.css?v=2" rel="stylesheet" />
 </head>
 <body>
@@ -116,6 +116,6 @@
     </form>
     <%-- contentpage.js drives the navbar wash and the reveals; it skips the sections this page doesn't have. --%>
     <script src="/Assets/js/ContentPage/contentpage.js?v=5"></script>
-    <script src="/Assets/js/LoginPage/loginpage.js?v=2"></script>
+    <script src="/Assets/js/LoginPage/loginpage.js?v=3"></script>
 </body>
 </html>

@@ -1,0 +1,113 @@
+/* RegisterPage — the sign-up screen. It is the login screen with a longer form, so
+   LoginPage/loginpage.css loads first and supplies the layout, panel, fields and button;
+   this file only adds what the longer form needs. reveal.css loads after it. */
+
+/* ---------- Register section ---------- */
+
+/* The form is several times the login form's length, so it takes the wider column,
+   as the contact form does on the portfolio. */
+.register-layout {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+}
+
+/* The fields come in three labelled groups, so the form reads as sections of one
+   record rather than a single long column. */
+.register-group {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    min-width: 0;
+    margin: 8px 0 0;
+    padding: 0;
+    border: none;
+}
+
+/* Floated so the legend sits in the column's flow instead of on the fieldset's edge. */
+.register-group-label {
+    float: left;
+    width: 100%;
+    margin: 0 0 2px;
+    padding: 0 0 8px;
+    border-bottom: 1px solid var(--cp-border);
+    font-family: var(--cp-font-mono);
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--cp-muted);
+}
+
+.register-group-label + * {
+    clear: both;
+}
+
+.register-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 18px;
+}
+
+/* A suffix is a few characters, so it gets a narrow column beside the last name. */
+.register-row--suffix {
+    grid-template-columns: minmax(0, 1fr) 140px;
+}
+
+.register-optional {
+    margin-left: 6px;
+    color: var(--cp-muted);
+    text-shadow: none;
+    letter-spacing: 0.08em;
+    text-transform: lowercase;
+}
+
+.login-field textarea {
+    min-height: 76px;
+    resize: vertical;
+}
+
+/* The native arrow ignores the theme, so it is replaced with a drawn chevron, as on the
+   contact form's topic picker. */
+.register-select {
+    position: relative;
+}
+
+.login-field select {
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 40px;
+    cursor: pointer;
+}
+
+.login-field select option {
+    background: var(--cp-surface-alt);
+    color: var(--cp-text);
+}
+
+.register-select::after {
+    content: "";
+    position: absolute;
+    right: 16px;
+    bottom: 20px;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid var(--cp-accent);
+    border-bottom: 2px solid var(--cp-accent);
+    transform: rotate(45deg);
+    pointer-events: none;
+}
+
+/* ---------- Responsive ---------- */
+
+/* Same two breakpoints as the portfolio. The layout rule above loads after the login
+   page's, so its single-column override has to be repeated here. */
+@media (max-width: 900px) {
+    .register-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 720px) {
+    .register-row,
+    .register-row--suffix {
+        grid-template-columns: 1fr;
+    }
+}

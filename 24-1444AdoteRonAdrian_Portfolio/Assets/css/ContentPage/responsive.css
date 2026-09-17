@@ -3,6 +3,23 @@
 
 /* ---------- Responsive ---------- */
 
+/* Above the phone breakpoint the whole page is drawn at 90%, as if the browser were zoomed
+   out: one zoom keeps every px size, clamp() and photo in proportion, where shrinking each
+   rule would drift. This file is the only one of the page's stylesheets the login screens
+   don't load, so they stay full size. Zoom shrinks vh along with everything else, so the
+   sections divide it back out to keep filling the screen. Written as the exact inverse of the
+   720px query: with display scaling a viewport can be 720.8px wide, which min-width: 721px misses. */
+@media not all and (max-width: 720px) {
+    body {
+        --cp-page-scale: 0.9;
+        zoom: var(--cp-page-scale);
+    }
+
+    .section {
+        min-height: calc(100vh / var(--cp-page-scale));
+    }
+}
+
 /* Touch screens can't hover, so the project name and description are always shown. */
 @media (hover: none) {
     .project-card-overlay {

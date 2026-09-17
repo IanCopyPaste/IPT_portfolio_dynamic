@@ -34,8 +34,8 @@
         if (input === userInput && value.length < 3) {
             return "Usernames are at least 3 characters.";
         }
-        if (input === passwordInput && value.length < 6) {
-            return "Passwords are at least 6 characters.";
+        if (input === passwordInput && value.length < 8) {
+            return "Passwords are at least 8 characters.";
         }
         return "";
     };

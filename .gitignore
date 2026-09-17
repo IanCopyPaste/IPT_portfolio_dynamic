@@ -4,7 +4,6 @@
 *.user
 *.userosscache
 *.sln.docstates
-CLAUDE.md
 
 ## Build results
 [Bb]in/
@@ -52,3 +51,4 @@ $RECYCLE.BIN/
 _ReSharper*/
 *.[Rr]e[Ss]harper
 *.DotSettings.user
+CLAUDE.md

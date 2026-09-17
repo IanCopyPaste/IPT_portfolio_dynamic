@@ -21,7 +21,7 @@
     <link href="/Assets/css/ContentPage/skills.css?v=3" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/contact.css?v=3" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/reveal.css?v=2" rel="stylesheet" />
-    <link href="/Assets/css/ContentPage/responsive.css?v=3" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/responsive.css?v=5" rel="stylesheet" />
 </head>
 <body>
     <form id="form1" runat="server">

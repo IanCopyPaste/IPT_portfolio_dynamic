@@ -29,6 +29,7 @@ namespace _24_1444AdoteRonAdrian_Portfolio
 
             //string script = "alert('" + Session["username"] + "')";
             //ClientScript.RegisterStartupScript(this.GetType(), "alertKey", script, true);
+
         }
     }
 }

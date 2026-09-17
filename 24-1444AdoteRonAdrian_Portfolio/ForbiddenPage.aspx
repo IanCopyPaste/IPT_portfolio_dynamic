@@ -42,7 +42,6 @@
                         </p>
                         <div class="forbidden-actions reveal" data-reveal-delay="360">
                             <a class="forbidden-btn" href="LoginPage.aspx">Log in</a>
-                            <a class="forbidden-btn forbidden-btn--ghost" href="<%: RetryPath %>">Try again</a>
                         </div>
                     </div>
 
