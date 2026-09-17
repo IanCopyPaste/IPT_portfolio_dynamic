@@ -113,6 +113,7 @@
     <Content Include="Assets\css\ContentPage\skills.css" />
     <Content Include="Assets\css\ForbiddenPage\forbiddenpage.css" />
     <Content Include="Assets\css\LoginPage\loginpage.css" />
+    <Content Include="Assets\css\ProfilePage\profilepage.css" />
     <Content Include="Assets\css\RegisterPage\registerpage.css" />
     <Content Include="Assets\js\ContentPage\contentpage.js" />
     <Content Include="Assets\js\LoginPage\loginpage.js" />
@@ -140,6 +141,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="LoginPage.aspx" />
+    <Content Include="ProfilePage.aspx" />
     <Content Include="RegisterPage.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -236,6 +238,14 @@
     <Compile Include="LoginPage.aspx.designer.cs">
       <DependentUpon>LoginPage.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Accounts\AccountRules.cs" />
+    <Compile Include="ProfilePage.aspx.cs">
+      <DependentUpon>ProfilePage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProfilePage.aspx.designer.cs">
+      <DependentUpon>ProfilePage.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegisterPage.aspx.cs">
       <DependentUpon>RegisterPage.aspx</DependentUpon>
@@ -245,6 +255,7 @@
       <DependentUpon>RegisterPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Security\PasswordHasher.cs" />
+    <Compile Include="Security\UserSession.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

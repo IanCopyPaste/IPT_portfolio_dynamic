@@ -14,9 +14,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
     <%-- The portfolio's tokens, base, navbar and terminal bar are reused rather than copied, so the
          two pages can't drift apart. reveal.css loads after the login rules so its hidden state wins. --%>
-    <link href="/Assets/css/ContentPage/contentpage.css?v=17" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/contentpage.css?v=19" rel="stylesheet" />
     <link href="/Assets/css/LoginPage/loginpage.css?v=4" rel="stylesheet" />
-    <link href="/Assets/css/ContentPage/reveal.css?v=2" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/reveal.css?v=3" rel="stylesheet" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -115,7 +115,7 @@
     </div>
     </form>
     <%-- contentpage.js drives the navbar wash and the reveals; it skips the sections this page doesn't have. --%>
-    <script src="/Assets/js/ContentPage/contentpage.js?v=5"></script>
-    <script src="/Assets/js/LoginPage/loginpage.js?v=3"></script>
+    <script src="/Assets/js/ContentPage/contentpage.js?v=6"></script>
+    <script src="/Assets/js/LoginPage/loginpage.js?v=4"></script>
 </body>
 </html>

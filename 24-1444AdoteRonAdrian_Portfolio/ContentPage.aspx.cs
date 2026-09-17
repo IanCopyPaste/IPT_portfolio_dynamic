@@ -1,3 +1,4 @@
+using _24_1444AdoteRonAdrian_Portfolio.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +18,15 @@ namespace _24_1444AdoteRonAdrian_Portfolio
 
 
         public const string HomeHeadingName = "Ron Adrian Adote";
+
+        // Shown when the account button is hovered. A session signed in before the full name was
+        // stored has only the username, so that stands in until the user signs in again.
+        protected string AccountName =>
+            Session[UserSession.FullNameKey] as string ?? Session[UserSession.UsernameKey] as string ?? "";
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["username"] == null && Session["user_id"] == null)
+            if (!UserSession.IsSignedIn(Session))
             {
                 Response.StatusCode = 401;
                 Response.Redirect("~/ForbiddenPage.aspx");

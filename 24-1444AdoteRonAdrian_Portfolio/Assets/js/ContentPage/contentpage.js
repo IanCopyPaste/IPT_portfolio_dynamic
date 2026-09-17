@@ -291,6 +291,4 @@
             setStatus("message looks good, but sending isn't connected yet. please reach out through the socials below for now.", false);
         });
     }
-
-    // TODO: functionality TBD for the circular navbar icon button (#navIconBtn).
 })();

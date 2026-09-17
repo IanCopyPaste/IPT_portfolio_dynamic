@@ -1,0 +1,85 @@
+/* ProfilePage — the signed-in user's account form. It is the sign-up form filled in, so
+   RegisterPage/registerpage.css (and before it LoginPage/loginpage.css) supplies the layout,
+   fields and button; this file only adds the profile's own parts. reveal.css loads after it. */
+
+/* ---------- Profile section ---------- */
+
+/* Username and the three password fields share the account row, as the four name fields
+   share the name row, so the form stays three rows tall and still fits one screen. */
+.profile-fields--account {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.profile-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.profile-back {
+    font-family: var(--cp-font-mono);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--cp-accent);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: text-shadow 200ms ease;
+}
+
+.profile-back:hover,
+.profile-back:focus-visible {
+    text-shadow: 0 0 12px rgba(57, 255, 136, 0.7);
+}
+
+/* The error colour marks it as the way out rather than another save; outlined, not filled,
+   so it never competes with the green Save button. */
+.profile-logout {
+    padding: 10px 22px;
+    border: 1px solid var(--cp-pastel-1);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--cp-pastel-1);
+    font-family: var(--cp-font-mono);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    cursor: pointer;
+    transition: background-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+}
+
+.profile-logout:hover,
+.profile-logout:focus-visible {
+    background: rgba(255, 59, 92, 0.12);
+    box-shadow: 0 0 18px rgba(255, 59, 92, 0.35);
+    transform: translateY(-2px);
+}
+
+.profile-logout:focus-visible {
+    outline: 2px solid var(--cp-text);
+    outline-offset: 3px;
+}
+
+/* ---------- Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+    .profile-logout:hover,
+    .profile-logout:focus-visible {
+        transform: none;
+    }
+}
+
+/* ---------- Responsive ---------- */
+
+/* Same breakpoints as the portfolio. Like the name row, the account row keeps its four columns
+   down to 720px; this file loads after the sign-up stylesheet, so the fold to one column there
+   has to be repeated for it. */
+@media (max-width: 720px) {
+    .profile-fields--account {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-links {
+        justify-content: space-between;
+    }
+}

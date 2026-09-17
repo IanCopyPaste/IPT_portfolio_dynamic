@@ -15,12 +15,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
     <%-- Order matters: tokens and base first, sections in page order, then the reveal
          and responsive overrides, which have to win over the section rules. --%>
-    <link href="/Assets/css/ContentPage/contentpage.css?v=17" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/contentpage.css?v=19" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/home.css?v=3" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/about.css?v=5" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/skills.css?v=3" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/contact.css?v=3" rel="stylesheet" />
-    <link href="/Assets/css/ContentPage/reveal.css?v=2" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/reveal.css?v=3" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/responsive.css?v=5" rel="stylesheet" />
 </head>
 <body>
@@ -44,10 +44,15 @@
                     <li><a href="#contact" class="nav-link" data-section="contact">Contact</a></li>
                 </ul>
 
-                <button type="button" class="icon-btn" id="navIconBtn" aria-label="Menu options">
-                    <%-- TODO: functionality TBD --%>
+                <%-- The account button opens the profile page. Hovering or focusing it names the
+                     signed-in user. The name is user-entered, so it goes out HTML-encoded. --%>
+                <a class="icon-btn" id="navIconBtn" href="ProfilePage.aspx" aria-label="Your profile: <%: AccountName %>">
                     <span class="icon-btn-glyph"></span>
-                </button>
+                    <span class="icon-btn-tooltip" aria-hidden="true">
+                        <span class="icon-btn-tooltip-label">signed in as</span>
+                        <span class="icon-btn-tooltip-name"><%: AccountName %></span>
+                    </span>
+                </a>
             </div>
         </nav>
 
@@ -364,6 +369,6 @@
 
     </div>
     </form>
-    <script src="/Assets/js/ContentPage/contentpage.js?v=5"></script>
+    <script src="/Assets/js/ContentPage/contentpage.js?v=6"></script>
 </body>
 </html>

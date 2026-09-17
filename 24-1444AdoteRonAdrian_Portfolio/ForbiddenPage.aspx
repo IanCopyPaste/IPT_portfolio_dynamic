@@ -15,9 +15,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
     <%-- Shared tokens, navbar and terminal bar come from the portfolio, as on the login page.
          reveal.css loads last so its hidden state wins. --%>
-    <link href="/Assets/css/ContentPage/contentpage.css?v=17" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/contentpage.css?v=19" rel="stylesheet" />
     <link href="/Assets/css/ForbiddenPage/forbiddenpage.css?v=1" rel="stylesheet" />
-    <link href="/Assets/css/ContentPage/reveal.css?v=2" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/reveal.css?v=3" rel="stylesheet" />
 </head>
 <body>
     <%-- No server <form>: nothing on this page posts back. --%>
@@ -70,6 +70,6 @@
     </main>
 
     <%-- contentpage.js drives the navbar wash and the reveals; it skips the sections this page doesn't have. --%>
-    <script src="/Assets/js/ContentPage/contentpage.js?v=5"></script>
+    <script src="/Assets/js/ContentPage/contentpage.js?v=6"></script>
 </body>
 </html>
