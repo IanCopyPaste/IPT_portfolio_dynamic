@@ -58,5 +58,14 @@ namespace _24_1444AdoteRonAdrian_Portfolio
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button loginSubmit;
+
+        /// <summary>
+        /// loginStatus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label loginStatus;
     }
 }

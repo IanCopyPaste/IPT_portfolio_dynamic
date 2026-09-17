@@ -15,7 +15,7 @@
     <%-- The portfolio's tokens, base, navbar and terminal bar are reused rather than copied, so the
          two pages can't drift apart. reveal.css loads after the login rules so its hidden state wins. --%>
     <link href="/Assets/css/ContentPage/contentpage.css?v=16" rel="stylesheet" />
-    <link href="/Assets/css/LoginPage/loginpage.css?v=2" rel="stylesheet" />
+    <link href="/Assets/css/LoginPage/loginpage.css?v=3" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/reveal.css?v=2" rel="stylesheet" />
 </head>
 <body>
@@ -41,8 +41,8 @@
                                 <h1 class="login-heading">Welcome back</h1>
                             </div>
                             <p class="login-intro-copy reveal" data-reveal-delay="200">
-                                Log in to pick up where you left off. This is a sample screen &mdash; nothing is
-                                checked against a real account yet.
+                                Log in to pick up where you left off. The portfolio is only open to signed-in
+                                accounts.
                             </p>
                             <ul class="login-log" aria-hidden="true">
                                 <li class="reveal" data-reveal-delay="320">establishing secure channel <span class="login-log-ok">[ ok ]</span></li>
@@ -94,7 +94,9 @@
 
                                 <asp:Button ID="loginSubmit" runat="server" ClientIDMode="Static" CssClass="login-submit"
                                     Text="Log in" OnClick="loginSubmit_Click" />
-                                <p class="login-status" id="loginStatus" role="status" aria-live="polite"></p>
+                                <%-- Always rendered, even when empty: loginpage.js writes its validation messages here too. --%>
+                                <asp:Label ID="loginStatus" runat="server" ClientIDMode="Static" CssClass="login-status"
+                                    role="status" aria-live="polite" />
                                 <p class="login-signup">
                                     Don't have an account? <a href="RegisterPage.aspx">Sign up</a>
                                 </p>
