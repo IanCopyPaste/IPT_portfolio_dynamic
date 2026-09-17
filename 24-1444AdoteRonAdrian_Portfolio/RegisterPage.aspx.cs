@@ -1,11 +1,9 @@
+using _24_1444AdoteRonAdrian_Portfolio.Accounts;
 using _24_1444AdoteRonAdrian_Portfolio.Security;
 using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Web.UI.WebControls;
 
 namespace _24_1444AdoteRonAdrian_Portfolio
 {
@@ -16,50 +14,15 @@ namespace _24_1444AdoteRonAdrian_Portfolio
         private static readonly string PortfolioConn =
             ConfigurationManager.ConnectionStrings["portfolio_conn"].ConnectionString;
 
-        // The name, address and email columns are varchar(max), so these caps are the form's own;
-        // the username and sms caps are the column widths, and a longer value would fail the insert.
-        private const int NameMaxLength = 50;
-        private const int AddressMaxLength = 200;
-        private const int EmailMaxLength = 254;
-        private const int SmsLength = 11;
-        private const int UsernameMaxLength = 40;
-        private const int PasswordMinLength = 8;
-        private const int PasswordMaxLength = 64;
-
-        // users.suffix is varchar(15); a fixed list keeps it to values that belong there.
-        private static readonly string[] Suffixes = { "Jr.", "Sr.", "II", "III", "IV", "V" };
-
-        // registerpage.js checks the same patterns, so both sides give the same answer.
-        private static readonly Regex UsernamePattern = new Regex(@"^[A-Za-z0-9._]{3,40}$");
-        private static readonly Regex EmailPattern = new Regex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$");
-        private static readonly Regex SmsPattern = new Regex(@"^09\d{9}$");
-
-        // SQL Server's duplicate-key errors, for a unique index and a unique constraint.
-        private const int DuplicateIndexError = 2601;
-        private const int DuplicateKeyError = 2627;
-
-        private const string RequiredMessage = "This field is required.";
-
         protected void Page_Load(object sender, EventArgs e)
         {
-            regFirstName.MaxLength = NameMaxLength;
-            regMiddleName.MaxLength = NameMaxLength;
-            regLastName.MaxLength = NameMaxLength;
-            regAddress.MaxLength = AddressMaxLength;
-            regEmail.MaxLength = EmailMaxLength;
-            // Room for the spaces or dashes people type in a number; they are stripped before the check.
-            regSms.MaxLength = SmsLength + 4;
-            regUser.MaxLength = UsernameMaxLength;
-            regPassword.MaxLength = PasswordMaxLength;
-            regConfirm.MaxLength = PasswordMaxLength;
+            AccountRules.ApplyLimits(regFirstName, regMiddleName, regLastName, regAddress, regEmail, regSms, regUser);
+            regPassword.MaxLength = AccountRules.PasswordMaxLength;
+            regConfirm.MaxLength = AccountRules.PasswordMaxLength;
 
             if (!IsPostBack)
             {
-                regSuffix.Items.Add(new ListItem("None", ""));
-                foreach (string suffix in Suffixes)
-                {
-                    regSuffix.Items.Add(new ListItem(suffix, suffix));
-                }
+                AccountRules.FillSuffixes(regSuffix);
             }
         }
 
@@ -71,43 +34,22 @@ namespace _24_1444AdoteRonAdrian_Portfolio
             string suffix = regSuffix.SelectedValue;
             string address = regAddress.Text.Trim();
             string email = regEmail.Text.Trim();
-            string sms = Regex.Replace(regSms.Text, @"[\s-]", "");
+            string sms = AccountRules.NormalizeSms(regSms.Text);
             string username = regUser.Text.Trim();
             string password = regPassword.Text;
 
             // Every field is checked, not just up to the first failure, so all the problems show at once.
             bool valid = true;
-            valid &= Report(regFirstNameError, NameError(firstName, true));
-            valid &= Report(regMiddleNameError, NameError(middleName, false));
-            valid &= Report(regLastNameError, NameError(lastName, true));
-            valid &= Report(regAddressError,
-                address.Length == 0 ? RequiredMessage
-                : address.Length > AddressMaxLength ? "Keep it under " + AddressMaxLength + " characters."
-                : null);
-            valid &= Report(regEmailError,
-                email.Length > 0 && (email.Length > EmailMaxLength || !EmailPattern.IsMatch(email))
-                    ? "Enter a valid email address." : null);
-            valid &= Report(regSmsError,
-                sms.Length > 0 && !SmsPattern.IsMatch(sms)
-                    ? "Use 11 digits starting with 09." : null);
-            valid &= Report(regUserError,
-                username.Length == 0 ? RequiredMessage
-                : !UsernamePattern.IsMatch(username) ? "3 to 40 letters, digits, . or _"
-                : null);
-            valid &= Report(regPasswordError,
-                password.Length == 0 ? RequiredMessage
-                : password.Length < PasswordMinLength ? "Passwords are at least " + PasswordMinLength + " characters."
-                : password.Length > PasswordMaxLength ? "Keep it under " + PasswordMaxLength + " characters."
-                : null);
-            valid &= Report(regConfirmError,
-                regConfirm.Text.Length == 0 ? RequiredMessage
-                : regConfirm.Text != password ? "The passwords don't match."
-                : null);
-
-            if (suffix.Length > 0 && !Suffixes.Contains(suffix))
-            {
-                valid = false;
-            }
+            valid &= AccountRules.Report(regFirstNameError, AccountRules.NameError(firstName, true));
+            valid &= AccountRules.Report(regMiddleNameError, AccountRules.NameError(middleName, false));
+            valid &= AccountRules.Report(regLastNameError, AccountRules.NameError(lastName, true));
+            valid &= AccountRules.Report(regAddressError, AccountRules.AddressError(address));
+            valid &= AccountRules.Report(regEmailError, AccountRules.EmailError(email));
+            valid &= AccountRules.Report(regSmsError, AccountRules.SmsError(sms));
+            valid &= AccountRules.Report(regUserError, AccountRules.UsernameError(username));
+            valid &= AccountRules.Report(regPasswordError, AccountRules.PasswordError(password));
+            valid &= AccountRules.Report(regConfirmError, AccountRules.ConfirmError(regConfirm.Text, password));
+            valid &= AccountRules.IsAllowedSuffix(suffix);
 
             if (!valid)
             {
@@ -128,14 +70,15 @@ namespace _24_1444AdoteRonAdrian_Portfolio
                     // Typed as varchar to match the columns; AddWithValue would send nvarchar and make
                     // SQL Server convert every value on the way in.
                     cmd.Parameters.Add("@first_name", SqlDbType.VarChar, -1).Value = firstName;
-                    cmd.Parameters.Add("@middle_name", SqlDbType.VarChar, -1).Value = OrNull(middleName);
+                    cmd.Parameters.Add("@middle_name", SqlDbType.VarChar, -1).Value = AccountRules.OrNull(middleName);
                     cmd.Parameters.Add("@last_name", SqlDbType.VarChar, -1).Value = lastName;
-                    cmd.Parameters.Add("@suffix", SqlDbType.VarChar, 15).Value = OrNull(suffix);
+                    cmd.Parameters.Add("@suffix", SqlDbType.VarChar, AccountRules.SuffixMaxLength).Value = AccountRules.OrNull(suffix);
                     cmd.Parameters.Add("@address", SqlDbType.VarChar, -1).Value = address;
-                    cmd.Parameters.Add("@email", SqlDbType.VarChar, -1).Value = OrNull(email);
-                    cmd.Parameters.Add("@sms", SqlDbType.VarChar, SmsLength).Value = OrNull(sms);
-                    cmd.Parameters.Add("@username", SqlDbType.VarChar, UsernameMaxLength).Value = username;
-                    cmd.Parameters.Add("@password_hash", SqlDbType.VarChar, 200).Value = PasswordHasher.Hash(password);
+                    cmd.Parameters.Add("@email", SqlDbType.VarChar, -1).Value = AccountRules.OrNull(email);
+                    cmd.Parameters.Add("@sms", SqlDbType.VarChar, AccountRules.SmsLength).Value = AccountRules.OrNull(sms);
+                    cmd.Parameters.Add("@username", SqlDbType.VarChar, AccountRules.UsernameMaxLength).Value = username;
+                    cmd.Parameters.Add("@password_hash", SqlDbType.VarChar, AccountRules.PasswordHashMaxLength).Value =
+                        PasswordHasher.Hash(password);
 
                     conn.Open();
                     userId = (int)cmd.ExecuteScalar();
@@ -143,45 +86,24 @@ namespace _24_1444AdoteRonAdrian_Portfolio
             }
             // Relying on the unique index rather than checking first: a check-then-insert would let two
             // sign-ups with the same name slip through together.
-            catch (SqlException ex) when (ex.Number == DuplicateIndexError || ex.Number == DuplicateKeyError)
+            catch (SqlException ex) when (AccountRules.IsDuplicateKey(ex))
             {
-                Report(regUserError, "That username is already taken.");
+                AccountRules.Report(regUserError, AccountRules.UsernameTakenMessage);
                 ShowStatus("sign-up failed. pick a different username.");
                 return;
             }
 
-            // Signed straight in, with the same two keys LoginPage sets and ContentPage checks.
-            Session["user_id"] = userId;
-            Session["username"] = username;
+            // Signed straight in, the same way LoginPage does it.
+            UserSession.SignIn(Session, userId, username,
+                UserSession.FullName(firstName, middleName, lastName, suffix));
             Response.Redirect("ContentPage.aspx", false);
             Context.ApplicationInstance.CompleteRequest();
-        }
-
-        private static string NameError(string value, bool required)
-        {
-            if (value.Length == 0)
-            {
-                return required ? RequiredMessage : null;
-            }
-            return value.Length > NameMaxLength ? "Keep it under " + NameMaxLength + " characters." : null;
-        }
-
-        // Writes the message (or clears it) and says whether the field passed.
-        private static bool Report(Label error, string message)
-        {
-            error.Text = message ?? "";
-            return message == null;
         }
 
         private void ShowStatus(string message)
         {
             registerStatus.Text = message;
             registerStatus.CssClass = "login-status is-error";
-        }
-
-        private static object OrNull(string value)
-        {
-            return value.Length == 0 ? (object)DBNull.Value : value;
         }
     }
 }

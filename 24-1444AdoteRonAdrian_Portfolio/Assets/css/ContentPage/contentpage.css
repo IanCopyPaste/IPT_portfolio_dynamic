@@ -151,6 +151,7 @@ img {
 }
 
 .icon-btn {
+    position: relative;
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -162,12 +163,19 @@ img {
     cursor: pointer;
     flex: 0 0 auto;
     margin-left: auto;
+    text-decoration: none;
     transition: border-color 250ms ease, box-shadow 250ms ease;
 }
 
-.icon-btn:hover {
+.icon-btn:hover,
+.icon-btn:focus-visible {
     border-color: var(--cp-accent);
     box-shadow: 0 0 14px rgba(57, 255, 136, 0.35);
+}
+
+.icon-btn:focus-visible {
+    outline: 2px solid var(--cp-accent);
+    outline-offset: 3px;
 }
 
 .icon-btn-glyph {
@@ -175,6 +183,61 @@ img {
     height: 16px;
     border-radius: 50%;
     border: 2px solid var(--cp-accent);
+}
+
+/* The signed-in user's name, dropped below the account button on hover or keyboard focus.
+   Anchored to the button's right edge, since the button sits at the right of the navbar and
+   a long name has to grow into the page, not off it. */
+.icon-btn-tooltip {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-width: min(360px, 80vw);
+    padding: 10px 16px 12px;
+    background: var(--cp-surface);
+    border: 1px solid var(--cp-border);
+    border-radius: var(--cp-radius-md);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+    font-family: var(--cp-font-mono);
+    text-align: left;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    pointer-events: none;
+    transition: opacity 200ms ease, transform 200ms ease, visibility 200ms;
+}
+
+.icon-btn:hover .icon-btn-tooltip,
+.icon-btn:focus-visible .icon-btn-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+}
+
+.icon-btn-tooltip-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--cp-muted);
+}
+
+.icon-btn-tooltip-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.95rem;
+    color: var(--cp-accent);
+    text-shadow: 0 0 8px rgba(57, 255, 136, 0.45);
+}
+
+.icon-btn-tooltip-name::before {
+    content: "> ";
+    content: "> " / "";
+    color: var(--cp-muted);
+    text-shadow: none;
 }
 
 .nav-toggle {

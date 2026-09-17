@@ -1,62 +1,95 @@
 (function () {
     "use strict";
 
-    // Client-side checks for the sign-up form, mirroring registerSubmit_Click so both give the same
-    // answer. As on the login page, a click that passes is left alone to post back; only an invalid
-    // one is stopped. The server checks everything again regardless.
-    var submit = document.getElementById("registerSubmit");
+    // Client-side checks for an account form: the sign-up form, and the profile page's edit form,
+    // which loads this same script. Each rule mirrors AccountRules on the server, message for message.
+    // As on the login page, a click that passes is left alone to post back; only an invalid one is
+    // stopped. The server checks everything again regardless.
+    //
+    // The form element says which page it is on:
+    //   data-prefix              id prefix of its fields ("reg" gives regFirstName, regFirstNameError, ...)
+    //   data-submit, data-status ids of the submit button and the status line
+    //   data-invalid-status      status text when a field fails
+    //   data-busy-label          button text while the post is in flight
+    //   data-busy-status         status text while it is, followed by the username
+    //   data-password-optional   blank password fields mean "keep the current password" (profile page)
+    var form = document.querySelector("[data-account-form]");
 
-    if (!submit) {
+    if (!form) {
         return;
     }
 
-    var passwordInput = document.getElementById("regPassword");
-    var confirmInput = document.getElementById("regConfirm");
-    var passwordToggle = document.getElementById("regPasswordToggle");
-    var capsHint = document.getElementById("regCapsHint");
-    var status = document.getElementById("registerStatus");
+    var prefix = form.getAttribute("data-prefix");
+    var byName = function (name) {
+        return document.getElementById(prefix + name);
+    };
+
+    var submit = document.getElementById(form.getAttribute("data-submit"));
+    var status = document.getElementById(form.getAttribute("data-status"));
+    var passwordOptional = form.hasAttribute("data-password-optional");
+    var passwordInput = byName("Password");
+    var confirmInput = byName("Confirm");
+    // Only the profile form asks for the current password, and only to change it.
+    var currentInput = byName("CurrentPassword");
+    var passwordToggle = byName("PasswordToggle");
+    var capsHint = byName("CapsHint");
+    var passwordInputs = [currentInput, passwordInput, confirmInput].filter(Boolean);
     var isBusy = false;
 
     var requiredMessage = "This field is required.";
+
+    // With optional passwords, the password fields only count once a new one has been typed.
+    var changingPassword = function () {
+        return !passwordOptional || !!(passwordInput.value || confirmInput.value);
+    };
 
     var nameRule = function (required) {
         return function (value, input) {
             if (!value) {
                 return required ? requiredMessage : "";
             }
-            return value.length > input.maxLength && input.maxLength > 0
+            return input.maxLength > 0 && value.length > input.maxLength
                 ? "Keep it under " + input.maxLength + " characters." : "";
         };
     };
 
     // Each rule gets the trimmed value (passwords stay untrimmed) and returns a message, or "".
     var rules = {
-        regFirstName: nameRule(true),
-        regMiddleName: nameRule(false),
-        regLastName: nameRule(true),
-        regAddress: nameRule(true),
-        regEmail: function (value) {
+        FirstName: nameRule(true),
+        MiddleName: nameRule(false),
+        LastName: nameRule(true),
+        Address: nameRule(true),
+        Email: function (value) {
             return value && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(value)
                 ? "Enter a valid email address." : "";
         },
-        regSms: function (value) {
+        Sms: function (value) {
             return value && !/^09\d{9}$/.test(value.replace(/[\s-]/g, ""))
                 ? "Use 11 digits starting with 09." : "";
         },
-        regUser: function (value) {
+        User: function (value) {
             if (!value) {
                 return requiredMessage;
             }
             return /^[A-Za-z0-9._]{3,40}$/.test(value)
                 ? "" : "3 to 40 letters, digits, . or _";
         },
-        regPassword: function (value) {
+        CurrentPassword: function (value) {
+            return changingPassword() && !value ? requiredMessage : "";
+        },
+        Password: function (value) {
+            if (!changingPassword()) {
+                return "";
+            }
             if (!value) {
                 return requiredMessage;
             }
-            return value.length < 8 ? "Passwords are at least 8 characters." : "";
+            return value.length < 8 ? "At least 8 characters." : "";
         },
-        regConfirm: function (value) {
+        Confirm: function (value) {
+            if (!changingPassword()) {
+                return "";
+            }
             if (!value) {
                 return requiredMessage;
             }
@@ -64,13 +97,19 @@
         }
     };
 
-    var fields = Object.keys(rules).map(function (id) {
+    var fields = Object.keys(rules).map(function (name) {
         return {
-            input: document.getElementById(id),
-            error: document.getElementById(id + "Error"),
-            rule: rules[id]
+            input: byName(name),
+            error: byName(name + "Error"),
+            rule: rules[name]
         };
+    }).filter(function (field) {
+        return field.input && field.error;
     });
+
+    var isPasswordField = function (field) {
+        return passwordInputs.indexOf(field.input) !== -1;
+    };
 
     // The password input is wrapped for its toggle, so the field is found by class, not parentNode.
     var fieldOf = function (input) {
@@ -90,17 +129,10 @@
     };
 
     var showFieldError = function (field) {
-        var isPassword = field.input === passwordInput || field.input === confirmInput;
-        var value = isPassword ? field.input.value : field.input.value.trim();
+        var value = isPasswordField(field) ? field.input.value : field.input.value.trim();
         var message = field.rule(value, field.input);
         markField(field, message);
         return !message;
-    };
-
-    var fieldById = function (id) {
-        return fields.filter(function (field) {
-            return field.input.id === id;
-        })[0];
     };
 
     var setStatus = function (text, isError) {
@@ -121,21 +153,25 @@
             if (fieldOf(field.input).classList.contains("is-invalid")) {
                 showFieldError(field);
             }
-            // Changing the password can make an already-checked confirmation right or wrong.
-            if (field.input === passwordInput) {
-                var confirmField = fieldById("regConfirm");
-                if (fieldOf(confirmInput).classList.contains("is-invalid") || confirmInput.value) {
-                    showFieldError(confirmField);
-                }
+            // The password fields depend on each other: the new password decides whether the
+            // confirmation matches, and on the profile form whether the others are needed at all.
+            if (isPasswordField(field)) {
+                fields.forEach(function (other) {
+                    if (other !== field && isPasswordField(other) &&
+                        (fieldOf(other.input).classList.contains("is-invalid") || other.input.value)) {
+                        showFieldError(other);
+                    }
+                });
             }
         });
     });
 
-    // One toggle reveals both password inputs, so the two can be compared by eye.
+    // One toggle reveals every password input, so they can be compared by eye.
     passwordToggle.addEventListener("click", function () {
         var reveal = passwordInput.type === "password";
-        passwordInput.type = reveal ? "text" : "password";
-        confirmInput.type = passwordInput.type;
+        passwordInputs.forEach(function (input) {
+            input.type = reveal ? "text" : "password";
+        });
         passwordToggle.textContent = reveal ? "Hide" : "Show";
         passwordToggle.setAttribute("aria-pressed", reveal ? "true" : "false");
         passwordInput.focus();
@@ -147,7 +183,7 @@
         }
     };
 
-    [passwordInput, confirmInput].forEach(function (input) {
+    passwordInputs.forEach(function (input) {
         input.addEventListener("keyup", updateCapsHint);
         input.addEventListener("keydown", updateCapsHint);
         input.addEventListener("blur", function () {
@@ -156,7 +192,7 @@
     });
 
     submit.addEventListener("click", function (event) {
-        // A second click while the first post is still in flight would create the account twice.
+        // A second click while the first post is still in flight would send the form twice.
         if (isBusy) {
             event.preventDefault();
             return;
@@ -172,17 +208,17 @@
 
         if (firstInvalid) {
             event.preventDefault();
-            setStatus("sign-up failed. fix the highlighted fields and try again.", true);
+            setStatus(form.getAttribute("data-invalid-status"), true);
             firstInvalid.focus();
             return;
         }
 
         // Not `disabled`: a disabled button isn't sent with the form, and the server would never
-        // know which button raised the post, so registerSubmit_Click wouldn't run.
+        // know which button raised the post, so its click handler wouldn't run.
         isBusy = true;
         submit.classList.add("is-busy");
         submit.setAttribute("aria-disabled", "true");
-        submit.value = "Creating account...";
-        setStatus("writing record for " + document.getElementById("regUser").value.trim() + "...", false);
+        submit.value = form.getAttribute("data-busy-label");
+        setStatus(form.getAttribute("data-busy-status") + " " + byName("User").value.trim() + "...", false);
     });
 })();

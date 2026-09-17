@@ -35,7 +35,7 @@
             return "Usernames are at least 3 characters.";
         }
         if (input === passwordInput && value.length < 8) {
-            return "Passwords are at least 8 characters.";
+            return "At least 8 characters.";
         }
         return "";
     };

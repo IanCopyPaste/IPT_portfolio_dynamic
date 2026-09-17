@@ -72,6 +72,7 @@
     }
 
     .project-card-overlay,
+    .icon-btn-tooltip,
     .project-card:hover .project-card-image,
     .project-card:focus-visible .project-card-image,
     .tech-tag:hover,
