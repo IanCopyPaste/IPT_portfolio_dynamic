@@ -15,11 +15,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
     <%-- Order matters: tokens and base first, sections in page order, then the reveal
          and responsive overrides, which have to win over the section rules. --%>
-    <link href="/Assets/css/ContentPage/contentpage.css?v=16" rel="stylesheet" />
-    <link href="/Assets/css/ContentPage/home.css?v=2" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/contentpage.css?v=17" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/home.css?v=3" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/about.css?v=5" rel="stylesheet" />
-    <link href="/Assets/css/ContentPage/skills.css?v=2" rel="stylesheet" />
-    <link href="/Assets/css/ContentPage/contact.css?v=2" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/skills.css?v=3" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/contact.css?v=3" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/reveal.css?v=2" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/responsive.css?v=3" rel="stylesheet" />
 </head>
@@ -57,7 +57,10 @@
                     <%-- The home block is in view on load, so its reveals fire immediately;
                          the delays stage them into a name → bio → portrait sequence. --%>
                     <div class="home-heading-row reveal" data-reveal-delay="0">
-                        <h1 class="home-heading"><%= HomeHeadingName %></h1>
+                        <%-- The glitch layers read data-text, so it has to match the heading. --%>
+                        <div class="home-heading-wrap" data-text="<%= HomeHeadingName %>">
+                            <h1 class="home-heading"><%= HomeHeadingName %></h1>
+                        </div>
                     </div>
                     <div class="home-stack">
                         <%-- data-text drives the CSS glitch layers; contentpage.js keeps it in sync with the text below. --%>
@@ -86,7 +89,7 @@
             <section id="about" class="section about-section">
                 <div class="section-inner">
                     <%-- Hand-ordered so the heading slides in first and the column cascades behind it. --%>
-                    <h2 class="section-heading reveal reveal--left" data-reveal-delay="0">Who am I?</h2>
+                    <h2 class="section-heading reveal reveal--left" data-reveal-delay="60">Who am I?</h2>
                     <div class="about-content">
                         <div class="about-panels">
                             <article class="about-panel reveal" data-reveal-delay="120">
@@ -149,7 +152,7 @@
                     <%-- Same hand-ordered cascade as the About section: heading, then the cards, then the
                          panel. Each tag is observed on its own, so its delay is measured from when that
                          tag scrolls in; the offsets hold the chips back until the panel has mostly landed. --%>
-                    <h2 class="section-heading reveal reveal--left" data-reveal-delay="0">Projects</h2>
+                    <h2 class="section-heading reveal reveal--left" data-reveal-delay="60">Projects</h2>
                     <div class="project-cards">
                         <a class="project-card reveal" data-reveal-delay="120" href="https://github.com/IanCopyPaste/LibraryManagementSystem" target="_blank" rel="noopener noreferrer">
                             <img class="project-card-image" src="/Assets/ContentPage/Library_Management_System.png" alt=""
@@ -211,7 +214,7 @@
                  contact screen instead of hanging below it as a separate strip. --%>
             <section id="contact" class="section contact-section">
                 <div class="section-inner">
-                    <h2 class="section-heading reveal reveal--left" data-reveal-delay="0">Contact Me!</h2>
+                    <h2 class="section-heading reveal reveal--left" data-reveal-delay="60">Contact Me!</h2>
                     <div class="contact-layout">
                         <div class="contact-info reveal" data-reveal-delay="120">
                             <p class="contact-lead">Let's build something.</p>

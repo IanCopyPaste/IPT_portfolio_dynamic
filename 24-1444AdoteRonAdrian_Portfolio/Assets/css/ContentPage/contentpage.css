@@ -227,6 +227,18 @@ img {
     padding: 96px 24px;
 }
 
+/* The "// label" line the login and 403 screens open with, so every page announces its
+   screen the same way. */
+.section-kicker {
+    margin: 0 0 10px;
+    font-family: var(--cp-font-mono);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--cp-accent);
+    text-shadow: 0 0 8px rgba(57, 255, 136, 0.45);
+}
+
 .section-heading {
     display: inline-block;
     position: relative;
