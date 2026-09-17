@@ -9,19 +9,27 @@ namespace _24_1444AdoteRonAdrian_Portfolio
 {
     public partial class ContentPage : System.Web.UI.Page
     {
-        // Single source of truth for the navbar brand text — swap here to change it everywhere it's used.
-        public const string SiteBrandName = "My Portfolio";
+        public const string SiteBrandName = "IAN ADOTE";
 
         public static readonly DateTime BirthDate = new DateTime(2006, 4, 16);
         public static int Age => DateTime.Today.Year - BirthDate.Year -
         (DateTime.Today.DayOfYear < BirthDate.DayOfYear ? 1 : 0);
 
 
-        // Home hero heading — kept separate from SiteBrandName since wireframes show them differing.
         public const string HomeHeadingName = "Ron Adrian Adote";
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            if (Session["username"] == null && Session["user_id"] == null)
+            {
+                Response.StatusCode = 401;
+                Response.Redirect("~/ForbiddenPage.aspx");
+                Response.End();
+                return;
+            }
+
+            //string script = "alert('" + Session["username"] + "')";
+            //ClientScript.RegisterStartupScript(this.GetType(), "alertKey", script, true);
+
         }
     }
 }

@@ -121,12 +121,18 @@
     color: var(--cp-accent);
 }
 
+/* The same glowing block cursor the login and 403 terminals end on. */
 .project-card p::after,
 .tech-stack-prompt::after {
-    content: "_";
-    content: "_" / "";
-    color: var(--cp-accent);
-    animation: cp-caret-blink 1s infinite steps(1);
+    content: "";
+    display: inline-block;
+    width: 0.6em;
+    height: 1.05em;
+    margin-left: 4px;
+    vertical-align: text-bottom;
+    background: var(--cp-accent);
+    box-shadow: 0 0 10px rgba(57, 255, 136, 0.8);
+    animation: cp-caret-blink 1.05s infinite steps(1);
 }
 
 @keyframes cp-caret-blink {

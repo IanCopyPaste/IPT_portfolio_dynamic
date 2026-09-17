@@ -1,0 +1,209 @@
+/* RegisterPage — the sign-up screen. LoginPage/loginpage.css loads first and supplies the panel,
+   fields and button; this file lays the longer form out so the whole of it fits on one desktop
+   screen: the form alone, full width, one row per group. reveal.css loads after it. */
+
+/* ---------- Register section ---------- */
+
+/* The fixed navbar floats over the top of the section, so the top padding only has to clear it;
+   the page's usual 96px above and below would push the form past the bottom of the screen. */
+.register-section .section-inner {
+    padding: calc(var(--cp-navbar-height) + 8px) 24px 24px;
+}
+
+/* The panel stands as tall as the screen allows: exactly the height left between the section's
+   padding, so it fills the screen without ever pushing past it, capped so a very tall screen
+   doesn't stretch the rows apart. Under the short-screen zoom below, vh shrinks with the page,
+   so it is divided back out by the same scale. */
+.register-panel {
+    display: flex;
+    flex-direction: column;
+    min-height: min(calc(100vh / var(--cp-page-scale, 1) - var(--cp-navbar-height) - 32px), 760px);
+}
+
+/* The form takes the panel's spare height; the groups below share it out. */
+.register-form {
+    flex: 1 1 auto;
+    gap: 16px;
+    padding: 26px 32px 28px;
+}
+
+/* Title on the left, the note on the right: one line instead of three. */
+.register-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 4px 24px;
+}
+
+.register-head .login-kicker {
+    margin-bottom: 2px;
+    font-size: 0.8rem;
+}
+
+.register-head .login-demo-note {
+    margin: 0 0 4px;
+}
+
+/* Each group is one row, its label in a narrow column to the left so it costs no height. The
+   groups grow into the form's spare height and centre their fields in it, so the space sits
+   evenly between the dividers rather than piling up under each row. */
+.register-group {
+    flex: 1 1 auto;
+    display: grid;
+    grid-template-columns: 96px minmax(0, 1fr);
+    align-content: center;
+    gap: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--cp-border);
+}
+
+/* Top-aligned with the field labels beside it. */
+.register-group-label {
+    margin: 0;
+    font-family: var(--cp-font-mono);
+    font-size: 0.78rem;
+    line-height: 1.5;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--cp-muted);
+}
+
+.register-fields {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px 18px;
+    align-items: start;
+}
+
+/* A suffix is a few characters, so it gets a narrow column after the three names. */
+.register-fields--name {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) 120px;
+}
+
+/* The address is the longest value on the form, so it takes half the row. */
+.register-fields--contact {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.register-optional {
+    margin-left: 6px;
+    color: var(--cp-muted);
+    text-shadow: none;
+    letter-spacing: 0.08em;
+    text-transform: lowercase;
+}
+
+/* The native arrow ignores the theme, so it is replaced with a drawn chevron, as on the
+   contact form's topic picker. */
+.register-select {
+    position: relative;
+}
+
+.login-field select {
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 36px;
+    cursor: pointer;
+}
+
+.login-field select option {
+    background: var(--cp-surface-alt);
+    color: var(--cp-text);
+}
+
+.register-select::after {
+    content: "";
+    position: absolute;
+    right: 16px;
+    bottom: 18px;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid var(--cp-accent);
+    border-bottom: 2px solid var(--cp-accent);
+    transform: rotate(45deg);
+    pointer-events: none;
+}
+
+/* Button, status line and the way back to log in share one row. */
+.register-actions {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 10px 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--cp-border);
+}
+
+.register-actions .login-submit {
+    width: auto;
+    margin: 0;
+    padding: 12px 28px;
+}
+
+.register-actions .login-signup {
+    padding: 0;
+    border: none;
+    text-align: right;
+}
+
+/* ---------- Responsive ---------- */
+
+/* Same two breakpoints as the portfolio. Below 900px the group label moves above its row to
+   give the fields its column; the rows keep their fields side by side, since folding them
+   would add rows and push the form off the screen. Below 720px everything stacks. */
+@media (max-width: 900px) {
+    .register-group {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .register-fields--name {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) 96px;
+    }
+}
+
+/* The one query that isn't a width: a short screen can't hold the form even laid out wide, so
+   the page is drawn smaller there, as ContentPage is on desktop. Zoom shrinks vh along with
+   everything else, so the section divides it back out to keep filling the screen.
+   The limits are the form's full-size height with every error showing (about 726px wide, 836px
+   once the group labels stack below 900px) plus a little slack, and are written with < because
+   display scaling can make a 700px screen measure 700.8px. */
+@media (width > 720px) and (height < 730px),
+       (width > 720px) and (width <= 900px) and (height < 860px) {
+    body {
+        --cp-page-scale: 0.85;
+        zoom: var(--cp-page-scale);
+    }
+
+    .section {
+        min-height: calc(100vh / var(--cp-page-scale));
+    }
+}
+
+@media (width > 720px) and (height < 620px),
+       (width > 720px) and (width <= 900px) and (height < 740px) {
+    body {
+        --cp-page-scale: 0.75;
+    }
+}
+
+@media (max-width: 720px) {
+    .register-fields,
+    .register-fields--name,
+    .register-fields--contact {
+        grid-template-columns: 1fr;
+    }
+
+    .register-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .register-actions .login-submit {
+        width: 100%;
+    }
+
+    .register-actions .login-signup {
+        text-align: center;
+    }
+}
