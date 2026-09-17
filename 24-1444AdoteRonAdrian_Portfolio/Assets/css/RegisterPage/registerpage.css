@@ -1,54 +1,89 @@
-/* RegisterPage — the sign-up screen. It is the login screen with a longer form, so
-   LoginPage/loginpage.css loads first and supplies the layout, panel, fields and button;
-   this file only adds what the longer form needs. reveal.css loads after it. */
+/* RegisterPage — the sign-up screen. LoginPage/loginpage.css loads first and supplies the panel,
+   fields and button; this file lays the longer form out so the whole of it fits on one desktop
+   screen: the form alone, full width, one row per group. reveal.css loads after it. */
 
 /* ---------- Register section ---------- */
 
-/* The form is several times the login form's length, so it takes the wider column,
-   as the contact form does on the portfolio. */
-.register-layout {
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+/* The fixed navbar floats over the top of the section, so the top padding only has to clear it;
+   the page's usual 96px above and below would push the form past the bottom of the screen. */
+.register-section .section-inner {
+    padding: calc(var(--cp-navbar-height) + 8px) 24px 24px;
 }
 
-/* The fields come in three labelled groups, so the form reads as sections of one
-   record rather than a single long column. */
-.register-group {
+/* The panel stands as tall as the screen allows: exactly the height left between the section's
+   padding, so it fills the screen without ever pushing past it, capped so a very tall screen
+   doesn't stretch the rows apart. Under the short-screen zoom below, vh shrinks with the page,
+   so it is divided back out by the same scale. */
+.register-panel {
     display: flex;
     flex-direction: column;
-    gap: 18px;
-    min-width: 0;
-    margin: 8px 0 0;
-    padding: 0;
-    border: none;
+    min-height: min(calc(100vh / var(--cp-page-scale, 1) - var(--cp-navbar-height) - 32px), 760px);
 }
 
-/* Floated so the legend sits in the column's flow instead of on the fieldset's edge. */
+/* The form takes the panel's spare height; the groups below share it out. */
+.register-form {
+    flex: 1 1 auto;
+    gap: 16px;
+    padding: 26px 32px 28px;
+}
+
+/* Title on the left, the note on the right: one line instead of three. */
+.register-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 4px 24px;
+}
+
+.register-head .login-kicker {
+    margin-bottom: 2px;
+    font-size: 0.8rem;
+}
+
+.register-head .login-demo-note {
+    margin: 0 0 4px;
+}
+
+/* Each group is one row, its label in a narrow column to the left so it costs no height. The
+   groups grow into the form's spare height and centre their fields in it, so the space sits
+   evenly between the dividers rather than piling up under each row. */
+.register-group {
+    flex: 1 1 auto;
+    display: grid;
+    grid-template-columns: 96px minmax(0, 1fr);
+    align-content: center;
+    gap: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--cp-border);
+}
+
+/* Top-aligned with the field labels beside it. */
 .register-group-label {
-    float: left;
-    width: 100%;
-    margin: 0 0 2px;
-    padding: 0 0 8px;
-    border-bottom: 1px solid var(--cp-border);
+    margin: 0;
     font-family: var(--cp-font-mono);
-    font-size: 0.82rem;
+    font-size: 0.78rem;
+    line-height: 1.5;
     text-transform: uppercase;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.14em;
     color: var(--cp-muted);
 }
 
-.register-group-label + * {
-    clear: both;
-}
-
-.register-row {
+.register-fields {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 18px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px 18px;
+    align-items: start;
 }
 
-/* A suffix is a few characters, so it gets a narrow column beside the last name. */
-.register-row--suffix {
-    grid-template-columns: minmax(0, 1fr) 140px;
+/* A suffix is a few characters, so it gets a narrow column after the three names. */
+.register-fields--name {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) 120px;
+}
+
+/* The address is the longest value on the form, so it takes half the row. */
+.register-fields--contact {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
 }
 
 .register-optional {
@@ -57,11 +92,6 @@
     text-shadow: none;
     letter-spacing: 0.08em;
     text-transform: lowercase;
-}
-
-.login-field textarea {
-    min-height: 76px;
-    resize: vertical;
 }
 
 /* The native arrow ignores the theme, so it is replaced with a drawn chevron, as on the
@@ -73,7 +103,7 @@
 .login-field select {
     appearance: none;
     -webkit-appearance: none;
-    padding-right: 40px;
+    padding-right: 36px;
     cursor: pointer;
 }
 
@@ -86,7 +116,7 @@
     content: "";
     position: absolute;
     right: 16px;
-    bottom: 20px;
+    bottom: 18px;
     width: 8px;
     height: 8px;
     border-right: 2px solid var(--cp-accent);
@@ -95,19 +125,85 @@
     pointer-events: none;
 }
 
+/* Button, status line and the way back to log in share one row. */
+.register-actions {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 10px 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--cp-border);
+}
+
+.register-actions .login-submit {
+    width: auto;
+    margin: 0;
+    padding: 12px 28px;
+}
+
+.register-actions .login-signup {
+    padding: 0;
+    border: none;
+    text-align: right;
+}
+
 /* ---------- Responsive ---------- */
 
-/* Same two breakpoints as the portfolio. The layout rule above loads after the login
-   page's, so its single-column override has to be repeated here. */
+/* Same two breakpoints as the portfolio. Below 900px the group label moves above its row to
+   give the fields its column; the rows keep their fields side by side, since folding them
+   would add rows and push the form off the screen. Below 720px everything stacks. */
 @media (max-width: 900px) {
-    .register-layout {
+    .register-group {
         grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .register-fields--name {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) 96px;
+    }
+}
+
+/* The one query that isn't a width: a short screen can't hold the form even laid out wide, so
+   the page is drawn smaller there, as ContentPage is on desktop. Zoom shrinks vh along with
+   everything else, so the section divides it back out to keep filling the screen.
+   The limits are the form's full-size height with every error showing (about 726px wide, 836px
+   once the group labels stack below 900px) plus a little slack, and are written with < because
+   display scaling can make a 700px screen measure 700.8px. */
+@media (width > 720px) and (height < 730px),
+       (width > 720px) and (width <= 900px) and (height < 860px) {
+    body {
+        --cp-page-scale: 0.85;
+        zoom: var(--cp-page-scale);
+    }
+
+    .section {
+        min-height: calc(100vh / var(--cp-page-scale));
+    }
+}
+
+@media (width > 720px) and (height < 620px),
+       (width > 720px) and (width <= 900px) and (height < 740px) {
+    body {
+        --cp-page-scale: 0.75;
     }
 }
 
 @media (max-width: 720px) {
-    .register-row,
-    .register-row--suffix {
+    .register-fields,
+    .register-fields--name,
+    .register-fields--contact {
         grid-template-columns: 1fr;
+    }
+
+    .register-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .register-actions .login-submit {
+        width: 100%;
+    }
+
+    .register-actions .login-signup {
+        text-align: center;
     }
 }

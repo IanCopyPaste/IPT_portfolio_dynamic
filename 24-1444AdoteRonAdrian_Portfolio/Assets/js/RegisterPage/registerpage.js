@@ -37,18 +37,18 @@
         regAddress: nameRule(true),
         regEmail: function (value) {
             return value && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(value)
-                ? "Enter an email like you@example.com." : "";
+                ? "Enter a valid email address." : "";
         },
         regSms: function (value) {
             return value && !/^09\d{9}$/.test(value.replace(/[\s-]/g, ""))
-                ? "Use an 11-digit mobile number starting with 09." : "";
+                ? "Use 11 digits starting with 09." : "";
         },
         regUser: function (value) {
             if (!value) {
                 return requiredMessage;
             }
             return /^[A-Za-z0-9._]{3,40}$/.test(value)
-                ? "" : "Use 3 to 40 letters, numbers, dots or underscores.";
+                ? "" : "3 to 40 letters, digits, . or _";
         },
         regPassword: function (value) {
             if (!value) {

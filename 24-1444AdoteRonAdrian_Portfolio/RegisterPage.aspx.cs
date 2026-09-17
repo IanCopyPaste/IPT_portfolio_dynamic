@@ -86,13 +86,13 @@ namespace _24_1444AdoteRonAdrian_Portfolio
                 : null);
             valid &= Report(regEmailError,
                 email.Length > 0 && (email.Length > EmailMaxLength || !EmailPattern.IsMatch(email))
-                    ? "Enter an email like you@example.com." : null);
+                    ? "Enter a valid email address." : null);
             valid &= Report(regSmsError,
                 sms.Length > 0 && !SmsPattern.IsMatch(sms)
-                    ? "Use an 11-digit mobile number starting with 09." : null);
+                    ? "Use 11 digits starting with 09." : null);
             valid &= Report(regUserError,
                 username.Length == 0 ? RequiredMessage
-                : !UsernamePattern.IsMatch(username) ? "Use 3 to 40 letters, numbers, dots or underscores."
+                : !UsernamePattern.IsMatch(username) ? "3 to 40 letters, digits, . or _"
                 : null);
             valid &= Report(regPasswordError,
                 password.Length == 0 ? RequiredMessage
