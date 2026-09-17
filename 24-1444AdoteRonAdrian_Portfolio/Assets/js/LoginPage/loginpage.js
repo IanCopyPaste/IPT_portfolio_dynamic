@@ -1,9 +1,8 @@
 (function () {
     "use strict";
 
-    // Sample sign-in. Nothing is checked against a real account: any username and a long enough
-    // password "authenticate", and the visitor is sent on to the portfolio.
-    // TODO: replace with a real check in the code-behind once there are accounts to check against.
+    // Client-side checks for the sign-in form. The button is an <asp:Button>, so a click that passes
+    // validation is left alone and posts back to loginSubmit_Click; only an invalid one is stopped.
     var submit = document.getElementById("loginSubmit");
 
     if (!submit) {
@@ -14,6 +13,7 @@
     var passwordInput = document.getElementById("loginPassword");
     var passwordToggle = document.getElementById("loginPasswordToggle");
     var capsHint = document.getElementById("loginCapsHint");
+    // Optional: the markup may drop these, and the rest of the form has to keep working without them.
     var remember = document.getElementById("loginRemember");
     var forgot = document.getElementById("loginForgot");
     var status = document.getElementById("loginStatus");
@@ -64,18 +64,11 @@
         status.classList.toggle("is-error", !!isError);
     };
 
+    // Enter needs no handler of its own: the browser treats it as a click on the form's submit button.
     fields.forEach(function (field) {
         field.input.addEventListener("input", function () {
             if (fieldOf(field.input).classList.contains("is-invalid")) {
                 showFieldError(field);
-            }
-        });
-
-        // With no submit button in the server form, Enter would otherwise do nothing.
-        field.input.addEventListener("keydown", function (event) {
-            if (event.key === "Enter") {
-                event.preventDefault();
-                signIn();
             }
         });
     });
@@ -100,21 +93,28 @@
         capsHint.textContent = "";
     });
 
-    forgot.addEventListener("click", function () {
-        setStatus("password recovery isn't part of this sample.", true);
-    });
+    if (forgot) {
+        forgot.addEventListener("click", function () {
+            setStatus("password recovery isn't available yet.", true);
+        });
+    }
 
     // "Remember me" keeps the username only — never the password. Storage can be unavailable
     // (private windows, blocked site data), and the page has to work the same without it.
-    try {
-        var saved = window.localStorage.getItem(rememberKey);
-        if (saved) {
-            userInput.value = saved;
-            remember.checked = true;
-        }
-    } catch (e) { }
+    if (remember) {
+        try {
+            var saved = window.localStorage.getItem(rememberKey);
+            if (saved && !userInput.value) {
+                userInput.value = saved;
+                remember.checked = true;
+            }
+        } catch (e) { }
+    }
 
     var storeUsername = function (username) {
+        if (!remember) {
+            return;
+        }
         try {
             if (remember.checked) {
                 window.localStorage.setItem(rememberKey, username);
@@ -124,25 +124,10 @@
         } catch (e) { }
     };
 
-    // Prints each line of the fake handshake in turn, then hands over to the portfolio.
-    var runSequence = function (lines, done) {
-        var step = 0;
-
-        var next = function () {
-            if (step >= lines.length) {
-                done();
-                return;
-            }
-            setStatus(lines[step], false);
-            step++;
-            window.setTimeout(next, 650);
-        };
-
-        next();
-    };
-
-    var signIn = function () {
+    submit.addEventListener("click", function (event) {
+        // A second click while the first post is still in flight would submit twice.
         if (isBusy) {
+            event.preventDefault();
             return;
         }
 
@@ -155,6 +140,7 @@
         });
 
         if (firstInvalid) {
+            event.preventDefault();
             setStatus("access denied. fix the highlighted fields and try again.", true);
             firstInvalid.focus();
             return;
@@ -163,19 +149,12 @@
         var username = userInput.value.trim();
         storeUsername(username);
 
+        // Not `disabled`: a disabled button isn't sent with the form, and the server would never
+        // know which button raised the post, so loginSubmit_Click wouldn't run.
         isBusy = true;
         submit.classList.add("is-busy");
         submit.setAttribute("aria-disabled", "true");
-        submit.textContent = "Authenticating...";
-
-        runSequence([
-            "verifying " + username + "...",
-            "handshake complete.",
-            "access granted. redirecting..."
-        ], function () {
-            window.location.href = "ContentPage.aspx";
-        });
-    };
-
-    submit.addEventListener("click", signIn);
+        submit.value = "Authenticating...";
+        setStatus("verifying " + username + "...", false);
+    });
 })();

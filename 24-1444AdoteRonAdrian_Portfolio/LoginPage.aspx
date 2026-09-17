@@ -15,7 +15,7 @@
     <%-- The portfolio's tokens, base, navbar and terminal bar are reused rather than copied, so the
          two pages can't drift apart. reveal.css loads after the login rules so its hidden state wins. --%>
     <link href="/Assets/css/ContentPage/contentpage.css?v=16" rel="stylesheet" />
-    <link href="/Assets/css/LoginPage/loginpage.css?v=1" rel="stylesheet" />
+    <link href="/Assets/css/LoginPage/loginpage.css?v=2" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/reveal.css?v=2" rel="stylesheet" />
 </head>
 <body>
@@ -25,7 +25,6 @@
         <nav class="navbar navbar--top" id="siteNavbar">
             <div class="navbar-inner">
                 <a class="navbar-brand" href="ContentPage.aspx"><%= SiteBrandName %></a>
-                <a class="login-back-link" href="ContentPage.aspx"><span aria-hidden="true">&larr;</span> Back to portfolio</a>
             </div>
         </nav>
 
@@ -42,7 +41,7 @@
                                 <h1 class="login-heading">Welcome back</h1>
                             </div>
                             <p class="login-intro-copy reveal" data-reveal-delay="200">
-                                Sign in to pick up where you left off. This is a sample screen &mdash; nothing is
+                                Log in to pick up where you left off. This is a sample screen &mdash; nothing is
                                 checked against a real account yet.
                             </p>
                             <ul class="login-log" aria-hidden="true">
@@ -52,8 +51,8 @@
                             </ul>
                         </div>
 
-                        <%-- Plain inputs and a type="button" sign-in, like the contact form: the page sits inside
-                             the server <form>, so a real submit would post back. loginpage.js runs the sample flow. --%>
+                        <%-- Server controls so loginSubmit_Click can read them; ClientIDMode="Static" keeps the ids
+                             the CSS and loginpage.js look for. The script validates and only then lets the post back through. --%>
                         <div class="login-panel reveal" data-reveal-delay="260">
                             <div class="terminal-bar" aria-hidden="true">
                                 <span class="terminal-dot"></span>
@@ -61,16 +60,16 @@
                                 <span class="terminal-dot"></span>
                                 <span class="terminal-path">~/portfolio/auth --login</span>
                             </div>
-                            <div class="login-form" id="loginForm">
+                            <div class="login-form" id="loginForm" runat="server">
                                 <div class="login-form-head">
-                                    <h2 class="login-title">Sign in</h2>
-                                    <p class="login-demo-note">Demo: any username and a 6+ character password will do.</p>
+                                    <h2 class="login-title">Log in</h2>
+                                    <p class="login-demo-note">&nbsp;</p>
                                 </div>
 
                                 <div class="login-field">
                                     <label for="loginUser">Username</label>
-                                    <input type="text" id="loginUser" name="loginUser" autocomplete="username"
-                                        placeholder="juan.delacruz" maxlength="40" required="required"
+                                    <asp:TextBox ID="loginUser" runat="server" ClientIDMode="Static" autocomplete="username"
+                                        placeholder="juan.delacruz" MaxLength="40" required="required"
                                         autocapitalize="none" spellcheck="false" />
                                     <span class="login-error" id="loginUserError" aria-live="polite"></span>
                                 </div>
@@ -78,8 +77,9 @@
                                 <div class="login-field">
                                     <label for="loginPassword">Password</label>
                                     <div class="login-password">
-                                        <input type="password" id="loginPassword" name="loginPassword" autocomplete="current-password"
-                                            placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" maxlength="64" required="required" />
+                                        <asp:TextBox ID="loginPassword" runat="server" ClientIDMode="Static" TextMode="Password"
+                                            autocomplete="current-password" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
+                                            MaxLength="64" required="required" />
                                         <button type="button" class="login-reveal-btn" id="loginPasswordToggle"
                                             aria-controls="loginPassword" aria-pressed="false">Show</button>
                                     </div>
@@ -89,15 +89,15 @@
 
                                 <div class="login-options">
                                     <label class="login-check" for="loginRemember">
-                                        <input type="checkbox" id="loginRemember" name="loginRemember" />
-                                        <span class="login-check-box" aria-hidden="true"></span>
-                                        Remember me
                                     </label>
-                                    <button type="button" class="login-text-btn" id="loginForgot">Forgot password?</button>
                                 </div>
 
-                                <button type="button" class="login-submit" id="loginSubmit">Sign in</button>
+                                <asp:Button ID="loginSubmit" runat="server" ClientIDMode="Static" CssClass="login-submit"
+                                    Text="Log in" OnClick="loginSubmit_Click" />
                                 <p class="login-status" id="loginStatus" role="status" aria-live="polite"></p>
+                                <p class="login-signup">
+                                    Don't have an account? <a href="RegisterPage.aspx">Sign up</a>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -114,6 +114,6 @@
     </form>
     <%-- contentpage.js drives the navbar wash and the reveals; it skips the sections this page doesn't have. --%>
     <script src="/Assets/js/ContentPage/contentpage.js?v=5"></script>
-    <script src="/Assets/js/LoginPage/loginpage.js?v=1"></script>
+    <script src="/Assets/js/LoginPage/loginpage.js?v=2"></script>
 </body>
 </html>
