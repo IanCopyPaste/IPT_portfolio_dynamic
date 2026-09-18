@@ -1,0 +1,87 @@
+/* ---------- Settings ---------- */
+.adm-settings-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    gap: 16px;
+}
+
+.adm-settings-card {
+    padding: 22px 24px;
+}
+
+/* The password form is the tallest card; it takes the right column across both rows. */
+.adm-settings-card:nth-child(2) {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+}
+
+.adm-account {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--adm-border);
+}
+
+.adm-account-name {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.adm-account-username {
+    margin: 0;
+    color: var(--adm-muted);
+    font-size: 14px;
+}
+
+.adm-settings-form .adm-input {
+    height: 42px;
+}
+
+.adm-form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 6px;
+}
+
+.adm-form-actions--end {
+    justify-content: flex-end;
+    margin-top: 18px;
+}
+
+/* ---------- Preferences ---------- */
+.adm-pref-list {
+    display: grid;
+}
+
+.adm-pref {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 14px 0;
+    border-bottom: 1px solid #edf1f6;
+}
+
+.adm-pref:first-child {
+    padding-top: 0;
+}
+
+.adm-pref-label {
+    display: block;
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.adm-pref-help {
+    margin: 2px 0 0;
+    color: var(--adm-muted);
+    font-size: 13px;
+}

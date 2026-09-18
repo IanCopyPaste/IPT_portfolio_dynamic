@@ -1,0 +1,193 @@
+/* ---------- Sidebar ---------- */
+/* Sticky rather than fixed, so it keeps its place in the flex row and the workspace never needs a
+   margin that has to be kept in step with the sidebar's width. */
+.adm-sidebar {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    flex: none;
+    width: var(--adm-sidebar-width);
+    height: 100vh;
+    height: 100dvh;
+    padding: 0 12px 16px;
+    border-right: 1px solid var(--adm-border);
+    background: var(--adm-surface);
+    transition: width 220ms ease;
+}
+
+.adm-sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: var(--adm-header-height);
+    /* Full-bleed so its rule lines up with the header's; 18px puts the logo dead centre in the rail. */
+    margin: 0 -12px 16px;
+    padding: 0 18px;
+    border-bottom: 1px solid var(--adm-border);
+    overflow: hidden;
+}
+
+.adm-sidebar-logo {
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+    background: var(--adm-primary);
+    color: #ffffff;
+}
+
+.adm-sidebar-name {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+}
+
+.adm-nav {
+    flex: 1 1 auto;
+}
+
+.adm-nav-heading {
+    margin: 0 0 8px;
+    padding: 0 12px;
+    color: #94a3b8;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.adm-nav-list {
+    display: grid;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.adm-nav-item,
+.adm-sidebar-toggle {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    height: 44px;
+    padding: 0 12px;
+    border: 0;
+    border-radius: var(--adm-radius-sm);
+    background: transparent;
+    color: #475569;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 160ms ease, color 160ms ease;
+}
+
+.adm-nav-item:hover,
+.adm-sidebar-toggle:hover {
+    background: #f1f5f9;
+    color: var(--adm-text);
+    text-decoration: none;
+}
+
+.adm-nav-item:focus-visible,
+.adm-sidebar-toggle:focus-visible {
+    outline: 2px solid var(--adm-primary);
+    outline-offset: -2px;
+}
+
+.adm-nav-item.is-active {
+    background: var(--adm-primary-soft);
+    color: var(--adm-primary);
+    font-weight: 600;
+}
+
+.adm-sidebar-toggle {
+    color: var(--adm-muted);
+}
+
+.adm-sidebar-toggle .adm-icon {
+    transition: transform 220ms ease;
+}
+
+.adm-sidebar-label {
+    transition: opacity 160ms ease;
+}
+
+/* ---------- Collapsed rail ---------- */
+.adm-sidebar-collapsed .adm-sidebar {
+    width: var(--adm-sidebar-rail);
+}
+
+.adm-sidebar-collapsed .adm-sidebar-label {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Labels fade and are then taken out of the flow; left in, they would widen the rail. */
+.adm-sidebar-collapsed .adm-nav-item .adm-sidebar-label,
+.adm-sidebar-collapsed .adm-sidebar-toggle .adm-sidebar-label,
+.adm-sidebar-collapsed .adm-sidebar-name {
+    position: absolute;
+}
+
+.adm-sidebar-collapsed .adm-nav-item,
+.adm-sidebar-collapsed .adm-sidebar-toggle {
+    justify-content: center;
+    padding: 0;
+}
+
+.adm-sidebar-collapsed .adm-sidebar-toggle .adm-icon {
+    transform: rotate(180deg);
+}
+
+/* The rail's stand-in for the hidden labels: a tooltip beside the icon on hover or focus. Defined
+   once here and switched on by the collapsed class, or by responsive.css where the rail is forced. */
+.adm-nav-item::after,
+.adm-sidebar-toggle::after {
+    content: attr(data-label);
+    display: none;
+    position: absolute;
+    left: calc(100% + 12px);
+    top: 50%;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: var(--adm-text);
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-4px, -50%);
+    transition: opacity 140ms ease, transform 140ms ease;
+}
+
+.adm-sidebar-collapsed .adm-nav-item::after,
+.adm-sidebar-collapsed .adm-sidebar-toggle::after {
+    display: block;
+}
+
+.adm-nav-item:hover::after,
+.adm-nav-item:focus-visible::after,
+.adm-sidebar-toggle:hover::after,
+.adm-sidebar-toggle:focus-visible::after {
+    opacity: 1;
+    transform: translate(0, -50%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .adm-sidebar,
+    .adm-sidebar-label,
+    .adm-sidebar-toggle .adm-icon {
+        transition: none;
+    }
+}

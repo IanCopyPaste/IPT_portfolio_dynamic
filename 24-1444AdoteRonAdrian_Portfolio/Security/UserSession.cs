@@ -10,13 +10,26 @@ namespace _24_1444AdoteRonAdrian_Portfolio.Security
         public const string UserIdKey = "user_id";
         public const string UsernameKey = "username";
         public const string FullNameKey = "full_name";
+        public const string RoleKey = "role";
+
+        // The value of users.role that the admin sign-in accepts. New accounts default to 'user'.
+        public const string AdminRole = "admin";
 
         // The full name is built once at sign-in, so pages that show it don't each query the database.
-        public static void SignIn(HttpSessionState session, int userId, string username, string fullName)
+        public static void SignIn(HttpSessionState session, int userId, string username, string fullName,
+            string role = null)
         {
             session[UserIdKey] = userId;
             session[UsernameKey] = username;
             session[FullNameKey] = fullName;
+            session[RoleKey] = role;
+        }
+
+        // Only the admin sign-in records a role, so an admin who came in through LoginPage is treated
+        // as an ordinary user until they sign in through Admin.aspx.
+        public static bool IsAdmin(HttpSessionState session)
+        {
+            return string.Equals(session[RoleKey] as string, AdminRole, System.StringComparison.OrdinalIgnoreCase);
         }
 
         public static bool IsSignedIn(HttpSessionState session)

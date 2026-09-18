@@ -1,0 +1,80 @@
+/* ---------- Tokens ---------- */
+/* The admin console is intentionally its own visual system: light, quiet and corporate, with none
+   of the portfolio's glow or glitch. Nothing here reads the portfolio's --cp-* tokens. Shared by the
+   sign-in page and the dashboard, so both are linked to this file first. */
+:root {
+    --adm-bg: #f4f6fb;
+    --adm-surface: #ffffff;
+    --adm-surface-alt: #f8fafc;
+    --adm-text: #0f172a;
+    --adm-muted: #64748b;
+    --adm-border: #dbe1ea;
+    --adm-border-strong: #c3ccd9;
+    --adm-primary: #2563eb;
+    --adm-primary-hover: #1d4ed8;
+    --adm-primary-soft: #eff4ff;
+    --adm-primary-ring: rgba(37, 99, 235, 0.18);
+    --adm-danger: #b42318;
+    --adm-danger-hover: #912018;
+    --adm-danger-bg: #fef3f2;
+    --adm-danger-border: #fecdca;
+    --adm-success: #067647;
+    --adm-success-bg: #ecfdf3;
+    --adm-success-border: #abefc6;
+    --adm-success-mark: #0ca30c;
+    --adm-neutral-mark: #94a3b8;
+    --adm-info-bg: #eff4ff;
+    --adm-info-border: #c7d7fe;
+    --adm-radius: 12px;
+    --adm-radius-sm: 8px;
+    --adm-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 12px 32px -12px rgba(15, 23, 42, 0.12);
+    --adm-font: "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    min-height: 100%;
+}
+
+body {
+    background: var(--adm-bg);
+    color: var(--adm-text);
+    font-family: var(--adm-font);
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    color: var(--adm-primary);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+.adm-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}

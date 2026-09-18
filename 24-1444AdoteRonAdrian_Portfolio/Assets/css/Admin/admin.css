@@ -1,0 +1,167 @@
+/* The sign-in page only. Tokens and base styles are in tokens.css, form controls in forms.css;
+   both are linked before this file. */
+
+/* ---------- Layout ---------- */
+/* Top bar, card, footer: three rows that together fill the viewport exactly, with the card centred
+   in whatever the middle row is left with. min-height rather than height, so a window too short
+   for the card scrolls instead of clipping the Sign in button. dvh keeps mobile browser toolbars
+   from pushing the footer off-screen; vh is the fallback. */
+.adm-page {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+}
+
+.adm-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 24px;
+}
+
+/* ---------- Top bar ---------- */
+.adm-topbar {
+    padding: 16px 32px;
+}
+
+.adm-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.adm-logo {
+    display: inline-grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+    background: var(--adm-primary);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+}
+
+.adm-brand-name {
+    font-weight: 600;
+    font-size: 17px;
+    letter-spacing: -0.01em;
+}
+
+.adm-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 32px 36px;
+    background: var(--adm-surface);
+    border: 1px solid var(--adm-border);
+    border-radius: var(--adm-radius);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 12px 32px -12px rgba(15, 23, 42, 0.12);
+}
+
+.adm-card-head {
+    margin-bottom: 22px;
+}
+
+.adm-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 12px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #eff4ff;
+    color: var(--adm-primary);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.adm-title {
+    margin: 0 0 6px;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+}
+
+.adm-subtitle {
+    margin: 0;
+    color: var(--adm-muted);
+}
+
+/* ---------- Submit ---------- */
+.adm-submit {
+    display: block;
+    width: 100%;
+    height: 44px;
+    margin-top: 22px;
+    border: 0;
+    border-radius: var(--adm-radius-sm);
+    background: var(--adm-primary);
+    color: #ffffff;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 160ms ease, box-shadow 160ms ease;
+}
+
+.adm-submit:hover {
+    background: var(--adm-primary-hover);
+}
+
+.adm-submit:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 4px var(--adm-primary-ring);
+}
+
+.adm-submit.is-busy {
+    opacity: 0.75;
+    cursor: progress;
+}
+
+.adm-notice {
+    margin: 20px 0 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--adm-border);
+    color: var(--adm-muted);
+    font-size: 13px;
+    text-align: center;
+}
+
+/* ---------- Footer ---------- */
+.adm-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 32px;
+    color: var(--adm-muted);
+    font-size: 13px;
+}
+
+.adm-footer a {
+    color: var(--adm-muted);
+}
+
+.adm-footer a:hover {
+    color: var(--adm-text);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 720px) {
+    .adm-topbar {
+        padding: 16px;
+    }
+
+    .adm-main {
+        padding: 0 16px;
+    }
+
+    .adm-card {
+        padding: 28px 22px;
+    }
+
+    .adm-footer {
+        padding: 12px 16px;
+    }
+}

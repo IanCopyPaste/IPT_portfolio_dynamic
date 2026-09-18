@@ -1,0 +1,123 @@
+/* ---------- Alert ---------- */
+.adm-alert {
+    display: none;
+    margin-bottom: 16px;
+    padding: 10px 14px;
+    border: 1px solid var(--adm-danger-border);
+    border-radius: var(--adm-radius-sm);
+    background: var(--adm-danger-bg);
+    color: var(--adm-danger);
+    font-size: 14px;
+}
+
+.adm-alert.is-visible {
+    display: block;
+}
+
+.adm-alert--info {
+    border-color: var(--adm-info-border);
+    background: var(--adm-info-bg);
+    color: var(--adm-primary-hover);
+}
+
+.adm-alert--success {
+    border-color: var(--adm-success-border);
+    background: var(--adm-success-bg);
+    color: var(--adm-success);
+}
+
+/* ---------- Fields ---------- */
+.adm-field {
+    margin-bottom: 18px;
+}
+
+.adm-label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.adm-input {
+    display: block;
+    width: 100%;
+    height: 44px;
+    padding: 0 14px;
+    border: 1px solid var(--adm-border-strong);
+    border-radius: var(--adm-radius-sm);
+    background: var(--adm-surface);
+    color: var(--adm-text);
+    font: inherit;
+    transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.adm-input:hover {
+    border-color: #94a3b8;
+}
+
+.adm-input:focus {
+    outline: none;
+    border-color: var(--adm-primary);
+    box-shadow: 0 0 0 4px var(--adm-primary-ring);
+}
+
+.adm-field.is-invalid .adm-input {
+    border-color: var(--adm-danger);
+}
+
+.adm-field.is-invalid .adm-input:focus {
+    box-shadow: 0 0 0 4px rgba(180, 35, 24, 0.14);
+}
+
+.adm-password {
+    position: relative;
+}
+
+.adm-password .adm-input {
+    padding-right: 72px;
+}
+
+.adm-toggle {
+    position: absolute;
+    top: 50%;
+    right: 6px;
+    transform: translateY(-50%);
+    padding: 6px 10px;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--adm-muted);
+    font: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.adm-toggle:hover {
+    background: #f1f5f9;
+    color: var(--adm-text);
+}
+
+.adm-toggle:focus-visible {
+    outline: 2px solid var(--adm-primary);
+    outline-offset: 1px;
+}
+
+.adm-error,
+.adm-hint {
+    display: block;
+    font-size: 13px;
+}
+
+.adm-error {
+    color: var(--adm-danger);
+}
+
+.adm-error:not(:empty),
+.adm-hint:not(:empty) {
+    margin-top: 6px;
+}
+
+.adm-hint {
+    color: #b54708;
+}
