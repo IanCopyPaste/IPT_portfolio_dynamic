@@ -164,7 +164,7 @@
                                 onerror="this.parentNode.classList.add('project-card--no-image'); this.style.display='none';" />
                             <div class="project-card-overlay">
                                 <h3>Library Management System</h3>
-                                <p>Placeholder description of the Library Management System project goes here.</p>
+                                <p>A Management System made with VB.NET and MySQL for OOP Sub</p>
                             </div>
                         </a>
                         <a class="project-card reveal" data-reveal-delay="230" href="https://mj-player.vercel.app/" target="_blank" rel="noopener noreferrer">
@@ -172,7 +172,7 @@
                                 onerror="this.parentNode.classList.add('project-card--no-image'); this.style.display='none';" />
                             <div class="project-card-overlay">
                                 <h3>Michael Jackson Player</h3>
-                                <p>Placeholder description of the Michael Jackson Player project goes here.</p>
+                                <p>A tribute web application dedicated to the King of Pop Michael Jackson. </p>
                             </div>
                         </a>
                         <a class="project-card reveal" data-reveal-delay="340" href="https://github.com/IanCopyPaste/Event_Management_System" target="_blank" rel="noopener noreferrer">
@@ -180,7 +180,7 @@
                                 onerror="this.parentNode.classList.add('project-card--no-image'); this.style.display='none';" />
                             <div class="project-card-overlay">
                                 <h3>Event Management System</h3>
-                                <p>Placeholder description of the Event Management System project goes here.</p>
+                                <p>PHP-based event management system with admin, organizer, and sponsor roles</p>
                             </div>
                         </a>
                     </div>
@@ -336,7 +336,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="social-link" href="https://github.com/" target="_blank" rel="noopener noreferrer">
+                                        <a class="social-link" href="https://github.com/IanCopyPaste" target="_blank" rel="noopener noreferrer">
                                             <span class="social-icon social-icon--github" aria-hidden="true"></span>
                                             <span class="social-text">
                                                 <span class="social-name">GitHub</span>
