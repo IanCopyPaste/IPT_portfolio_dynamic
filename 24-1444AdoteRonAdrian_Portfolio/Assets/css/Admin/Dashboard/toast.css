@@ -1,0 +1,61 @@
+/* ---------- Toasts ---------- */
+.adm-toasts {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 60;
+    display: grid;
+    gap: 8px;
+    width: min(360px, calc(100vw - 32px));
+    pointer-events: none;
+}
+
+.adm-toast {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: var(--adm-radius-sm);
+    background: var(--adm-text);
+    color: #ffffff;
+    font-size: 14px;
+    box-shadow: 0 12px 28px -12px rgba(15, 23, 42, 0.5);
+    pointer-events: auto;
+    animation: adm-toast-in 200ms ease-out;
+}
+
+.adm-toast::before {
+    content: "";
+    flex: none;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--adm-success-mark);
+}
+
+.adm-toast--error::before {
+    background: #f97066;
+}
+
+.adm-toast.is-leaving {
+    opacity: 0;
+    transition: opacity 200ms ease;
+}
+
+@keyframes adm-toast-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .adm-toast {
+        animation: none;
+    }
+}

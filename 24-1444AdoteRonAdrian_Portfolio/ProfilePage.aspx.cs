@@ -45,16 +45,18 @@ namespace _24_1444AdoteRonAdrian_Portfolio
             using (var conn = new SqlConnection(PortfolioConn))
             using (var cmd = new SqlCommand(
                 "SELECT first_name, middle_name, last_name, suffix, address, email, sms, username " +
-                "FROM users WHERE id = @id", conn))
+                "FROM users WHERE id = @id AND status = @active", conn))
             {
                 cmd.Parameters.Add("@id", SqlDbType.Int).Value = userId;
+                cmd.Parameters.Add("@active", SqlDbType.VarChar, 10).Value = AccountStatus.Active;
                 conn.Open();
 
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     if (!reader.Read())
                     {
-                        // The account is gone (deleted while signed in), so the session is stale.
+                        // The account is gone, or an admin deactivated it, while the user was signed
+                        // in, so the session is stale.
                         SignOutTo("LoginPage.aspx");
                         return;
                     }
@@ -142,8 +144,9 @@ namespace _24_1444AdoteRonAdrian_Portfolio
                     "suffix = @suffix, address = @address, email = @email, sms = @sms, username = @username, " +
                     // A null hash leaves the stored one alone, so one statement covers both cases.
                     "password_hash = COALESCE(@password_hash, password_hash) " +
-                    "WHERE id = @id", conn))
+                    "WHERE id = @id AND status = @active", conn))
                 {
+                    cmd.Parameters.Add("@active", SqlDbType.VarChar, 10).Value = AccountStatus.Active;
                     cmd.Parameters.Add("@first_name", SqlDbType.VarChar, -1).Value = firstName;
                     cmd.Parameters.Add("@middle_name", SqlDbType.VarChar, -1).Value = AccountRules.OrNull(middleName);
                     cmd.Parameters.Add("@last_name", SqlDbType.VarChar, -1).Value = lastName;

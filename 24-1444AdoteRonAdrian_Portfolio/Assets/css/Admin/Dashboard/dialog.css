@@ -1,0 +1,174 @@
+/* ---------- Manage dialog ---------- */
+.adm-dialog {
+    width: min(620px, calc(100vw - 32px));
+    max-height: calc(100vh - 48px);
+    max-height: calc(100dvh - 48px);
+    padding: 0;
+    border: 1px solid var(--adm-border);
+    border-radius: var(--adm-radius);
+    background: var(--adm-surface);
+    color: var(--adm-text);
+    box-shadow: 0 24px 64px -16px rgba(15, 23, 42, 0.35);
+}
+
+.adm-dialog[open] {
+    display: flex;
+    flex-direction: column;
+    animation: adm-dialog-in 180ms ease-out;
+}
+
+.adm-dialog::backdrop {
+    background: rgba(15, 23, 42, 0.45);
+}
+
+@keyframes adm-dialog-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.adm-dialog-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--adm-border);
+}
+
+.adm-dialog-titles {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.adm-dialog-title {
+    margin: 0;
+    overflow: hidden;
+    font-size: 17px;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.adm-dialog-subtitle {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin: 2px 0 0;
+    color: var(--adm-muted);
+    font-size: 13px;
+}
+
+/* The head stays put; only the body scrolls when the dialog is taller than the window. */
+.adm-dialog-body {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding: 4px 20px 20px;
+}
+
+.adm-dialog-body > .adm-alert {
+    margin-top: 16px;
+}
+
+.adm-dialog-loading {
+    margin: 0;
+    padding: 40px 0;
+    color: var(--adm-muted);
+    text-align: center;
+}
+
+.adm-dialog-section {
+    padding: 18px 0;
+    border-bottom: 1px solid var(--adm-border);
+}
+
+.adm-dialog-section:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+}
+
+.adm-section-title {
+    margin: 0 0 12px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: #334155;
+}
+
+.adm-status-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.adm-status-label {
+    margin: 0;
+    font-weight: 600;
+}
+
+.adm-status-help {
+    margin: 2px 0 0;
+    color: var(--adm-muted);
+    font-size: 13px;
+}
+
+.adm-danger-zone .adm-btn {
+    margin-top: 12px;
+}
+
+.adm-confirm {
+    margin-top: 14px;
+    padding: 14px;
+    border: 1px solid var(--adm-danger-border);
+    border-radius: var(--adm-radius-sm);
+    background: var(--adm-danger-bg);
+}
+
+.adm-confirm .adm-label {
+    color: var(--adm-danger);
+}
+
+.adm-confirm .adm-input {
+    height: 40px;
+}
+
+.adm-confirm .adm-input:focus {
+    border-color: var(--adm-danger);
+    box-shadow: 0 0 0 4px rgba(180, 35, 24, 0.14);
+}
+
+.adm-confirm-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.adm-confirm-actions .adm-btn {
+    margin-top: 12px;
+}
+
+.adm-protected-note {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 18px 0 0;
+    padding: 12px 14px;
+    border: 1px solid var(--adm-info-border);
+    border-radius: var(--adm-radius-sm);
+    background: var(--adm-info-bg);
+    color: var(--adm-primary-hover);
+    font-size: 13px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .adm-dialog[open] {
+        animation: none;
+    }
+}

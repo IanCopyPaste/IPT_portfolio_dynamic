@@ -1,0 +1,397 @@
+/* ---------- Controls ---------- */
+/* The small building blocks every dashboard component uses: icons, buttons, badges, avatars,
+   selects, switches and the panel surface. Component files only arrange them. */
+
+.adm-icon {
+    flex: none;
+    display: block;
+}
+
+/* ---------- Buttons ---------- */
+.adm-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 40px;
+    padding: 0 16px;
+    border: 1px solid transparent;
+    border-radius: var(--adm-radius-sm);
+    background: transparent;
+    color: var(--adm-text);
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease, color 160ms ease;
+}
+
+.adm-btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 4px var(--adm-primary-ring);
+}
+
+.adm-btn:disabled,
+.adm-btn.is-busy {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.adm-btn.is-busy {
+    cursor: progress;
+}
+
+.adm-btn--primary {
+    background: var(--adm-primary);
+    color: #ffffff;
+}
+
+.adm-btn--primary:hover:not(:disabled) {
+    background: var(--adm-primary-hover);
+}
+
+.adm-btn--secondary {
+    border-color: var(--adm-border-strong);
+    background: var(--adm-surface);
+}
+
+.adm-btn--secondary:hover:not(:disabled) {
+    background: var(--adm-surface-alt);
+    border-color: #94a3b8;
+}
+
+.adm-btn--danger {
+    background: var(--adm-danger);
+    color: #ffffff;
+}
+
+.adm-btn--danger:hover:not(:disabled) {
+    background: var(--adm-danger-hover);
+}
+
+.adm-btn--danger-outline {
+    border-color: var(--adm-danger-border);
+    background: var(--adm-surface);
+    color: var(--adm-danger);
+}
+
+.adm-btn--danger-outline:hover:not(:disabled) {
+    background: var(--adm-danger-bg);
+}
+
+.adm-btn--sm {
+    height: 32px;
+    padding: 0 12px;
+    font-size: 13px;
+}
+
+.adm-icon-btn {
+    display: inline-grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border: 0;
+    border-radius: var(--adm-radius-sm);
+    background: transparent;
+    color: var(--adm-muted);
+    cursor: pointer;
+    transition: background-color 160ms ease, color 160ms ease;
+}
+
+.adm-icon-btn:hover {
+    background: #f1f5f9;
+    color: var(--adm-text);
+}
+
+.adm-icon-btn:focus-visible,
+.adm-link-btn:focus-visible,
+.adm-inline-link:focus-visible {
+    outline: 2px solid var(--adm-primary);
+    outline-offset: 2px;
+}
+
+.adm-link-btn {
+    padding: 4px 6px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.adm-link-btn:hover {
+    background: var(--adm-primary-soft);
+    text-decoration: none;
+}
+
+.adm-inline-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    border-radius: 4px;
+}
+
+/* ---------- Badges ---------- */
+.adm-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 10px;
+    border-radius: 999px;
+    background: #f1f5f9;
+    color: #334155;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 20px;
+    white-space: nowrap;
+}
+
+.adm-badge--primary {
+    background: var(--adm-primary-soft);
+    color: var(--adm-primary);
+}
+
+/* Status never rides on colour alone: the dot sits beside the word. */
+.adm-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 10px 2px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 20px;
+    white-space: nowrap;
+}
+
+.adm-status::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+.adm-status--active {
+    background: var(--adm-success-bg);
+    color: var(--adm-success);
+}
+
+.adm-status--inactive {
+    background: #f1f5f9;
+    color: #475569;
+}
+
+/* ---------- Avatar ---------- */
+.adm-avatar {
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--adm-primary);
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.adm-avatar--muted {
+    background: #e2e8f0;
+    color: #334155;
+}
+
+.adm-avatar--lg {
+    width: 44px;
+    height: 44px;
+    font-size: 15px;
+}
+
+.adm-avatar--xl {
+    width: 56px;
+    height: 56px;
+    font-size: 18px;
+}
+
+/* ---------- Select ---------- */
+.adm-select {
+    height: 40px;
+    padding: 0 36px 0 12px;
+    border: 1px solid var(--adm-border-strong);
+    border-radius: var(--adm-radius-sm);
+    /* The native arrow differs per browser; this chevron is drawn in --adm-muted. */
+    background: var(--adm-surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%2364748b' d='M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z'/%3E%3C/svg%3E") no-repeat right 10px center / 18px;
+    color: var(--adm-text);
+    font: inherit;
+    font-size: 14px;
+    appearance: none;
+    cursor: pointer;
+    transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.adm-select:hover {
+    border-color: #94a3b8;
+}
+
+.adm-select:focus {
+    outline: none;
+    border-color: var(--adm-primary);
+    box-shadow: 0 0 0 4px var(--adm-primary-ring);
+}
+
+.adm-select--sm {
+    height: 34px;
+    font-size: 13px;
+}
+
+/* ---------- Switch ---------- */
+.adm-switch {
+    position: relative;
+    flex: none;
+    width: 44px;
+    height: 24px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: #cbd5e1;
+    cursor: pointer;
+    transition: background-color 200ms ease, box-shadow 160ms ease;
+}
+
+.adm-switch[aria-checked="true"] {
+    background: var(--adm-primary);
+}
+
+.adm-switch:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 4px var(--adm-primary-ring);
+}
+
+.adm-switch:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.adm-switch.is-busy {
+    cursor: progress;
+}
+
+.adm-switch-thumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.25);
+    transition: transform 200ms ease;
+}
+
+.adm-switch[aria-checked="true"] .adm-switch-thumb {
+    transform: translateX(20px);
+}
+
+/* ---------- Checkbox ---------- */
+.adm-checkbox {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--adm-muted);
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.adm-checkbox input {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    accent-color: var(--adm-primary);
+}
+
+/* ---------- Panel ---------- */
+/* The dashboard's card surface. Named apart from the sign-in page's .adm-card, which it doesn't share. */
+.adm-panel {
+    min-width: 0;
+    padding: 20px 22px;
+    border: 1px solid var(--adm-border);
+    border-radius: var(--adm-radius);
+    background: var(--adm-surface);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.adm-panel-header {
+    margin-bottom: 16px;
+}
+
+.adm-panel-header--split {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.adm-panel-header--icon {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.adm-panel-icon {
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--adm-radius-sm);
+    background: var(--adm-primary-soft);
+    color: var(--adm-primary);
+}
+
+.adm-panel-title {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.adm-panel-subtitle {
+    margin: 2px 0 0;
+    color: var(--adm-muted);
+    font-size: 13px;
+}
+
+/* ---------- Detail list ---------- */
+.adm-details {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 20px;
+    margin: 0;
+}
+
+.adm-details > div {
+    min-width: 0;
+}
+
+.adm-details dt {
+    color: var(--adm-muted);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.adm-details dd {
+    margin: 2px 0 0;
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
+
+.adm-details .adm-details-wide {
+    grid-column: 1 / -1;
+}
+
+.adm-details--stacked {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+.adm-empty-value {
+    color: #94a3b8;
+}

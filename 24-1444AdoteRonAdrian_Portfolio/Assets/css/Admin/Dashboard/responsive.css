@@ -1,0 +1,112 @@
+/* ---------- Responsive ---------- */
+/* Two breakpoints, as elsewhere in the project: 900px and 720px. Always the last stylesheet. */
+
+@media (max-width: 900px) {
+    .adm-content {
+        padding: 20px 24px 40px;
+    }
+
+    .adm-header {
+        padding: 0 24px;
+    }
+
+    .adm-tiles {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .adm-chart-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .adm-chart-card--wide {
+        grid-column: 1 / -1;
+    }
+
+    .adm-settings-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .adm-settings-card:nth-child(2) {
+        grid-column: auto;
+        grid-row: auto;
+    }
+}
+
+/* Below 720px the sidebar is always the icon rail, whatever was saved: a full-width sidebar would
+   leave no room for the content. The toggle goes, since there is nothing to expand into. */
+@media (max-width: 720px) {
+    .adm-sidebar {
+        width: var(--adm-sidebar-rail);
+    }
+
+    .adm-sidebar .adm-sidebar-label {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .adm-nav-item {
+        justify-content: center;
+        padding: 0;
+    }
+
+    .adm-nav-item::after {
+        display: block;
+    }
+
+    .adm-sidebar-toggle {
+        display: none;
+    }
+
+    .adm-content {
+        padding: 16px 16px 32px;
+    }
+
+    .adm-header {
+        padding: 0 16px;
+    }
+
+    .adm-usermenu-name {
+        display: none;
+    }
+
+    .adm-view-intro {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .adm-view-actions {
+        justify-content: space-between;
+    }
+
+    .adm-tiles,
+    .adm-chart-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .adm-toolbar {
+        padding: 14px 16px;
+    }
+
+    .adm-search {
+        max-width: none;
+    }
+
+    .adm-toolbar-status {
+        flex-basis: 100%;
+        margin-left: 0;
+    }
+
+    .adm-pagination {
+        padding: 12px 16px;
+    }
+
+    .adm-details {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .adm-toasts {
+        right: 16px;
+        bottom: 16px;
+    }
+}

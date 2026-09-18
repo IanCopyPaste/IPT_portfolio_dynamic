@@ -1,3 +1,4 @@
+using _24_1444AdoteRonAdrian_Portfolio.Accounts;
 using _24_1444AdoteRonAdrian_Portfolio.Security;
 using Microsoft.Ajax.Utilities;
 using System;
@@ -29,10 +30,11 @@ namespace _24_1444AdoteRonAdrian_Portfolio
             int userId = 0;
             string storedHash = null;
             string fullName = null;
+            string status = null;
 
             using (var conn = new SqlConnection(PortfolioConn))
             using (var cmd = new SqlCommand(
-                "SELECT id, password_hash, username, first_name, middle_name, last_name, suffix " +
+                "SELECT id, password_hash, username, first_name, middle_name, last_name, suffix, status " +
                 "FROM users WHERE username = @username", conn))
             {
                 cmd.Parameters.AddWithValue("@username", username);
@@ -48,6 +50,7 @@ namespace _24_1444AdoteRonAdrian_Portfolio
                         username = reader.GetString(2);
                         fullName = UserSession.FullName(
                             TextOrNull(reader, 3), TextOrNull(reader, 4), TextOrNull(reader, 5), TextOrNull(reader, 6));
+                        status = reader.GetString(7);
                     }
                 }
             }
@@ -59,6 +62,15 @@ namespace _24_1444AdoteRonAdrian_Portfolio
                 return;
             }
 
+            // Only said after the password checks out, so it doesn't reveal which usernames exist.
+            if (status != AccountStatus.Active)
+            {
+                loginStatus.Text = AccountStatus.DeactivatedMessage;
+                loginStatus.CssClass = "login-status is-error";
+                return;
+            }
+
+            AccountActivity.RecordSignIn(userId);
             UserSession.SignIn(Session, userId, username, fullName);
             Response.Redirect("ContentPage.aspx", false);
             Context.ApplicationInstance.CompleteRequest();

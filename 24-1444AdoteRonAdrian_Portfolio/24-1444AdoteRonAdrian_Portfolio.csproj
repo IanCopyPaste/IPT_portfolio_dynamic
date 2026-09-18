@@ -99,6 +99,65 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Admin.aspx" />
+    <Content Include="Assets\css\Admin\admin.css" />
+    <Content Include="Assets\js\Admin\admin.js" />
+    <Content Include="AdminDashboard.aspx" />
+    <Content Include="AdminApi\Analytics.ashx" />
+    <Content Include="AdminApi\Logout.ashx" />
+    <Content Include="AdminApi\Password.ashx" />
+    <Content Include="AdminApi\UserDelete.ashx" />
+    <Content Include="AdminApi\UserInfo.ashx" />
+    <Content Include="AdminApi\UserStatus.ashx" />
+    <Content Include="AdminApi\Users.ashx" />
+    <Content Include="Components\Dashboard\Analytics\AnalyticsView.ascx" />
+    <Content Include="Components\Dashboard\Analytics\ChartCard.ascx" />
+    <Content Include="Components\Dashboard\Analytics\RecentSignups.ascx" />
+    <Content Include="Components\Dashboard\Analytics\StatTile.ascx" />
+    <Content Include="Components\Dashboard\Layout\Header.ascx" />
+    <Content Include="Components\Dashboard\Layout\NavItem.ascx" />
+    <Content Include="Components\Dashboard\Layout\Sidebar.ascx" />
+    <Content Include="Components\Dashboard\Layout\UserMenu.ascx" />
+    <Content Include="Components\Dashboard\Settings\AccountCard.ascx" />
+    <Content Include="Components\Dashboard\Settings\PasswordCard.ascx" />
+    <Content Include="Components\Dashboard\Settings\PreferencesCard.ascx" />
+    <Content Include="Components\Dashboard\Settings\SettingsView.ascx" />
+    <Content Include="Components\Dashboard\Shared\Icon.ascx" />
+    <Content Include="Components\Dashboard\Shared\ToastRegion.ascx" />
+    <Content Include="Components\Dashboard\Users\ManageUserDialog.ascx" />
+    <Content Include="Components\Dashboard\Users\UsersPagination.ascx" />
+    <Content Include="Components\Dashboard\Users\UsersTable.ascx" />
+    <Content Include="Components\Dashboard\Users\UsersToolbar.ascx" />
+    <Content Include="Components\Dashboard\Users\UsersView.ascx" />
+    <Content Include="Assets\css\Admin\forms.css" />
+    <Content Include="Assets\css\Admin\tokens.css" />
+    <Content Include="Assets\css\Admin\Dashboard\analytics.css" />
+    <Content Include="Assets\css\Admin\Dashboard\controls.css" />
+    <Content Include="Assets\css\Admin\Dashboard\dialog.css" />
+    <Content Include="Assets\css\Admin\Dashboard\header.css" />
+    <Content Include="Assets\css\Admin\Dashboard\layout.css" />
+    <Content Include="Assets\css\Admin\Dashboard\responsive.css" />
+    <Content Include="Assets\css\Admin\Dashboard\settings.css" />
+    <Content Include="Assets\css\Admin\Dashboard\sidebar.css" />
+    <Content Include="Assets\css\Admin\Dashboard\toast.css" />
+    <Content Include="Assets\css\Admin\Dashboard\users.css" />
+    <Content Include="Assets\js\Admin\Dashboard\main.js" />
+    <Content Include="Assets\js\Admin\Dashboard\analytics\analytics.js" />
+    <Content Include="Assets\js\Admin\Dashboard\analytics\charts.js" />
+    <Content Include="Assets\js\Admin\Dashboard\core\api.js" />
+    <Content Include="Assets\js\Admin\Dashboard\core\dom.js" />
+    <Content Include="Assets\js\Admin\Dashboard\core\format.js" />
+    <Content Include="Assets\js\Admin\Dashboard\core\prefs.js" />
+    <Content Include="Assets\js\Admin\Dashboard\core\toast.js" />
+    <Content Include="Assets\js\Admin\Dashboard\layout\router.js" />
+    <Content Include="Assets\js\Admin\Dashboard\layout\sidebar.js" />
+    <Content Include="Assets\js\Admin\Dashboard\layout\usermenu.js" />
+    <Content Include="Assets\js\Admin\Dashboard\settings\password.js" />
+    <Content Include="Assets\js\Admin\Dashboard\settings\preferences.js" />
+    <Content Include="Assets\js\Admin\Dashboard\users\managedialog.js" />
+    <Content Include="Assets\js\Admin\Dashboard\users\userstable.js" />
+    <Content Include="Database\Migrations\001_admin_dashboard.sql" />
+    <Content Include="Database\Seeds\sample_users.sql" />
     <Content Include="Assets\ContentPage\DEV_PHOTO.png" />
     <Content Include="Assets\ContentPage\DEV_PHOTO2.png" />
     <Content Include="Assets\ContentPage\Event_Management_System.png" />
@@ -206,6 +265,189 @@
     <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin.aspx.cs">
+      <DependentUpon>Admin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin.aspx.designer.cs">
+      <DependentUpon>Admin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Accounts\AccountStatus.cs" />
+    <Compile Include="Accounts\AccountActivity.cs" />
+    <Compile Include="Security\AntiForgery.cs" />
+    <Compile Include="AdminServices\AdminPassword.cs" />
+    <Compile Include="AdminServices\AnalyticsReport.cs" />
+    <Compile Include="AdminServices\Db.cs" />
+    <Compile Include="AdminServices\SignedInAdmin.cs" />
+    <Compile Include="AdminServices\UserDirectory.cs" />
+    <Compile Include="AdminServices\Models\AnalyticsSnapshot.cs" />
+    <Compile Include="AdminServices\Models\CountBucket.cs" />
+    <Compile Include="AdminServices\Models\UserDetail.cs" />
+    <Compile Include="AdminServices\Models\UserPage.cs" />
+    <Compile Include="AdminServices\Models\UserSummary.cs" />
+    <Compile Include="AdminApi\AdminHandler.cs" />
+    <Compile Include="AdminApi\UserRequest.cs" />
+    <Compile Include="AdminApi\Analytics.ashx.cs">
+      <DependentUpon>Analytics.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminApi\Logout.ashx.cs">
+      <DependentUpon>Logout.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminApi\Password.ashx.cs">
+      <DependentUpon>Password.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminApi\UserDelete.ashx.cs">
+      <DependentUpon>UserDelete.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminApi\UserInfo.ashx.cs">
+      <DependentUpon>UserInfo.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminApi\UserStatus.ashx.cs">
+      <DependentUpon>UserStatus.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminApi\Users.ashx.cs">
+      <DependentUpon>Users.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminDashboard.aspx.cs">
+      <DependentUpon>AdminDashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminDashboard.aspx.designer.cs">
+      <DependentUpon>AdminDashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Dashboard\Analytics\AnalyticsView.ascx.cs">
+      <DependentUpon>AnalyticsView.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Components\Dashboard\Analytics\AnalyticsView.ascx.designer.cs">
+      <DependentUpon>AnalyticsView.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Dashboard\Analytics\ChartCard.ascx.cs">
+      <DependentUpon>ChartCard.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Components\Dashboard\Analytics\ChartCard.ascx.designer.cs">
+      <DependentUpon>ChartCard.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Dashboard\Analytics\RecentSignups.ascx.cs">
+      <DependentUpon>RecentSignups.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Components\Dashboard\Analytics\RecentSignups.ascx.designer.cs">
+      <DependentUpon>RecentSignups.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Dashboard\Analytics\StatTile.ascx.cs">
+      <DependentUpon>StatTile.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Components\Dashboard\Analytics\StatTile.ascx.designer.cs">
+      <DependentUpon>StatTile.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Dashboard\Layout\Header.ascx.cs">
+      <DependentUpon>Header.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Components\Dashboard\Layout\Header.ascx.designer.cs">
+      <DependentUpon>Header.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Dashboard\Layout\NavItem.ascx.cs">
+      <DependentUpon>NavItem.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Components\Dashboard\Layout\NavItem.ascx.designer.cs">
+      <DependentUpon>NavItem.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Dashboard\Layout\Sidebar.ascx.cs">
+      <DependentUpon>Sidebar.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Components\Dashboard\Layout\Sidebar.ascx.designer.cs">
+      <DependentUpon>Sidebar.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Dashboard\Layout\UserMenu.ascx.cs">
+      <DependentUpon>UserMenu.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Components\Dashboard\Layout\UserMenu.ascx.designer.cs">
+      <DependentUpon>UserMenu.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Dashboard\Settings\AccountCard.ascx.cs">
+      <DependentUpon>AccountCard.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Components\Dashboard\Settings\AccountCard.ascx.designer.cs">
+      <DependentUpon>AccountCard.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Dashboard\Settings\PasswordCard.ascx.cs">
+      <DependentUpon>PasswordCard.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Components\Dashboard\Settings\PasswordCard.ascx.designer.cs">
+      <DependentUpon>PasswordCard.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Dashboard\Settings\PreferencesCard.ascx.cs">
+      <DependentUpon>PreferencesCard.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Components\Dashboard\Settings\PreferencesCard.ascx.designer.cs">
+      <DependentUpon>PreferencesCard.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Dashboard\Settings\SettingsView.ascx.cs">
+      <DependentUpon>SettingsView.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Components\Dashboard\Settings\SettingsView.ascx.designer.cs">
+      <DependentUpon>SettingsView.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Dashboard\Shared\Icon.ascx.cs">
+      <DependentUpon>Icon.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Components\Dashboard\Shared\Icon.ascx.designer.cs">
+      <DependentUpon>Icon.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Dashboard\Shared\ToastRegion.ascx.cs">
+      <DependentUpon>ToastRegion.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Components\Dashboard\Shared\ToastRegion.ascx.designer.cs">
+      <DependentUpon>ToastRegion.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Dashboard\Users\ManageUserDialog.ascx.cs">
+      <DependentUpon>ManageUserDialog.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Components\Dashboard\Users\ManageUserDialog.ascx.designer.cs">
+      <DependentUpon>ManageUserDialog.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Dashboard\Users\UsersPagination.ascx.cs">
+      <DependentUpon>UsersPagination.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Components\Dashboard\Users\UsersPagination.ascx.designer.cs">
+      <DependentUpon>UsersPagination.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Dashboard\Users\UsersTable.ascx.cs">
+      <DependentUpon>UsersTable.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Components\Dashboard\Users\UsersTable.ascx.designer.cs">
+      <DependentUpon>UsersTable.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Dashboard\Users\UsersToolbar.ascx.cs">
+      <DependentUpon>UsersToolbar.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Components\Dashboard\Users\UsersToolbar.ascx.designer.cs">
+      <DependentUpon>UsersToolbar.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Dashboard\Users\UsersView.ascx.cs">
+      <DependentUpon>UsersView.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Components\Dashboard\Users\UsersView.ascx.designer.cs">
+      <DependentUpon>UsersView.ascx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="ContentPage.aspx.cs">

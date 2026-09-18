@@ -1,0 +1,357 @@
+/* ---------- Analytics ---------- */
+/* Chart ink: one blue for magnitude (the accent), hairline grey grid, and status marks that always
+   sit beside a word. Text never takes a series colour. */
+:root {
+    --adm-chart-bar: var(--adm-primary);
+    --adm-chart-bar-hover: var(--adm-primary-hover);
+    --adm-chart-track: #eef2f7;
+    --adm-chart-grid: #e8edf3;
+    --adm-chart-axis: #cbd5e1;
+    --adm-chart-label: #64748b;
+}
+
+/* A refresh keeps the last render on screen, dimmed, instead of blanking it, so nothing jumps. */
+.adm-analytics {
+    transition: opacity 160ms ease;
+}
+
+.adm-analytics.is-refreshing {
+    opacity: 0.55;
+}
+
+/* ---------- Stat tiles ---------- */
+.adm-tiles {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.adm-tile {
+    min-width: 0;
+    padding: 18px 20px;
+    border: 1px solid var(--adm-border);
+    border-radius: var(--adm-radius);
+    background: var(--adm-surface);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.adm-tile-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.adm-tile-label {
+    margin: 0;
+    color: var(--adm-muted);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.adm-tile-icon {
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--adm-radius-sm);
+    background: var(--adm-primary-soft);
+    color: var(--adm-primary);
+}
+
+.adm-tile-value {
+    margin: 10px 0 2px;
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+}
+
+.adm-tile-hint {
+    margin: 0;
+    color: var(--adm-muted);
+    font-size: 13px;
+}
+
+/* ---------- Chart grid ---------- */
+.adm-chart-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.adm-chart-card--wide {
+    grid-column: span 2;
+}
+
+.adm-chart {
+    position: relative;
+    min-height: 120px;
+}
+
+.adm-chart-empty {
+    display: grid;
+    place-items: center;
+    min-height: 160px;
+    margin: 0;
+    color: var(--adm-muted);
+    font-size: 14px;
+    text-align: center;
+}
+
+/* ---------- Column chart ---------- */
+.adm-columns {
+    display: block;
+    width: 100%;
+    overflow: visible;
+}
+
+.adm-columns .adm-grid-line {
+    stroke: var(--adm-chart-grid);
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+
+.adm-columns .adm-baseline {
+    stroke: var(--adm-chart-axis);
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+
+.adm-columns text {
+    fill: var(--adm-chart-label);
+    font-family: var(--adm-font);
+    font-size: 11px;
+    font-variant-numeric: tabular-nums;
+}
+
+.adm-columns .adm-column-value {
+    fill: var(--adm-text);
+    font-weight: 600;
+}
+
+.adm-column-bar {
+    fill: var(--adm-chart-bar);
+    transition: fill 160ms ease;
+}
+
+/* Each month's whole band, not just its bar, answers the pointer; an empty month has no bar to aim at. */
+.adm-column-band {
+    fill: transparent;
+    transition: fill 160ms ease;
+}
+
+.adm-column-group.is-hovered .adm-column-band {
+    fill: var(--adm-surface-alt);
+}
+
+.adm-column-group.is-hovered .adm-column-bar {
+    fill: var(--adm-chart-bar-hover);
+}
+
+/* ---------- Tooltip ---------- */
+.adm-tooltip {
+    position: absolute;
+    z-index: 5;
+    padding: 8px 10px;
+    border-radius: var(--adm-radius-sm);
+    background: var(--adm-text);
+    color: #ffffff;
+    font-size: 12px;
+    line-height: 1.4;
+    white-space: nowrap;
+    pointer-events: none;
+    box-shadow: 0 8px 20px -8px rgba(15, 23, 42, 0.4);
+    transform: translate(-50%, calc(-100% - 10px));
+}
+
+.adm-tooltip strong {
+    display: block;
+    font-size: 14px;
+}
+
+.adm-tooltip span {
+    color: #cbd5e1;
+}
+
+/* ---------- Split bar (status) ---------- */
+.adm-split {
+    display: flex;
+    gap: 2px;
+    height: 14px;
+    margin: 6px 0 18px;
+    overflow: hidden;
+    border-radius: 4px;
+    background: var(--adm-chart-track);
+}
+
+.adm-split-segment {
+    height: 100%;
+    min-width: 4px;
+    transition: flex-grow 300ms ease;
+}
+
+.adm-split-segment--active {
+    background: var(--adm-success-mark);
+}
+
+.adm-split-segment--inactive {
+    background: var(--adm-neutral-mark);
+}
+
+.adm-legend {
+    display: grid;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.adm-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.adm-legend-swatch {
+    flex: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+}
+
+.adm-legend-label {
+    flex: 1 1 auto;
+}
+
+.adm-legend-value {
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+.adm-legend-share {
+    min-width: 44px;
+    color: var(--adm-muted);
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+}
+
+/* ---------- Bar list ---------- */
+.adm-barlist {
+    display: grid;
+    gap: 14px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.adm-barlist-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 6px;
+    font-size: 13px;
+}
+
+.adm-barlist-label {
+    color: #334155;
+}
+
+.adm-barlist-value {
+    flex: none;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+.adm-barlist-value span {
+    color: var(--adm-muted);
+    font-weight: 400;
+}
+
+.adm-barlist-track {
+    height: 8px;
+    overflow: hidden;
+    border-radius: 4px;
+    background: var(--adm-chart-track);
+}
+
+.adm-barlist-fill {
+    height: 100%;
+    border-radius: 0 4px 4px 0;
+    background: var(--adm-chart-bar);
+    transition: width 300ms ease;
+}
+
+/* ---------- Recent sign-ups ---------- */
+.adm-recent-list {
+    display: grid;
+    gap: 2px;
+    margin: 0 -10px;
+    padding: 0;
+    list-style: none;
+}
+
+.adm-recent-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 8px 10px;
+    border: 0;
+    border-radius: var(--adm-radius-sm);
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 160ms ease;
+}
+
+.adm-recent-item:hover {
+    background: var(--adm-surface-alt);
+}
+
+.adm-recent-item:focus-visible {
+    outline: 2px solid var(--adm-primary);
+    outline-offset: -2px;
+}
+
+.adm-recent-text {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.adm-recent-name,
+.adm-recent-meta {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.adm-recent-name {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.adm-recent-meta {
+    color: var(--adm-muted);
+    font-size: 12px;
+}
+
+.adm-recent-when {
+    flex: none;
+    color: var(--adm-muted);
+    font-size: 12px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .adm-split-segment,
+    .adm-barlist-fill {
+        transition: none;
+    }
+}

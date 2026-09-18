@@ -63,9 +63,11 @@ namespace _24_1444AdoteRonAdrian_Portfolio
             {
                 using (var conn = new SqlConnection(PortfolioConn))
                 using (var cmd = new SqlCommand(
-                    "INSERT INTO users (first_name, middle_name, last_name, suffix, address, email, sms, username, password_hash) " +
+                    // status and created_at take their column defaults. last_login_at is set here
+                    // because a new account is signed straight in below.
+                    "INSERT INTO users (first_name, middle_name, last_name, suffix, address, email, sms, username, password_hash, last_login_at) " +
                     "OUTPUT INSERTED.id " +
-                    "VALUES (@first_name, @middle_name, @last_name, @suffix, @address, @email, @sms, @username, @password_hash)", conn))
+                    "VALUES (@first_name, @middle_name, @last_name, @suffix, @address, @email, @sms, @username, @password_hash, SYSUTCDATETIME())", conn))
                 {
                     // Typed as varchar to match the columns; AddWithValue would send nvarchar and make
                     // SQL Server convert every value on the way in.

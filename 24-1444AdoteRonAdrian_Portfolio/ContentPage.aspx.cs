@@ -10,7 +10,7 @@ namespace _24_1444AdoteRonAdrian_Portfolio
 {
     public partial class ContentPage : System.Web.UI.Page
     {
-        public const string SiteBrandName = "IAN ADOTE";
+        public const string SiteBrandName = "IAN";
 
         public static readonly DateTime BirthDate = new DateTime(2006, 4, 16);
         public static int Age => DateTime.Today.Year - BirthDate.Year -

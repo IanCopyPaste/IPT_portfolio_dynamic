@@ -1,0 +1,78 @@
+/* ---------- Layout ---------- */
+/* Sidebar and workspace side by side. The sidebar's width is the one number the collapse changes;
+   the workspace takes whatever is left, and min-width: 0 lets it shrink below its content (the
+   table scrolls inside its own wrapper instead of widening the page). */
+:root {
+    --adm-sidebar-width: 248px;
+    --adm-sidebar-rail: 72px;
+    --adm-header-height: 68px;
+}
+
+.adm-shell {
+    display: flex;
+    min-height: 100vh;
+    min-height: 100dvh;
+}
+
+.adm-workspace {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* No max-width: the content keeps the header's edges at any window width or zoom level, instead of
+   stopping short and leaving an empty gutter beside a full-width header. */
+.adm-content {
+    width: 100%;
+    padding: 24px 32px 48px;
+}
+
+/* ---------- View ---------- */
+.adm-view-intro {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.adm-view-lead {
+    margin: 0;
+    max-width: 68ch;
+    color: var(--adm-muted);
+    font-size: 14px;
+}
+
+.adm-view-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: none;
+}
+
+.adm-updated {
+    color: var(--adm-muted);
+    font-size: 13px;
+}
+
+/* A view switch gets a short fade so the change of content registers; nothing travels. */
+.js .adm-view:not([hidden]) {
+    animation: adm-view-in 200ms ease-out;
+}
+
+@keyframes adm-view-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .js .adm-view:not([hidden]) {
+        animation: none;
+    }
+}

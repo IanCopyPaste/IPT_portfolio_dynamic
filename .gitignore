@@ -17,6 +17,9 @@ bld/
 [Bb]in/
 [Oo]bj/
 
+##secrets
+**/Web.config
+
 ## NuGet packages (restored via NuGet, not committed)
 packages/
 *.nupkg

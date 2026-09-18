@@ -1,0 +1,253 @@
+/* ---------- Users ---------- */
+/* Unpadded so the table's rules run edge to edge; clipped so its header fill keeps the rounded corners. */
+.adm-users {
+    padding: 0;
+    overflow: hidden;
+}
+
+/* ---------- Toolbar ---------- */
+.adm-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--adm-border);
+}
+
+.adm-search {
+    position: relative;
+    flex: 1 1 280px;
+    max-width: 420px;
+}
+
+.adm-search > .adm-icon {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    color: var(--adm-muted);
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.adm-search-input {
+    width: 100%;
+    height: 40px;
+    padding: 0 12px 0 38px;
+    border: 1px solid var(--adm-border-strong);
+    border-radius: var(--adm-radius-sm);
+    background: var(--adm-surface);
+    color: var(--adm-text);
+    font: inherit;
+    font-size: 14px;
+    transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.adm-search-input:hover {
+    border-color: #94a3b8;
+}
+
+.adm-search-input:focus {
+    outline: none;
+    border-color: var(--adm-primary);
+    box-shadow: 0 0 0 4px var(--adm-primary-ring);
+}
+
+.adm-select-wrap {
+    display: block;
+}
+
+.adm-toolbar-status {
+    margin: 0 0 0 auto;
+    color: var(--adm-muted);
+    font-size: 13px;
+}
+
+/* ---------- Table ---------- */
+/* position: relative so the visually hidden labels inside the table (absolutely positioned) are
+   clipped by this scroller; without it they escape it and stretch the whole page sideways. */
+.adm-table-wrap {
+    position: relative;
+    overflow-x: auto;
+}
+
+.adm-table {
+    width: 100%;
+    min-width: 760px;
+    border-collapse: collapse;
+    font-size: 14px;
+    transition: opacity 160ms ease;
+}
+
+/* A new page or search dims the current rows until the answer arrives, rather than blanking them. */
+.adm-table.is-loading {
+    opacity: 0.55;
+}
+
+.adm-table th {
+    padding: 10px 20px;
+    border-bottom: 1px solid var(--adm-border);
+    background: var(--adm-surface-alt);
+    color: var(--adm-muted);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.adm-table td {
+    padding: 12px 20px;
+    border-bottom: 1px solid #edf1f6;
+    vertical-align: middle;
+}
+
+.adm-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.adm-table tbody tr:not(.adm-table-message):hover td {
+    background: #fafbfd;
+}
+
+.adm-table-actions {
+    width: 1%;
+    text-align: right;
+}
+
+.adm-table td.adm-table-actions {
+    text-align: right;
+}
+
+.adm-table-muted {
+    color: var(--adm-muted);
+    white-space: nowrap;
+}
+
+.adm-table-email {
+    max-width: 240px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.adm-user-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.adm-user-names {
+    min-width: 0;
+}
+
+.adm-user-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    font-weight: 600;
+}
+
+.adm-user-username {
+    margin: 0;
+    color: var(--adm-muted);
+    font-size: 13px;
+}
+
+.adm-table-message td {
+    padding: 48px 20px;
+    color: var(--adm-muted);
+    text-align: center;
+}
+
+.adm-table-message .adm-btn {
+    margin-top: 12px;
+}
+
+.adm-table-message p {
+    margin: 0;
+}
+
+/* ---------- Pagination ---------- */
+.adm-pagination {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 20px;
+    padding: 14px 20px;
+    border-top: 1px solid var(--adm-border);
+}
+
+.adm-pagination-range {
+    margin: 0;
+    color: var(--adm-muted);
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+}
+
+.adm-pagination-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 20px;
+}
+
+.adm-pagesize {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--adm-muted);
+    font-size: 13px;
+}
+
+.adm-pager {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.adm-page-btn {
+    min-width: 34px;
+    height: 34px;
+    padding: 0 10px;
+    border: 1px solid transparent;
+    border-radius: var(--adm-radius-sm);
+    background: transparent;
+    color: #334155;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    cursor: pointer;
+    transition: background-color 160ms ease, border-color 160ms ease;
+}
+
+.adm-page-btn:hover:not(:disabled):not([aria-current]) {
+    background: #f1f5f9;
+}
+
+.adm-page-btn:focus-visible {
+    outline: 2px solid var(--adm-primary);
+    outline-offset: 1px;
+}
+
+.adm-page-btn[aria-current="page"] {
+    border-color: var(--adm-primary);
+    background: var(--adm-primary-soft);
+    color: var(--adm-primary);
+    cursor: default;
+}
+
+.adm-page-btn:disabled {
+    color: #cbd5e1;
+    cursor: not-allowed;
+}
+
+.adm-page-gap {
+    min-width: 20px;
+    color: var(--adm-muted);
+    text-align: center;
+}
