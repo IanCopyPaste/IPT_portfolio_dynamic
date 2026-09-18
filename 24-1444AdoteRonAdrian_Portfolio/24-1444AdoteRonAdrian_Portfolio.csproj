@@ -157,6 +157,7 @@
     <Content Include="Assets\js\Admin\Dashboard\users\managedialog.js" />
     <Content Include="Assets\js\Admin\Dashboard\users\userstable.js" />
     <Content Include="Database\Migrations\001_admin_dashboard.sql" />
+    <Content Include="Database\Seeds\sample_users.sql" />
     <Content Include="Assets\ContentPage\DEV_PHOTO.png" />
     <Content Include="Assets\ContentPage\DEV_PHOTO2.png" />
     <Content Include="Assets\ContentPage\Event_Management_System.png" />
