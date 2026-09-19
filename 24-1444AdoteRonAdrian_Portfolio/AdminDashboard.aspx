@@ -45,6 +45,7 @@
     <link href="/Assets/css/Admin/Dashboard/settings.css?v=1" rel="stylesheet" />
     <link href="/Assets/css/Admin/Dashboard/toast.css?v=1" rel="stylesheet" />
     <link href="/Assets/css/Admin/Dashboard/responsive.css?v=1" rel="stylesheet" />
+    <link href="/DEV_PHOTO.png" rel="icon" type="image/png" />
 </head>
 <body>
     <%-- No server <form>: every action is a fetch to /AdminApi, apart from log-out, which is its own

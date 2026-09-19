@@ -16,6 +16,7 @@
     <link href="/Assets/css/Admin/tokens.css?v=1" rel="stylesheet" />
     <link href="/Assets/css/Admin/forms.css?v=1" rel="stylesheet" />
     <link href="/Assets/css/Admin/admin.css?v=6" rel="stylesheet" />
+    <link href="/DEV_PHOTO.png" rel="icon" type="image/png" />
 </head>
 <body>
     <form id="form1" runat="server">
