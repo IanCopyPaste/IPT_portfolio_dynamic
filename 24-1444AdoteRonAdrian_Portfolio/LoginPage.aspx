@@ -17,6 +17,7 @@
     <link href="/Assets/css/ContentPage/contentpage.css?v=19" rel="stylesheet" />
     <link href="/Assets/css/LoginPage/loginpage.css?v=5" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/reveal.css?v=3" rel="stylesheet" />
+    <link href="/DEV_PHOTO.png" rel="icon" type="image/png" />
 </head>
 <body>
     <form id="form1" runat="server">

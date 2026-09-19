@@ -213,6 +213,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
     <Content Include="ForbiddenPage.aspx" />
+    <Content Include="DEV_PHOTO.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="LoginPage.aspx" />

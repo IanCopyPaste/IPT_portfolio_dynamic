@@ -18,6 +18,7 @@
     <link href="/Assets/css/ContentPage/contentpage.css?v=19" rel="stylesheet" />
     <link href="/Assets/css/ForbiddenPage/forbiddenpage.css?v=1" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/reveal.css?v=3" rel="stylesheet" />
+    <link href="/DEV_PHOTO.png" rel="icon" type="image/png" />
 </head>
 <body>
     <%-- No server <form>: nothing on this page posts back. --%>
