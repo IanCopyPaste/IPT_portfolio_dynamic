@@ -23,57 +23,84 @@ namespace _24_1444AdoteRonAdrian_Portfolio
         // One message for both an unknown username and a wrong password, so the form can't be used
         // to find out which usernames exist.
         private const string InvalidLoginMessage = "invalid username or password.";
+        private const string ForAdminMessage = "hey, you the admin? no not here, somewhere...";
 
         protected void loginSubmit_Click(object sender, EventArgs e)
         {
-            string username = loginUser.Text.Trim();
-            int userId = 0;
-            string storedHash = null;
-            string fullName = null;
-            string status = null;
-
-            using (var conn = new SqlConnection(PortfolioConn))
-            using (var cmd = new SqlCommand(
-                "SELECT id, password_hash, username, first_name, middle_name, last_name, suffix, status " +
-                "FROM users WHERE username = @username", conn))
+            try
             {
-                cmd.Parameters.AddWithValue("@username", username);
-                conn.Open();
+                string username = loginUser.Text.Trim();
+                int userId = 0;
+                string storedHash = null;
+                string fullName = null;
+                string status = null;
+                string role = null;
 
-                using (SqlDataReader reader = cmd.ExecuteReader())
+                using (var conn = new SqlConnection(PortfolioConn))
+                using (var cmd = new SqlCommand(
+                    "SELECT id, password_hash, username, first_name, middle_name, last_name, suffix, status, role " +
+                    "FROM users WHERE username = @username", conn))
                 {
-                    if (reader.Read())
+                    cmd.Parameters.AddWithValue("@username", username);
+                    conn.Open();
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        userId = reader.GetInt32(0);
-                        storedHash = reader.IsDBNull(1) ? null : reader.GetString(1);
-                        // The match ignores case, so keep the username as it was registered, not as typed.
-                        username = reader.GetString(2);
-                        fullName = UserSession.FullName(
-                            TextOrNull(reader, 3), TextOrNull(reader, 4), TextOrNull(reader, 5), TextOrNull(reader, 6));
-                        status = reader.GetString(7);
+                        if (reader.Read())
+                        {
+                            userId = reader.GetInt32(0);
+                            storedHash = TextOrNull(reader, 1);
+                            // The match ignores case, so keep the username as it was registered, not as typed.
+                            username = reader.GetString(2);
+                            fullName = UserSession.FullName(
+                                TextOrNull(reader, 3), TextOrNull(reader, 4), TextOrNull(reader, 5), TextOrNull(reader, 6));
+                            status = reader.GetString(7);
+                            role = TextOrNull(reader, 8);
+                        }
                     }
                 }
-            }
 
-            if (storedHash == null || !PasswordHasher.Verify(loginPassword.Text, storedHash))
+                // Admins sign in through Admin.aspx. They're turned away here with the same message as a
+                // bad password, and only after the hash check, so neither the text nor the response time
+                // gives away which usernames are admins.
+                bool passwordOk = storedHash != null && PasswordHasher.Verify(loginPassword.Text, storedHash);
+                bool isAdmin = string.Equals(role, UserSession.AdminRole, StringComparison.OrdinalIgnoreCase);
+
+                if (!passwordOk || isAdmin)
+                {
+                    loginStatus.Text = ForAdminMessage;
+                    loginStatus.CssClass = "login-status is-error";
+                    return;
+                }
+
+                // Only said after the password checks out, so it doesn't reveal which usernames exist.
+                if (status != AccountStatus.Active)
+                {
+                    loginStatus.Text = AccountStatus.DeactivatedMessage;
+                    loginStatus.CssClass = "login-status is-error";
+                    return;
+                }
+
+                AccountActivity.RecordSignIn(userId);
+                UserSession.SignIn(Session, userId, username, fullName);
+                Response.Redirect("ContentPage.aspx", false);
+                Context.ApplicationInstance.CompleteRequest();
+            }
+            // The raw exception text can name the server or the schema, so it goes to the trace log
+            // and the visitor gets a generic line instead.
+            catch (SqlException ex)
             {
-                loginStatus.Text = InvalidLoginMessage;
+                Trace.Warn("LoginPage", "Sign-in query failed", ex);
+                loginStatus.Text = "can't reach the server right now. try again in a moment.";
                 loginStatus.CssClass = "login-status is-error";
-                return;
             }
-
-            // Only said after the password checks out, so it doesn't reveal which usernames exist.
-            if (status != AccountStatus.Active)
+            catch (Exception ex)
             {
-                loginStatus.Text = AccountStatus.DeactivatedMessage;
+                // e.g. a malformed stored hash making PasswordHasher.Verify throw.
+                Trace.Warn("LoginPage", "Sign-in failed", ex);
+                loginStatus.Text = "something went wrong. please try again.";
                 loginStatus.CssClass = "login-status is-error";
-                return;
             }
-
-            AccountActivity.RecordSignIn(userId);
-            UserSession.SignIn(Session, userId, username, fullName);
-            Response.Redirect("ContentPage.aspx", false);
-            Context.ApplicationInstance.CompleteRequest();
         }
 
         private static string TextOrNull(SqlDataReader reader, int column)

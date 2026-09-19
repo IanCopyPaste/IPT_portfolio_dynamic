@@ -100,6 +100,27 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Admin.aspx" />
+    <Content Include="Assets\ContentPage\DEV_PHOTO.png" />
+    <Content Include="Assets\ContentPage\DEV_PHOTO2.png" />
+    <Content Include="Assets\ContentPage\Event_Management_System.png" />
+    <Content Include="Assets\ContentPage\Library_Management_System.png" />
+    <Content Include="Assets\ContentPage\logo-csharp.svg" />
+    <Content Include="Assets\ContentPage\logo-css3.svg" />
+    <Content Include="Assets\ContentPage\logo-dotnetcore.svg" />
+    <Content Include="Assets\ContentPage\logo-facebook.svg" />
+    <Content Include="Assets\ContentPage\logo-git.svg" />
+    <Content Include="Assets\ContentPage\logo-github.svg" />
+    <Content Include="Assets\ContentPage\logo-html5.svg" />
+    <Content Include="Assets\ContentPage\logo-instagram.svg" />
+    <Content Include="Assets\ContentPage\logo-java.svg" />
+    <Content Include="Assets\ContentPage\logo-javascript.svg" />
+    <Content Include="Assets\ContentPage\logo-linkedin.svg" />
+    <Content Include="Assets\ContentPage\logo-mssql.svg" />
+    <Content Include="Assets\ContentPage\logo-mysql.svg" />
+    <Content Include="Assets\ContentPage\logo-php.svg" />
+    <Content Include="Assets\ContentPage\logo-react.svg" />
+    <Content Include="Assets\ContentPage\logo-vbnet.svg" />
+    <Content Include="Assets\ContentPage\Michael_Jackson_Player.png" />
     <Content Include="Assets\css\Admin\admin.css" />
     <Content Include="Assets\js\Admin\admin.js" />
     <Content Include="AdminDashboard.aspx" />
@@ -158,11 +179,6 @@
     <Content Include="Assets\js\Admin\Dashboard\users\userstable.js" />
     <Content Include="Database\Migrations\001_admin_dashboard.sql" />
     <Content Include="Database\Seeds\sample_users.sql" />
-    <Content Include="Assets\ContentPage\DEV_PHOTO.png" />
-    <Content Include="Assets\ContentPage\DEV_PHOTO2.png" />
-    <Content Include="Assets\ContentPage\Event_Management_System.png" />
-    <Content Include="Assets\ContentPage\Library_Management_System.png" />
-    <Content Include="Assets\ContentPage\Michael_Jackson_Player.png" />
     <Content Include="Assets\css\ContentPage\about.css" />
     <Content Include="Assets\css\ContentPage\contact.css" />
     <Content Include="Assets\css\ContentPage\contentpage.css" />
