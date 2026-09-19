@@ -41,6 +41,29 @@
     to { transform: translateY(100vh); }
 }
 
+/* The sign-in screen fits one laptop screen, error messages included. The fixed navbar floats
+   over the section, so the top padding only has to clear it; the portfolio's 96px above and
+   below would push the form past the bottom of the screen. Register and Profile share
+   .login-section but lay themselves out in registerpage.css, hence the variant. */
+.login-section--signin .section-inner {
+    padding: calc(var(--cp-navbar-height) + 8px) 24px 24px;
+}
+
+/* Sized so the worst case (both field errors, the caps hint and the status line at once) still fits. */
+.login-section--signin .login-form {
+    gap: 14px;
+    padding-top: 22px;
+    padding-bottom: 24px;
+}
+
+.login-section--signin .login-field {
+    gap: 6px;
+}
+
+.login-section--signin .login-signup {
+    padding-top: 14px;
+}
+
 .login-layout {
     display: grid;
     grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
@@ -482,8 +505,8 @@
 }
 
 .login-footnote {
-    margin: 48px 0 0;
-    padding-top: 20px;
+    margin: 20px 0 0;
+    padding-top: 14px;
     border-top: 1px solid var(--cp-border);
     font-family: var(--cp-font-mono);
     font-size: 0.82rem;

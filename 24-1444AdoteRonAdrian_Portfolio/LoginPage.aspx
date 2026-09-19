@@ -15,7 +15,7 @@
     <%-- The portfolio's tokens, base, navbar and terminal bar are reused rather than copied, so the
          two pages can't drift apart. reveal.css loads after the login rules so its hidden state wins. --%>
     <link href="/Assets/css/ContentPage/contentpage.css?v=19" rel="stylesheet" />
-    <link href="/Assets/css/LoginPage/loginpage.css?v=4" rel="stylesheet" />
+    <link href="/Assets/css/LoginPage/loginpage.css?v=5" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/reveal.css?v=3" rel="stylesheet" />
 </head>
 <body>
@@ -29,7 +29,7 @@
         </nav>
 
         <main>
-            <section id="login" class="section login-section">
+            <section id="login" class="section login-section login-section--signin">
                 <div class="section-inner">
                     <div class="login-layout">
                         <%-- Everything is in view on load, so the delays stage a heading → log → panel sequence. --%>
@@ -63,7 +63,6 @@
                             <div class="login-form" id="loginForm" runat="server">
                                 <div class="login-form-head">
                                     <h2 class="login-title">Log in</h2>
-                                    <p class="login-demo-note">&nbsp;</p>
                                 </div>
 
                                 <div class="login-field">
@@ -85,11 +84,6 @@
                                     </div>
                                     <span class="login-hint" id="loginCapsHint" aria-live="polite"></span>
                                     <span class="login-error" id="loginPasswordError" aria-live="polite"></span>
-                                </div>
-
-                                <div class="login-options">
-                                    <label class="login-check" for="loginRemember">
-                                    </label>
                                 </div>
 
                                 <asp:Button ID="loginSubmit" runat="server" ClientIDMode="Static" CssClass="login-submit"
