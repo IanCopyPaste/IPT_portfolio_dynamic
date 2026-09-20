@@ -21,9 +21,10 @@ namespace _24_1444AdoteRonAdrian_Portfolio.Accounts
             LastName = "";
             Suffix = "";
             Address = "";
+            Email = "";
+            Sms = "";
             Sex = "";
             HomePhoto = "";
-            AboutPhoto = "";
             Nationality = "";
             JhsSchool = "";
             ShsSchool = "";
@@ -39,6 +40,11 @@ namespace _24_1444AdoteRonAdrian_Portfolio.Accounts
         public string Suffix { get; set; }
         public string Address { get; set; }
 
+        // Asked for on the account half of ProfilePage and both optional, so either can be "".
+        // The About section shows them alongside the address rather than only the contact form.
+        public string Email { get; set; }
+        public string Sms { get; set; }
+
         public DateTime? Birthdate { get; set; }
         public string Sex { get; set; }
         public string Nationality { get; set; }
@@ -52,21 +58,13 @@ namespace _24_1444AdoteRonAdrian_Portfolio.Accounts
         public string[] Skills { get; private set; }
         public string[] Projects { get; private set; }
 
-        // Paths under the uploads folder, "" until the user has uploaded one. ContentPage leaves
-        // the home portrait out entirely when it is empty and shows a marked box in the About
-        // section, so the two sections read differently on purpose.
+        // The hero portrait's path under the uploads folder, "" until the user has uploaded one,
+        // which is what leaves it out of the home screen entirely.
         public string HomePhoto { get; set; }
-
-        public string AboutPhoto { get; set; }
 
         public string HomePhotoUrl
         {
             get { return ProfilePhotos.Url(HomePhoto); }
-        }
-
-        public string AboutPhotoUrl
-        {
-            get { return ProfilePhotos.Url(AboutPhoto); }
         }
 
         public string FullName

@@ -15,13 +15,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
     <%-- Order matters: tokens and base first, sections in page order, then the reveal
          and responsive overrides, which have to win over the section rules. --%>
-    <link href="/Assets/css/ContentPage/contentpage.css?v=20" rel="stylesheet" />
-    <link href="/Assets/css/ContentPage/home.css?v=3" rel="stylesheet" />
-    <link href="/Assets/css/ContentPage/about.css?v=7" rel="stylesheet" />
-    <link href="/Assets/css/ContentPage/skills.css?v=4" rel="stylesheet" />
-    <link href="/Assets/css/ContentPage/contact.css?v=4" rel="stylesheet" />
-    <link href="/Assets/css/ContentPage/reveal.css?v=3" rel="stylesheet" />
-    <link href="/Assets/css/ContentPage/responsive.css?v=6" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/contentpage.css?v=21" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/home.css?v=4" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/about.css?v=8" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/skills.css?v=5" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/contact.css?v=5" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/reveal.css?v=4" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/responsive.css?v=7" rel="stylesheet" />
     <link href="/DEV_PHOTO.png" rel="icon" type="image/png" />
 </head>
 <body>
@@ -104,105 +104,75 @@
                 <div class="section-inner">
                     <%-- Hand-ordered so the heading slides in first and the column cascades behind it. --%>
                     <h2 class="section-heading reveal reveal--left" data-reveal-delay="60">Who am I?</h2>
-                    <div class="about-content">
-                        <div class="about-panels">
-                            <%-- Every value below is the signed-in user's own, and every one of them
-                                 can still be blank: a brand-new account has a name and an address and
-                                 nothing else, so each field falls back to its placeholder. --%>
-                            <article class="about-panel reveal" data-reveal-delay="120">
-                                <h3><span class="about-panel-index" aria-hidden="true">01</span>Personal Information</h3>
-                                <dl class="about-details">
-                                    <div class="about-detail"><dt>Age</dt><dd class="<%= UnsetClass(Owner.Age == null) %>"><%: AgeText %></dd></div>
-                                    <div class="about-detail"><dt>Sex</dt><dd class="<%= UnsetClass(Owner.Sex) %>"><%: Or(Owner.Sex) %></dd></div>
-                                    <div class="about-detail"><dt>Birthdate</dt><dd class="<%= UnsetClass(Owner.Birthdate == null) %>"><%: BirthdateText %></dd></div>
-                                    <div class="about-detail"><dt>Nationality</dt><dd class="<%= UnsetClass(Owner.Nationality) %>"><%: Or(Owner.Nationality) %></dd></div>
-                                    <div class="about-detail about-detail--wide"><dt>From</dt><dd class="<%= UnsetClass(Owner.Address) %>"><%: Or(Owner.Address) %></dd></div>
-                                </dl>
-                            </article>
-                            <%-- Three fixed stages rather than a list the user can add to: the rail is
-                                 a path through school, and a missing stage still has to hold its place
-                                 on it or the two either side would read as consecutive. --%>
-                            <article class="about-panel reveal" data-reveal-delay="230">
-                                <h3><span class="about-panel-index" aria-hidden="true">02</span>Educational Attainment</h3>
-                                <ol class="about-timeline">
-                                    <li class="about-timeline-item">
-                                        <abbr class="about-timeline-level" title="Junior High School">JHS</abbr>
-                                        <span class="about-timeline-school <%= UnsetClass(Owner.JhsSchool) %>"><%: Or(Owner.JhsSchool) %></span>
-                                    </li>
-                                    <li class="about-timeline-item">
-                                        <abbr class="about-timeline-level" title="Senior High School">SHS</abbr>
-                                        <span class="about-timeline-school <%= UnsetClass(Owner.ShsSchool) %>"><%: Or(Owner.ShsSchool) %></span>
-                                    </li>
-                                    <li class="about-timeline-item">
-                                        <span class="about-timeline-level">College</span>
-                                        <span class="about-timeline-school <%= UnsetClass(Owner.CollegeSchool) %>"><%: Or(Owner.CollegeSchool) %></span>
-                                        <%-- The course is the one part with no placeholder: an empty
-                                             second line under the school would read as a value that
-                                             went missing rather than one that was never asked for. --%>
-                                        <% if (Owner.CollegeCourse.Length > 0) { %>
-                                        <span class="about-timeline-course"><%: Owner.CollegeCourse %></span>
-                                        <% } %>
-                                    </li>
-                                </ol>
-                            </article>
-                            <article class="about-panel reveal" data-reveal-delay="340">
-                                <h3><span class="about-panel-index" aria-hidden="true">03</span>Hobbies and Interest</h3>
-                                <%-- Four slots on the form, however many of them were filled in here.
-                                     No emoji any more: they were picked to suit one person's list, and
-                                     there is no guessing one for a hobby somebody types in. --%>
-                                <div class="hobbies">
-                                    <% foreach (string hobby in Owner.FilledHobbies) { %>
-                                    <span class="hobby-tag"><%: hobby %></span>
+                    <div class="about-panels">
+                        <%-- Every value below is the signed-in user's own, and every one of them
+                             can still be blank: a brand-new account has a name and an address and
+                             nothing else, so each field falls back to its placeholder. --%>
+                        <article class="about-panel reveal" data-reveal-delay="120">
+                            <h3><span class="about-panel-index" aria-hidden="true">01</span>Personal Information</h3>
+                            <dl class="about-details">
+                                <div class="about-detail"><dt>Age</dt><dd class="<%= UnsetClass(Owner.Age == null) %>"><%: AgeText %></dd></div>
+                                <div class="about-detail"><dt>Sex</dt><dd class="<%= UnsetClass(Owner.Sex) %>"><%: Or(Owner.Sex) %></dd></div>
+                                <div class="about-detail"><dt>Birthdate</dt><dd class="<%= UnsetClass(Owner.Birthdate == null) %>"><%: BirthdateText %></dd></div>
+                                <div class="about-detail"><dt>Nationality</dt><dd class="<%= UnsetClass(Owner.Nationality) %>"><%: Or(Owner.Nationality) %></dd></div>
+                                <div class="about-detail"><dt>Mobile</dt><dd class="<%= UnsetClass(Owner.Sms) %>"><%: Or(Owner.Sms) %></dd></div>
+                                <%-- The email and the address are the two long values, so each
+                                     takes a row of its own rather than wrapping in a cell. --%>
+                                <div class="about-detail about-detail--wide"><dt>Email</dt><dd class="<%= UnsetClass(Owner.Email) %>"><%: Or(Owner.Email) %></dd></div>
+                                <div class="about-detail about-detail--wide"><dt>From</dt><dd class="<%= UnsetClass(Owner.Address) %>"><%: Or(Owner.Address) %></dd></div>
+                            </dl>
+                        </article>
+                        <%-- Three fixed stages rather than a list the user can add to: the rail is
+                             a path through school, and a missing stage still has to hold its place
+                             on it or the two either side would read as consecutive. --%>
+                        <article class="about-panel reveal" data-reveal-delay="230">
+                            <h3><span class="about-panel-index" aria-hidden="true">02</span>Educational Attainment</h3>
+                            <ol class="about-timeline">
+                                <li class="about-timeline-item">
+                                    <abbr class="about-timeline-level" title="Junior High School">JHS</abbr>
+                                    <span class="about-timeline-school <%= UnsetClass(Owner.JhsSchool) %>"><%: Or(Owner.JhsSchool) %></span>
+                                </li>
+                                <li class="about-timeline-item">
+                                    <abbr class="about-timeline-level" title="Senior High School">SHS</abbr>
+                                    <span class="about-timeline-school <%= UnsetClass(Owner.ShsSchool) %>"><%: Or(Owner.ShsSchool) %></span>
+                                </li>
+                                <li class="about-timeline-item">
+                                    <span class="about-timeline-level">College</span>
+                                    <span class="about-timeline-school <%= UnsetClass(Owner.CollegeSchool) %>"><%: Or(Owner.CollegeSchool) %></span>
+                                    <%-- The course is the one part with no placeholder: an empty
+                                         second line under the school would read as a value that
+                                         went missing rather than one that was never asked for. --%>
+                                    <% if (Owner.CollegeCourse.Length > 0) { %>
+                                    <span class="about-timeline-course"><%: Owner.CollegeCourse %></span>
                                     <% } %>
-                                    <% if (!HasHobbies) { %>
-                                    <p class="cp-unset cp-unset--block">No hobbies added yet.</p>
-                                    <% } %>
-                                </div>
-                            </article>
-                        </div>
-                        <%-- Same cutout portrait treatment as the home hero, parked on the right.
-                             Its delay lands it after the three panels have cascaded in. --%>
-                        <% if (HasAboutPhoto) { %>
-                        <div class="profile-photo profile-photo--about reveal" data-reveal-delay="450">
-                            <img src="<%: Owner.AboutPhotoUrl %>" alt="<%: OwnerName %>"
-                                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-                            <div class="profile-photo-placeholder" aria-hidden="true">
-                                <span class="ph-head"></span>
-                                <span class="ph-body"></span>
+                                </li>
+                            </ol>
+                        </article>
+                        <article class="about-panel reveal" data-reveal-delay="340">
+                            <h3><span class="about-panel-index" aria-hidden="true">03</span>Hobbies and Interest</h3>
+                            <%-- Four slots on the form, however many of them were filled in here.
+                                 No emoji any more: they were picked to suit one person's list, and
+                                 there is no guessing one for a hobby somebody types in. --%>
+                            <div class="hobbies">
+                                <% foreach (string hobby in Owner.FilledHobbies) { %>
+                                <span class="hobby-tag"><%: hobby %></span>
+                                <% } %>
+                                <% if (!HasHobbies) { %>
+                                <p class="cp-unset cp-unset--block">No hobbies added yet.</p>
+                                <% } %>
                             </div>
-                        </div>
-                        <% } else { %>
-                        <%-- Unlike the hero, this column is half the layout: leaving it out would
-                             strand the panels, so the empty frame says so instead. --%>
-                        <div class="profile-photo profile-photo--about photo-unset reveal" data-reveal-delay="450">
-                            <span class="photo-unset-mark" aria-hidden="true"></span>
-                            <p class="photo-unset-text">Image isn&rsquo;t set yet</p>
-                        </div>
-                        <% } %>
+                        </article>
                     </div>
                 </div>
             </section>
 
             <section id="skills" class="section skills-section">
                 <div class="section-inner">
-                    <%-- Same hand-ordered cascade as the About section: heading, then the chips, then
-                         the two panels. Each tag is observed on its own, so its delay is measured from
-                         when that tag scrolls in; the offsets hold the chips back until the panel has
-                         mostly landed. --%>
+                    <%-- Same hand-ordered cascade as the About section: the heading, then the two
+                         panels. Each chip in the lower panel is observed on its own, so its delay is
+                         measured from when that chip scrolls in; the offsets hold them back until
+                         the panel has mostly landed. --%>
                     <h2 class="section-heading reveal reveal--left" data-reveal-delay="60">Skills</h2>
-                    <div class="skill-tags">
-                        <%-- Stepped by hand at the tech tags' cadence rather than left to the automatic
-                             sibling stagger, so the chips carry on from the heading instead of
-                             restarting at zero underneath it. --%>
-                        <% int skillDelay = 120; %>
-                        <% foreach (string skill in Owner.FilledSkills) { %>
-                        <span class="skill-tag reveal" data-reveal-delay="<%= skillDelay %>"><%: skill %></span>
-                        <% skillDelay += 40; %>
-                        <% } %>
-                        <% if (!HasSkills) { %>
-                        <p class="cp-unset cp-unset--block reveal" data-reveal-delay="120">No skills added yet.</p>
-                        <% } %>
-                    </div>
 
                     <%-- The projects are the user's own five lines of text, so they are listed rather
                          than given the screenshot cards this section used to carry: there is no image
@@ -230,31 +200,34 @@
                         </div>
                     </div>
 
-                    <div class="tech-stack-panel reveal" data-reveal-delay="340">
+                    <%-- Where the site's own tech stack used to sit. That list was the same for
+                         everyone and carried logos; these are the user's own four skill slots, so
+                         they are plain chips, and an account that hasn't filled any in gets the
+                         panel with a line saying so rather than an empty shelf of logos. --%>
+                    <div class="highlight-panel reveal" data-reveal-delay="340">
                         <div class="terminal-bar" aria-hidden="true">
                             <span class="terminal-dot"></span>
                             <span class="terminal-dot"></span>
                             <span class="terminal-dot"></span>
-                            <span class="terminal-path">~/portfolio/tech-stack</span>
+                            <span class="terminal-path">~/portfolio/skills</span>
                         </div>
-                        <div class="tech-stack-body">
-                            <h3>Tech Stack</h3>
-                            <p class="tech-stack-prompt" aria-hidden="true">$ ls ./stack --all</p>
-                            <div class="tech-tags">
-                                <span class="tech-tag reveal" data-reveal-delay="550"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-html5.svg" alt="" />HTML</span>
-                                <span class="tech-tag reveal" data-reveal-delay="590"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-css3.svg" alt="" />CSS</span>
-                                <span class="tech-tag reveal" data-reveal-delay="630"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-javascript.svg" alt="" />JS</span>
-                                <span class="tech-tag reveal" data-reveal-delay="670"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-react.svg" alt="" />React.js</span>
-                                <span class="tech-tag reveal" data-reveal-delay="710"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-php.svg" alt="" />PHP</span>
-                                <span class="tech-tag reveal" data-reveal-delay="750"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-dotnetcore.svg" alt="" />ASP.NET</span>
-                                <span class="tech-tag reveal" data-reveal-delay="790"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-mssql.svg" alt="" />MSSQL</span>
-                                <span class="tech-tag reveal" data-reveal-delay="830"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-mysql.svg" alt="" />MySQL</span>
-                                <span class="tech-tag reveal" data-reveal-delay="870"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-git.svg" alt="" />Git</span>
-                                <span class="tech-tag reveal" data-reveal-delay="910"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-github.svg" alt="" />GitHub</span>
-                                <span class="tech-tag reveal" data-reveal-delay="950"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-csharp.svg" alt="" />C#</span>
-                                <span class="tech-tag reveal" data-reveal-delay="990"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-java.svg" alt="" />Java</span>
-                                <span class="tech-tag reveal" data-reveal-delay="1030"><img class="tech-tag-icon" src="/Assets/ContentPage/logo-vbnet.svg" alt="" />VB.NET</span>
+                        <div class="highlight-body">
+                            <h3>Highlighted Skills</h3>
+                            <p class="highlight-prompt" aria-hidden="true">$ ls ./skills --top <%= SkillSlots %></p>
+                            <% if (HasSkills) { %>
+                            <div class="highlight-tags">
+                                <%-- Stepped by hand rather than left to the automatic sibling
+                                     stagger, so the chips carry on from the panel instead of
+                                     restarting at zero inside it. --%>
+                                <% int skillDelay = 550; %>
+                                <% foreach (string skill in Owner.FilledSkills) { %>
+                                <span class="highlight-tag reveal" data-reveal-delay="<%= skillDelay %>"><%: skill %></span>
+                                <% skillDelay += 40; %>
+                                <% } %>
                             </div>
+                            <% } else { %>
+                            <p class="cp-unset cp-unset--block">No skills added yet.</p>
+                            <% } %>
                         </div>
                     </div>
                 </div>

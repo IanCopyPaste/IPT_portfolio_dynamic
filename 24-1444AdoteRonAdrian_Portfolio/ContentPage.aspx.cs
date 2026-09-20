@@ -64,10 +64,10 @@ namespace _24_1444AdoteRonAdrian_Portfolio
 
         protected bool HasHomePhoto => Owner.HomePhotoUrl.Length > 0;
 
-        protected bool HasAboutPhoto => Owner.AboutPhotoUrl.Length > 0;
-
-        // The projects prompt names how many the form has room for, so the two can't drift.
+        // The projects and skills prompts name how many the form has room for, so the two can't drift.
         protected static int ProjectSlots => ProfileRules.ProjectCount;
+
+        protected static int SkillSlots => ProfileRules.SkillCount;
 
         protected string AgeText => Owner.Age == null
             ? UnsetText

@@ -2,28 +2,18 @@
 
 /* ---------- About section ---------- */
 
-/* The heading drops straight onto the panel column here, so it gives up the 40px
-   the other section headings keep between themselves and their content. */
-.about-section .section-heading {
-    margin-bottom: 0;
-}
-
-.about-content {
-    display: flex;
-    align-items: center;
-    gap: 48px;
-}
-
+/* One full-width column now that the portrait that used to sit beside it is gone, so the
+   panels have the whole section to spread across and the heading keeps the 40px every
+   other section heading holds between itself and its content. */
 .about-panels {
-    flex: 1 1 auto;
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
 /* A plain card shell with no coloured stripe or border, kept short since three of these
-   stack in one column beside the portrait. The face carries the tech-stack terminal's
-   scanlines and corner glow, so both sections read as one system. */
+   stack in one column. The face carries the Skills panels' terminal scanlines and corner
+   glow, so both sections read as one system. */
 .about-panel {
     position: relative;
     overflow: hidden;
@@ -73,10 +63,13 @@
 
 /* Details sit in their own cells, label over value, so each one is read at a glance
    instead of being picked out of a run of "Label: value" lines. The labels are in the
-   terminal face; the values keep the body face at full brightness, so they stand out. */
+   terminal face; the values keep the body face at full brightness, so they stand out.
+   The floor is 180px rather than the 120px this took when the panel was half the section:
+   across the full width, auto-fit would otherwise cut the row into cells too narrow to
+   hold a mobile number on one line. */
 .about-details {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 10px;
     margin: 0;
 }
@@ -94,7 +87,8 @@
     box-shadow: 0 0 14px rgba(57, 255, 136, 0.28);
 }
 
-/* The hometown is the longest value, so it takes a full row rather than wrapping in a cell. */
+/* The email address and the hometown are the two long values, so each takes a full row
+   rather than wrapping inside a cell. */
 .about-detail--wide {
     grid-column: 1 / -1;
 }
@@ -191,7 +185,7 @@
 }
 
 /* Hobbies read as a row of tags rather than a stacked list. Same chip language as the
-   tech-stack and skill tags, so the three stay recognisably one system; they wrap onto a
+   highlighted-skill tags, so the two stay recognisably one system; they wrap onto a
    second line inside the panel rather than widening it. */
 .hobbies {
     display: flex;
@@ -219,48 +213,4 @@
     border-color: var(--cp-accent);
     color: var(--cp-accent);
     box-shadow: 0 0 14px rgba(57, 255, 136, 0.28);
-}
-
-/* Keeps the home hero's scale; only the placement — a column of its own — differs. */
-.profile-photo--about {
-    flex: 0 0 auto;
-    width: min(420px, 42vw);
-}
-
-/* The About portrait is half this section's layout, so an account with no photo yet gets a
-   marked frame rather than a hole: the panels beside it would otherwise sit alone against
-   empty space and read as a broken image. The home hero drops its portrait entirely instead,
-   because there the name and the bio already fill the screen. */
-.profile-photo--about.photo-unset {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    aspect-ratio: 3 / 4;
-    background:
-        repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 0px, rgba(255, 255, 255, 0.02) 1px, transparent 1px, transparent 4px),
-        var(--cp-surface);
-    /* Dashed, where every other card on the page is solid: the edge is the thing saying this is
-       a slot waiting to be filled rather than a card in its own right. */
-    border: 1px dashed var(--cp-border);
-    border-radius: var(--cp-radius-lg);
-}
-
-/* The silhouette's head and shoulders in outline, at the scale the real portrait would be. */
-.photo-unset-mark {
-    width: 72px;
-    height: 72px;
-    border: 2px dashed var(--cp-muted);
-    border-radius: 50%;
-    opacity: 0.55;
-}
-
-.photo-unset-text {
-    margin: 0;
-    font-family: var(--cp-font-mono);
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--cp-muted);
 }

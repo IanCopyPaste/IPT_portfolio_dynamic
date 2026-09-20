@@ -1,43 +1,12 @@
-/* ContentPage — Skills section (skills + projects + tech stack). Tokens and base styles live in contentpage.css, which loads first. */
+/* ContentPage — Skills section (projects + highlighted skills). Tokens and base styles live in contentpage.css, which loads first. */
 
 /* ---------- Skills section ---------- */
 
-/* The user's own skills, in the same chip language as the hobby tags in the About section
-   and the tech-stack tags below, so all three read as one system. Four slots on the form,
-   so this never grows past a line or two. */
-.skill-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 40px;
-}
-
-.skill-tag {
-    display: inline-flex;
-    align-items: center;
-    background: var(--cp-surface-alt);
-    border: 1px solid var(--cp-border);
-    border-radius: 999px;
-    padding: 7px 16px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    color: var(--cp-text);
-    transition: transform 200ms ease, border-color 200ms ease, color 200ms ease, box-shadow 200ms ease;
-}
-
-.skill-tag:hover {
-    transform: translateY(-3px);
-    border-color: var(--cp-accent);
-    color: var(--cp-accent);
-    box-shadow: 0 0 14px rgba(57, 255, 136, 0.28);
-}
-
-/* The projects panel and the tech-stack panel are the same terminal window and only differ
+/* The projects panel and the highlights panel are the same terminal window and only differ
    in what they hold, so they share the shell, the title and the prompt rather than each
    carrying its own copy. */
 .project-panel,
-.tech-stack-panel {
+.highlight-panel {
     position: relative;
     width: 100%;
     overflow: hidden;
@@ -56,14 +25,14 @@
 }
 
 .project-panel-body,
-.tech-stack-body {
+.highlight-body {
     padding: 28px 32px 32px;
 }
 
 /* No colour here: the hero gradient in home.css paints it, and this file loads later,
    so a colour declared here would override that gradient's transparent fill. */
 .project-panel h3,
-.tech-stack-panel h3 {
+.highlight-panel h3 {
     margin: 0;
     font-family: var(--cp-font-display);
     font-weight: 400;
@@ -75,7 +44,7 @@
 
 /* The home bio's voice: same mono face, same glow, same flicker. */
 .project-prompt,
-.tech-stack-prompt {
+.highlight-prompt {
     margin: 6px 0 22px;
     font-family: var(--cp-font-mono);
     font-size: 1rem;
@@ -128,7 +97,7 @@
 
 /* The same glowing block cursor the login and 403 terminals end on. */
 .project-prompt::after,
-.tech-stack-prompt::after {
+.highlight-prompt::after {
     content: "";
     display: inline-block;
     width: 0.6em;
@@ -144,21 +113,21 @@
     50% { opacity: 0; }
 }
 
-.tech-tags {
+.highlight-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
 }
 
-/* Hover matches the hobby tags in the About section, so the chips stay one system. */
-.tech-tag {
+/* Four slots on the form, so this never grows past a line or two. Hover matches the hobby
+   tags in the About section, so the chips stay one system. */
+.highlight-tag {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
     background: var(--cp-surface-alt);
     border: 1px solid var(--cp-border);
     border-radius: 999px;
-    padding: 6px 16px 6px 8px;
+    padding: 7px 16px;
     font-size: 0.85rem;
     font-weight: 600;
     letter-spacing: 0.02em;
@@ -166,19 +135,9 @@
     transition: transform 200ms ease, border-color 200ms ease, color 200ms ease, box-shadow 200ms ease;
 }
 
-.tech-tag:hover {
+.highlight-tag:hover {
     transform: translateY(-3px);
     border-color: var(--cp-accent);
     color: var(--cp-accent);
     box-shadow: 0 0 14px rgba(57, 255, 136, 0.28);
-}
-
-.tech-tag-icon {
-    width: 20px;
-    height: 20px;
-    padding: 2px;
-    border-radius: 50%;
-    background: #ffffff;
-    object-fit: contain;
-    flex: 0 0 auto;
 }

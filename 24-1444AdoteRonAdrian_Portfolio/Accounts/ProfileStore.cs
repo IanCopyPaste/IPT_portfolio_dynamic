@@ -5,9 +5,10 @@ using System.Data.SqlClient;
 
 namespace _24_1444AdoteRonAdrian_Portfolio.Accounts
 {
-    // Reads and writes a user_profile row through the two stored procedures in
-    // Database/Migrations/002_profile_content.sql. ContentPage reads the signed-in user's row,
-    // ProfilePage writes it, and the admin dashboard reads anyone's.
+    // Reads and writes a user_profile row through the two stored procedures, as last recreated by
+    // Database/Migrations/004_profile_contact.sql. ContentPage reads the signed-in user's row,
+    // ProfilePage writes it, and the admin dashboard reads anyone's. The users columns the read
+    // brings back with it are read-only here: ProfilePage saves those with its own UPDATE.
     public static class ProfileStore
     {
         private static readonly string PortfolioConn =
@@ -20,19 +21,20 @@ namespace _24_1444AdoteRonAdrian_Portfolio.Accounts
         private const int LastNameColumn = 2;
         private const int SuffixColumn = 3;
         private const int AddressColumn = 4;
-        private const int BirthdateColumn = 5;
-        private const int SexColumn = 6;
-        private const int NationalityColumn = 7;
-        private const int JhsColumn = 8;
-        private const int ShsColumn = 9;
-        private const int CollegeColumn = 10;
-        private const int CourseColumn = 11;
-        private const int FirstHobbyColumn = 12;
-        // Appended after the three runs of slots, so adding them left every other index alone.
-        private const int HomePhotoColumn = 25;
-        private const int AboutPhotoColumn = 26;
+        private const int EmailColumn = 5;
+        private const int SmsColumn = 6;
+        private const int BirthdateColumn = 7;
+        private const int SexColumn = 8;
+        private const int NationalityColumn = 9;
+        private const int JhsColumn = 10;
+        private const int ShsColumn = 11;
+        private const int CollegeColumn = 12;
+        private const int CourseColumn = 13;
+        private const int FirstHobbyColumn = 14;
+        // Last, after the three runs of slots.
+        private const int HomePhotoColumn = 27;
 
-        // The width of the two photo columns.
+        // The width of the home_photo column.
         private const int PhotoPathMaxLength = 260;
 
         // Null only when there is no such account, which tells the caller its session is stale. An
@@ -61,6 +63,8 @@ namespace _24_1444AdoteRonAdrian_Portfolio.Accounts
                     content.LastName = Text(reader, LastNameColumn);
                     content.Suffix = Text(reader, SuffixColumn);
                     content.Address = Text(reader, AddressColumn);
+                    content.Email = Text(reader, EmailColumn);
+                    content.Sms = Text(reader, SmsColumn);
                     content.Birthdate = reader.IsDBNull(BirthdateColumn)
                         ? (DateTime?)null : reader.GetDateTime(BirthdateColumn);
                     content.Sex = Text(reader, SexColumn);
@@ -78,7 +82,6 @@ namespace _24_1444AdoteRonAdrian_Portfolio.Accounts
                     ReadSlots(reader, column, content.Projects);
 
                     content.HomePhoto = Text(reader, HomePhotoColumn);
-                    content.AboutPhoto = Text(reader, AboutPhotoColumn);
                 }
             }
 
@@ -110,7 +113,6 @@ namespace _24_1444AdoteRonAdrian_Portfolio.Accounts
                 AddSlots(cmd, "@skill_", ProfileRules.SkillMaxLength, content.Skills);
                 AddSlots(cmd, "@project_", ProfileRules.ProjectMaxLength, content.Projects);
                 Add(cmd, "@home_photo", PhotoPathMaxLength, content.HomePhoto);
-                Add(cmd, "@about_photo", PhotoPathMaxLength, content.AboutPhoto);
 
                 conn.Open();
                 cmd.ExecuteNonQuery();

@@ -180,6 +180,7 @@
     <Content Include="Database\Migrations\001_admin_dashboard.sql" />
     <Content Include="Database\Migrations\002_profile_content.sql" />
     <Content Include="Database\Migrations\003_profile_photos.sql" />
+    <Content Include="Database\Migrations\004_profile_contact.sql" />
     <Content Include="uploads\README.txt" />
     <Content Include="Database\Seeds\sample_users.sql" />
     <Content Include="Assets\css\ContentPage\about.css" />

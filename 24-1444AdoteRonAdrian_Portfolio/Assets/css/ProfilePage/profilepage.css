@@ -72,10 +72,10 @@
     outline-offset: 3px;
 }
 
-/* Two wide cells rather than the three-column default: each holds a thumbnail as well as a
-   picker, so they need the room. */
+/* One wide cell rather than the three-column default: it holds a thumbnail as well as a
+   picker, so it needs the room. */
 .profile-fields--photos {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1fr);
 }
 
 /* A file input can never be pre-filled -- browsers won't let a page put a value in one -- so the
@@ -261,7 +261,6 @@
     .profile-fields--account,
     .profile-fields--education,
     .profile-fields--slots,
-    .profile-fields--photos,
     .profile-fields--projects {
         grid-template-columns: 1fr;
     }

@@ -326,7 +326,7 @@ img {
     border-radius: 2px;
 }
 
-/* Terminal-window title bar: three dots and a path. Shared by the tech-stack panel and the
+/* Terminal-window title bar: three dots and a path. Shared by the Skills panels and the
    contact form, so it lives with the layout helpers rather than in either section file. */
 .terminal-bar {
     display: flex;

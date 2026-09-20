@@ -16,11 +16,11 @@
     <%-- The same account form as the sign-up page, filled in, so it borrows that page's stylesheet
          (and, through it, the login page's); profilepage.css only adds the profile's own parts.
          reveal.css loads last so its hidden state wins. --%>
-    <link href="/Assets/css/ContentPage/contentpage.css?v=20" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/contentpage.css?v=21" rel="stylesheet" />
     <link href="/Assets/css/LoginPage/loginpage.css?v=4" rel="stylesheet" />
     <link href="/Assets/css/RegisterPage/registerpage.css?v=7" rel="stylesheet" />
-    <link href="/Assets/css/ProfilePage/profilepage.css?v=4" rel="stylesheet" />
-    <link href="/Assets/css/ContentPage/reveal.css?v=3" rel="stylesheet" />
+    <link href="/Assets/css/ProfilePage/profilepage.css?v=5" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/reveal.css?v=4" rel="stylesheet" />
     <link href="/DEV_PHOTO.png" rel="icon" type="image/png" />
 </head>
 <body>
@@ -261,12 +261,12 @@
                                 </div>
                             </section>
 
-                            <%-- The two portraits ContentPage draws. A step of their own: an upload
-                                 is a different kind of answer from a text box, and the current
-                                 image has to be shown beside the picker to be worth anything. --%>
-                            <section class="profile-step" data-step-label="Photos">
-                                <div class="register-group" role="group" aria-labelledby="prfGroupPhotos">
-                                    <p class="register-group-label" id="prfGroupPhotos">// photos</p>
+                            <%-- The one portrait ContentPage draws. A step of its own: an upload is
+                                 a different kind of answer from a text box, and the current image
+                                 has to be shown beside the picker to be worth anything. --%>
+                            <section class="profile-step" data-step-label="Photo">
+                                <div class="register-group" role="group" aria-labelledby="prfGroupPhoto">
+                                    <p class="register-group-label" id="prfGroupPhoto">// photo</p>
                                     <div class="register-fields profile-fields--photos">
                                         <div class="login-field">
                                             <label for="prfHomePhoto">Home portrait <span class="register-optional">optional</span></label>
@@ -274,13 +274,6 @@
                                             <asp:Image ID="prfHomePreview" runat="server" ClientIDMode="Static" CssClass="profile-photo-preview" AlternateText="Your home portrait" />
                                             <asp:FileUpload ID="prfHomePhoto" runat="server" ClientIDMode="Static" CssClass="profile-file" />
                                             <asp:Label ID="prfHomePhotoError" runat="server" ClientIDMode="Static" CssClass="login-error" aria-live="polite" />
-                                        </div>
-                                        <div class="login-field">
-                                            <label for="prfAboutPhoto">About portrait <span class="register-optional">optional</span></label>
-                                            <p class="profile-photo-note">Shows a marked empty frame until you set one.</p>
-                                            <asp:Image ID="prfAboutPreview" runat="server" ClientIDMode="Static" CssClass="profile-photo-preview" AlternateText="Your about portrait" />
-                                            <asp:FileUpload ID="prfAboutPhoto" runat="server" ClientIDMode="Static" CssClass="profile-file" />
-                                            <asp:Label ID="prfAboutPhotoError" runat="server" ClientIDMode="Static" CssClass="login-error" aria-live="polite" />
                                         </div>
                                     </div>
                                 </div>

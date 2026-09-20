@@ -6,9 +6,9 @@ using System.Web.UI.WebControls;
 
 namespace _24_1444AdoteRonAdrian_Portfolio.Accounts
 {
-    // The two portraits ContentPage draws. The file is written under ~/uploads and only its path
-    // goes in the database, so the image is served as an ordinary static file rather than streamed
-    // back through a page on every request.
+    // The portrait ContentPage draws in its hero. The file is written under ~/uploads and only its
+    // path goes in the database, so the image is served as an ordinary static file rather than
+    // streamed back through a page on every request.
     public static class ProfilePhotos
     {
         public const string Folder = "uploads";
@@ -22,9 +22,8 @@ namespace _24_1444AdoteRonAdrian_Portfolio.Accounts
         public const string TypeMessage = "Only PNG or JPEG images.";
         public const string SizeMessage = "Keep the image under 2 MB.";
 
-        // The two slots, used as part of the generated file name.
+        // Used as part of the generated file name.
         public const string HomeSlot = "home";
-        public const string AboutSlot = "about";
 
         // What the file has to start with to be what its extension claims. Checked because an
         // extension is only a promise: anything at all can be renamed to .png.

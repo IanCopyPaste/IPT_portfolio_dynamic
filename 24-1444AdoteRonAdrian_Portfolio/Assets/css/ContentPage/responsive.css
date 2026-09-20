@@ -25,18 +25,6 @@
         width: min(320px, 74vw);
     }
 
-    .about-content {
-        flex-direction: column;
-    }
-
-    .about-panels {
-        width: 100%;
-    }
-
-    .profile-photo--about {
-        width: min(320px, 74vw);
-    }
-
     .contact-layout {
         grid-template-columns: 1fr;
     }
@@ -92,7 +80,7 @@
     }
 
     .project-panel-body,
-    .tech-stack-body {
+    .highlight-body {
         padding: 22px 20px 24px;
     }
 
