@@ -17,11 +17,11 @@
          and responsive overrides, which have to win over the section rules. --%>
     <link href="/Assets/css/ContentPage/contentpage.css?v=21" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/home.css?v=4" rel="stylesheet" />
-    <link href="/Assets/css/ContentPage/about.css?v=8" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/about.css?v=9" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/skills.css?v=5" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/contact.css?v=5" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/reveal.css?v=4" rel="stylesheet" />
-    <link href="/Assets/css/ContentPage/responsive.css?v=7" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/responsive.css?v=8" rel="stylesheet" />
     <link href="/DEV_PHOTO.png" rel="icon" type="image/png" />
 </head>
 <body>
@@ -116,8 +116,8 @@
                                 <div class="about-detail"><dt>Birthdate</dt><dd class="<%= UnsetClass(Owner.Birthdate == null) %>"><%: BirthdateText %></dd></div>
                                 <div class="about-detail"><dt>Nationality</dt><dd class="<%= UnsetClass(Owner.Nationality) %>"><%: Or(Owner.Nationality) %></dd></div>
                                 <div class="about-detail"><dt>Mobile</dt><dd class="<%= UnsetClass(Owner.Sms) %>"><%: Or(Owner.Sms) %></dd></div>
-                                <%-- The email and the address are the two long values, so each
-                                     takes a row of its own rather than wrapping in a cell. --%>
+                                <%-- The email and the address are the two long values, so they
+                                     share a row of their own, half of it each. --%>
                                 <div class="about-detail about-detail--wide"><dt>Email</dt><dd class="<%= UnsetClass(Owner.Email) %>"><%: Or(Owner.Email) %></dd></div>
                                 <div class="about-detail about-detail--wide"><dt>From</dt><dd class="<%= UnsetClass(Owner.Address) %>"><%: Or(Owner.Address) %></dd></div>
                             </dl>

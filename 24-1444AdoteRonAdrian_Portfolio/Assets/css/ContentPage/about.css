@@ -64,17 +64,19 @@
 /* Details sit in their own cells, label over value, so each one is read at a glance
    instead of being picked out of a run of "Label: value" lines. The labels are in the
    terminal face; the values keep the body face at full brightness, so they stand out.
-   The floor is 180px rather than the 120px this took when the panel was half the section:
-   across the full width, auto-fit would otherwise cut the row into cells too narrow to
-   hold a mobile number on one line. */
+   The track count is fixed rather than auto-fit because the two long values have to land
+   beside each other on a row of their own, and a span can only be counted against a row
+   whose width is known. Ten tenths divide both ways: five short cells fill the first row,
+   the email and the hometown halve the second. */
 .about-details {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(10, 1fr);
     gap: 10px;
     margin: 0;
 }
 
 .about-detail {
+    grid-column: span 2;
     padding: 8px 12px;
     background: var(--cp-surface-alt);
     border: 1px solid var(--cp-border);
@@ -87,10 +89,18 @@
     box-shadow: 0 0 14px rgba(57, 255, 136, 0.28);
 }
 
-/* The email address and the hometown are the two long values, so each takes a full row
-   rather than wrapping inside a cell. */
+/* The email address and the hometown are the two long values: half a row each, so they read
+   as a pair and still have room a short cell wouldn't give them. */
 .about-detail--wide {
-    grid-column: 1 / -1;
+    grid-column: span 5;
+}
+
+/* The first of the pair -- the second-to-last cell in the list -- is pinned to column 1 so the
+   two always open a row together. Five short cells above them don't divide evenly into every
+   row width, and without this the email would drop into whatever gap the last short cell left
+   and the hometown would wrap away from it. */
+.about-detail--wide:nth-last-child(2) {
+    grid-column: 1 / span 5;
 }
 
 .about-detail dt,
