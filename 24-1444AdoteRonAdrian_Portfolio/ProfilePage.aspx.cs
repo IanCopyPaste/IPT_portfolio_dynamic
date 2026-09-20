@@ -31,6 +31,7 @@ namespace _24_1444AdoteRonAdrian_Portfolio
 
             AccountRules.ApplyLimits(prfFirstName, prfMiddleName, prfLastName, prfAddress, prfEmail, prfSms, prfUser);
             ApplyPortfolioLimits();
+            ProfilePhotos.Apply(prfHomePhoto);
             prfCurrentPassword.MaxLength = AccountRules.PasswordMaxLength;
             prfPassword.MaxLength = AccountRules.PasswordMaxLength;
             prfConfirm.MaxLength = AccountRules.PasswordMaxLength;

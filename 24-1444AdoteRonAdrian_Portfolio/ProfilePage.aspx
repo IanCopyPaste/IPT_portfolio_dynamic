@@ -349,7 +349,7 @@
     </form>
     <%-- contentpage.js drives the navbar wash and the reveals; it skips the sections this page doesn't have. --%>
     <script src="/Assets/js/ContentPage/contentpage.js?v=6"></script>
-    <script src="/Assets/js/RegisterPage/registerpage.js?v=7"></script>
+    <script src="/Assets/js/RegisterPage/registerpage.js?v=8"></script>
     <%-- Loads after registerpage.js: it wraps that form in steps and hands it a way to bring
          a failed field back on screen. --%>
     <script src="/Assets/js/ProfilePage/profilepage.js?v=2"></script>

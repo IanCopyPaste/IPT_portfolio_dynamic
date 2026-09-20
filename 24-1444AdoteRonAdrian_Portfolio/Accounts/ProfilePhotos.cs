@@ -17,7 +17,11 @@ namespace _24_1444AdoteRonAdrian_Portfolio.Accounts
         // applies by default, so an oversized file is rejected with a message rather than by IIS.
         public const int MaxBytes = 2 * 1024 * 1024;
 
-        public const string Accept = "image/png,image/jpeg";
+        // Handed to the file input's accept attribute, which is what narrows the file explorer's
+        // own filter. Extensions first and media types after: between the two every browser has
+        // something it understands, and a dialog that offers nothing but .jpg/.jpeg/.png is one
+        // fewer way to pick a file that was never going to be accepted.
+        public const string Accept = ".jpg,.jpeg,.png,image/jpeg,image/png";
 
         public const string TypeMessage = "Only PNG or JPEG images.";
         public const string SizeMessage = "Keep the image under 2 MB.";
@@ -26,9 +30,27 @@ namespace _24_1444AdoteRonAdrian_Portfolio.Accounts
         public const string HomeSlot = "home";
 
         // What the file has to start with to be what its extension claims. Checked because an
-        // extension is only a promise: anything at all can be renamed to .png.
-        private static readonly byte[] PngMagic = { 0x89, 0x50, 0x4E, 0x47 };
+        // extension is only a promise: anything at all can be renamed to .png. The PNG signature
+        // is taken in full rather than its first four bytes -- the tail is the line-ending trap
+        // that catches a file mangled on the way here, and half a check is not a check.
+        private static readonly byte[] PngMagic = { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A };
         private static readonly byte[] JpegMagic = { 0xFF, 0xD8, 0xFF };
+
+        // The only two media types a browser may claim for an upload here. Its word proves nothing
+        // -- it mostly derives this from the extension it was handed -- so this turns away the
+        // careless case cheaply and the magic bytes are what actually decide.
+        private static readonly string[] AllowedTypes = { "image/png", "image/jpeg" };
+
+        // Puts the same limits the server enforces onto the file input itself, so the file explorer
+        // filters by them and the page can refuse a bad pick without a post-back. Set here rather
+        // than written into the markup so each limit has one source of truth.
+        public static void Apply(FileUpload upload)
+        {
+            upload.Attributes["accept"] = Accept;
+            upload.Attributes["data-max-bytes"] = MaxBytes.ToString(CultureInfo.InvariantCulture);
+            upload.Attributes["data-type-message"] = TypeMessage;
+            upload.Attributes["data-size-message"] = SizeMessage;
+        }
 
         // "uploads/34-home-20260920143005.png" as the browser should ask for it. Empty when the
         // user hasn't uploaded one, which is what the page checks.
@@ -54,11 +76,21 @@ namespace _24_1444AdoteRonAdrian_Portfolio.Accounts
                 return SizeMessage;
             }
 
+            // An empty file has no signature to disagree with, so it would walk straight through
+            // the test below.
+            if (upload.PostedFile.ContentLength <= 0)
+            {
+                return TypeMessage;
+            }
+
             string extension = Extension(upload.FileName);
 
-            // An extension is only a promise, so the first bytes have to agree with it: anything
-            // at all can be renamed to .png.
-            return extension == null || !HasMagic(upload.PostedFile.InputStream, extension)
+            // Three things have to agree before the file is kept: the extension, the media type the
+            // browser sent, and the bytes themselves. Only the last is evidence -- the other two
+            // are the user's side of the story, and anything at all can be renamed to .png -- but
+            // a file that fails any one of them is not what was asked for.
+            return extension == null || !IsAllowedType(upload.PostedFile.ContentType) ||
+                !HasMagic(upload.PostedFile.InputStream, extension)
                 ? TypeMessage : null;
         }
 
@@ -125,6 +157,23 @@ namespace _24_1444AdoteRonAdrian_Portfolio.Accounts
             }
 
             return extension == ".jpg" || extension == ".jpeg" ? ".jpg" : null;
+        }
+
+        // The header can carry parameters ("image/jpeg; charset=binary") and any casing at all, so
+        // it is cut back to the media type before being compared.
+        private static bool IsAllowedType(string contentType)
+        {
+            string type = (contentType ?? "").Split(';')[0].Trim();
+
+            for (int i = 0; i < AllowedTypes.Length; i++)
+            {
+                if (string.Equals(type, AllowedTypes[i], StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private static bool HasMagic(Stream stream, string extension)

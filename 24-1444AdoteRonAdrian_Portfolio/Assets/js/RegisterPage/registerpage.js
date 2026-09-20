@@ -128,6 +128,30 @@
             rules[name] = optionalText;
         });
 
+    // The portrait picker, which only the profile form has. The accept attribute narrows the file
+    // explorer, but every browser lets the user widen it back to "All files", so the pick is
+    // checked here too and a bad one never reaches the server. The limits and both messages are
+    // read off the input, where ProfilePhotos.Apply put them, so there is no second copy of them
+    // to drift. The server still checks the bytes: a name and a type are only claims.
+    rules.HomePhoto = function (value, input) {
+        var file = input.files && input.files[0];
+
+        if (!file) {
+            // No pick at all means "keep the portrait I already have", not a mistake.
+            return "";
+        }
+
+        // The reported type is taken as a claim to be matched when the browser makes one, and
+        // skipped when it doesn't -- an OS with no mapping for .png would otherwise send back a
+        // real portrait as a rejection.
+        if (!/\.(jpe?g|png)$/i.test(file.name) || (file.type && !/^image\/(jpeg|png)$/i.test(file.type))) {
+            return input.getAttribute("data-type-message");
+        }
+
+        return file.size > parseInt(input.getAttribute("data-max-bytes"), 10)
+            ? input.getAttribute("data-size-message") : "";
+    };
+
     var fields = Object.keys(rules).map(function (name) {
         return {
             input: byName(name),
@@ -195,6 +219,17 @@
                 });
             }
         });
+    });
+
+    // A file input reports a pick as `change`, and the text fields' `input` handler above only
+    // rechecks a field that is already marked, so the first bad pick would otherwise go unanswered
+    // until Save. This says so the moment the dialog closes.
+    fields.forEach(function (field) {
+        if (field.input.type === "file") {
+            field.input.addEventListener("change", function () {
+                showFieldError(field);
+            });
+        }
     });
 
     // One toggle reveals every password input, so they can be compared by eye.
