@@ -125,6 +125,12 @@ namespace _24_1444AdoteRonAdrian_Portfolio
             ProfileContent portfolio = ReadPortfolio(out portfolioValid);
             valid &= portfolioValid;
 
+            // Only the pickers are checked here. Nothing is written to disk until every other
+            // field has passed too, so a save that fails on a typo somewhere else does not leave
+            // an orphaned image behind.
+            valid &= AccountRules.Report(prfHomePhotoError, ProfilePhotos.Check(prfHomePhoto));
+            valid &= AccountRules.Report(prfAboutPhotoError, ProfilePhotos.Check(prfAboutPhoto));
+
             if (!valid)
             {
                 ShowStatus("save failed. fix the highlighted fields and try again.", true);
@@ -189,6 +195,11 @@ namespace _24_1444AdoteRonAdrian_Portfolio
             // A second write rather than part of the first: the portfolio lives in its own table,
             // behind the stored procedure that upserts it. The row above has just been updated, so
             // the account is there; a false here would mean it went in between the two.
+            // Everything has passed and the account is still there, so the uploads can be written.
+            // The paths of the portraits they replace come from the stored row, not the form: a
+            // picker posts nothing when no file was chosen, so the row is the only record of them.
+            ApplyPhotos(portfolio, userId, ProfileStore.Get(userId) ?? new ProfileContent());
+
             if (!ProfileStore.Save(userId, portfolio))
             {
                 SignOutTo("LoginPage.aspx");
@@ -271,6 +282,30 @@ namespace _24_1444AdoteRonAdrian_Portfolio
             ShowSlots(HobbyBoxes, content.Hobbies);
             ShowSlots(SkillBoxes, content.Skills);
             ShowSlots(ProjectBoxes, content.Projects);
+            ShowPhotos(content);
+        }
+
+        // The pickers can't be pre-filled -- a browser never hands a file input a value back -- so
+        // the current portrait is shown beside each one instead, and "no file chosen" means keep it.
+        private void ShowPhotos(ProfileContent content)
+        {
+            ShowPhoto(prfHomePreview, content.HomePhotoUrl);
+            ShowPhoto(prfAboutPreview, content.AboutPhotoUrl);
+        }
+
+        private static void ShowPhoto(Image preview, string url)
+        {
+            preview.Visible = url.Length > 0;
+            preview.ImageUrl = url;
+        }
+
+        // Writes whichever files were chosen and puts their paths on the content about to be
+        // saved, so every path in the database already has a file behind it. A picker left empty
+        // keeps the portrait that is there; one that was replaced is deleted by Save.
+        private void ApplyPhotos(ProfileContent content, int userId, ProfileContent saved)
+        {
+            content.HomePhoto = ProfilePhotos.Save(prfHomePhoto, userId, ProfilePhotos.HomeSlot, saved.HomePhoto);
+            content.AboutPhoto = ProfilePhotos.Save(prfAboutPhoto, userId, ProfilePhotos.AboutSlot, saved.AboutPhoto);
         }
 
         // Reads the portfolio half of the form and reports on each field, the same way the account

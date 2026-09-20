@@ -28,6 +28,12 @@ namespace _24_1444AdoteRonAdrian_Portfolio.Accounts
         private const int CollegeColumn = 10;
         private const int CourseColumn = 11;
         private const int FirstHobbyColumn = 12;
+        // Appended after the three runs of slots, so adding them left every other index alone.
+        private const int HomePhotoColumn = 25;
+        private const int AboutPhotoColumn = 26;
+
+        // The width of the two photo columns.
+        private const int PhotoPathMaxLength = 260;
 
         // Null only when there is no such account, which tells the caller its session is stale. An
         // account that has simply never saved its portfolio comes back with the name and address
@@ -70,6 +76,9 @@ namespace _24_1444AdoteRonAdrian_Portfolio.Accounts
                     column = ReadSlots(reader, column, content.Hobbies);
                     column = ReadSlots(reader, column, content.Skills);
                     ReadSlots(reader, column, content.Projects);
+
+                    content.HomePhoto = Text(reader, HomePhotoColumn);
+                    content.AboutPhoto = Text(reader, AboutPhotoColumn);
                 }
             }
 
@@ -100,6 +109,8 @@ namespace _24_1444AdoteRonAdrian_Portfolio.Accounts
                 AddSlots(cmd, "@hobby_", ProfileRules.HobbyMaxLength, content.Hobbies);
                 AddSlots(cmd, "@skill_", ProfileRules.SkillMaxLength, content.Skills);
                 AddSlots(cmd, "@project_", ProfileRules.ProjectMaxLength, content.Projects);
+                Add(cmd, "@home_photo", PhotoPathMaxLength, content.HomePhoto);
+                Add(cmd, "@about_photo", PhotoPathMaxLength, content.AboutPhoto);
 
                 conn.Open();
                 cmd.ExecuteNonQuery();

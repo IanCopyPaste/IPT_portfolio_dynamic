@@ -17,7 +17,7 @@
          and responsive overrides, which have to win over the section rules. --%>
     <link href="/Assets/css/ContentPage/contentpage.css?v=20" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/home.css?v=3" rel="stylesheet" />
-    <link href="/Assets/css/ContentPage/about.css?v=6" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/about.css?v=7" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/skills.css?v=4" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/contact.css?v=4" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/reveal.css?v=3" rel="stylesheet" />
@@ -82,14 +82,20 @@
                             sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa quae
                             ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
                         </p>
+                        <%-- No portrait, nothing here: the hero is the name and the bio, and an empty
+                             frame beside them would read as something that failed to load. --%>
+                        <% if (HasHomePhoto) { %>
                         <div class="profile-photo profile-photo--home reveal" data-reveal-delay="320">
-                            <img src="/Assets/ContentPage/dev_photo.png" alt="<%: OwnerName %>"
+                            <img src="<%: Owner.HomePhotoUrl %>" alt="<%: OwnerName %>"
                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                            <%-- The silhouette is the fallback for a row that points at a file that is
+                                 no longer on disk, not for a user who never uploaded one. --%>
                             <div class="profile-photo-placeholder" aria-hidden="true">
                                 <span class="ph-head"></span>
                                 <span class="ph-body"></span>
                             </div>
                         </div>
+                        <% } %>
                     </div>
                 </div>
             </section>
@@ -153,18 +159,26 @@
                                     <% } %>
                                 </div>
                             </article>
-                            </article>
                         </div>
                         <%-- Same cutout portrait treatment as the home hero, parked on the right.
                              Its delay lands it after the three panels have cascaded in. --%>
+                        <% if (HasAboutPhoto) { %>
                         <div class="profile-photo profile-photo--about reveal" data-reveal-delay="450">
-                            <img src="/Assets/ContentPage/dev_photo2.png" alt="<%: OwnerName %>"
+                            <img src="<%: Owner.AboutPhotoUrl %>" alt="<%: OwnerName %>"
                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
                             <div class="profile-photo-placeholder" aria-hidden="true">
                                 <span class="ph-head"></span>
                                 <span class="ph-body"></span>
                             </div>
                         </div>
+                        <% } else { %>
+                        <%-- Unlike the hero, this column is half the layout: leaving it out would
+                             strand the panels, so the empty frame says so instead. --%>
+                        <div class="profile-photo profile-photo--about photo-unset reveal" data-reveal-delay="450">
+                            <span class="photo-unset-mark" aria-hidden="true"></span>
+                            <p class="photo-unset-text">Image isn&rsquo;t set yet</p>
+                        </div>
+                        <% } %>
                     </div>
                 </div>
             </section>

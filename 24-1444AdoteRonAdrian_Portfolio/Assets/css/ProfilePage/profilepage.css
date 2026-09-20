@@ -72,6 +72,59 @@
     outline-offset: 3px;
 }
 
+/* Two wide cells rather than the three-column default: each holds a thumbnail as well as a
+   picker, so they need the room. */
+.profile-fields--photos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* A file input can never be pre-filled -- browsers won't let a page put a value in one -- so the
+   portrait that is already saved is shown above the picker, and "no file chosen" means keep it. */
+.profile-photo-preview {
+    width: 100%;
+    max-width: 160px;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    border: 1px solid var(--cp-border);
+    border-radius: var(--cp-radius-md);
+    background: var(--cp-surface-alt);
+}
+
+.profile-photo-note {
+    margin: 0 0 4px;
+    font-family: var(--cp-font-mono);
+    font-size: 0.72rem;
+    line-height: 1.5;
+    color: var(--cp-muted);
+}
+
+/* The native button is drawn by the browser and ignores the theme, so only the parts that can be
+   styled are: the surrounding box, and the button through ::file-selector-button. */
+.profile-file {
+    width: 100%;
+    padding: 8px;
+    background: var(--cp-surface-alt);
+    border: 1px solid var(--cp-border);
+    border-radius: var(--cp-radius-md);
+    font-family: var(--cp-font-mono);
+    font-size: 0.78rem;
+    color: var(--cp-muted);
+}
+
+.profile-file::file-selector-button {
+    margin-right: 12px;
+    padding: 6px 14px;
+    border: 1px solid var(--cp-accent);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--cp-accent);
+    font-family: var(--cp-font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    cursor: pointer;
+}
+
 /* ---------- Steps ---------- */
 
 /* The form asks for about thirty values, which is a wall to land on. profilepage.js splits it into
@@ -208,6 +261,7 @@
     .profile-fields--account,
     .profile-fields--education,
     .profile-fields--slots,
+    .profile-fields--photos,
     .profile-fields--projects {
         grid-template-columns: 1fr;
     }

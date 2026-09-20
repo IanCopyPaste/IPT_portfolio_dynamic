@@ -563,6 +563,60 @@ namespace _24_1444AdoteRonAdrian_Portfolio
         protected global::System.Web.UI.WebControls.Label prfConfirmError;
 
         /// <summary>
+        /// prfHomePreview control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image prfHomePreview;
+
+        /// <summary>
+        /// prfHomePhoto control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload prfHomePhoto;
+
+        /// <summary>
+        /// prfHomePhotoError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prfHomePhotoError;
+
+        /// <summary>
+        /// prfAboutPreview control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image prfAboutPreview;
+
+        /// <summary>
+        /// prfAboutPhoto control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload prfAboutPhoto;
+
+        /// <summary>
+        /// prfAboutPhotoError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prfAboutPhotoError;
+
+        /// <summary>
         /// profileStep control.
         /// </summary>
         /// <remarks>

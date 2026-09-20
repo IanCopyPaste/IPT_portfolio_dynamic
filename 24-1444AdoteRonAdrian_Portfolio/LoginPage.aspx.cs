@@ -66,7 +66,14 @@ namespace _24_1444AdoteRonAdrian_Portfolio
                 bool passwordOk = storedHash != null && PasswordHasher.Verify(loginPassword.Text, storedHash);
                 bool isAdmin = string.Equals(role, UserSession.AdminRole, StringComparison.OrdinalIgnoreCase);
 
-                if (!passwordOk || isAdmin)
+                if (!passwordOk)
+                {
+                    loginStatus.Text = InvalidLoginMessage;
+                    loginStatus.CssClass = "login-status is-error";
+                    return;
+                }
+
+                if (isAdmin)
                 {
                     loginStatus.Text = ForAdminMessage;
                     loginStatus.CssClass = "login-status is-error";

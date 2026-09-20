@@ -22,6 +22,8 @@ namespace _24_1444AdoteRonAdrian_Portfolio.Accounts
             Suffix = "";
             Address = "";
             Sex = "";
+            HomePhoto = "";
+            AboutPhoto = "";
             Nationality = "";
             JhsSchool = "";
             ShsSchool = "";
@@ -49,6 +51,23 @@ namespace _24_1444AdoteRonAdrian_Portfolio.Accounts
         public string[] Hobbies { get; private set; }
         public string[] Skills { get; private set; }
         public string[] Projects { get; private set; }
+
+        // Paths under the uploads folder, "" until the user has uploaded one. ContentPage leaves
+        // the home portrait out entirely when it is empty and shows a marked box in the About
+        // section, so the two sections read differently on purpose.
+        public string HomePhoto { get; set; }
+
+        public string AboutPhoto { get; set; }
+
+        public string HomePhotoUrl
+        {
+            get { return ProfilePhotos.Url(HomePhoto); }
+        }
+
+        public string AboutPhotoUrl
+        {
+            get { return ProfilePhotos.Url(AboutPhoto); }
+        }
 
         public string FullName
         {

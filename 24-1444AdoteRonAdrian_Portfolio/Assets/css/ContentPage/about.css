@@ -226,3 +226,41 @@
     flex: 0 0 auto;
     width: min(420px, 42vw);
 }
+
+/* The About portrait is half this section's layout, so an account with no photo yet gets a
+   marked frame rather than a hole: the panels beside it would otherwise sit alone against
+   empty space and read as a broken image. The home hero drops its portrait entirely instead,
+   because there the name and the bio already fill the screen. */
+.profile-photo--about.photo-unset {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    aspect-ratio: 3 / 4;
+    background:
+        repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 0px, rgba(255, 255, 255, 0.02) 1px, transparent 1px, transparent 4px),
+        var(--cp-surface);
+    /* Dashed, where every other card on the page is solid: the edge is the thing saying this is
+       a slot waiting to be filled rather than a card in its own right. */
+    border: 1px dashed var(--cp-border);
+    border-radius: var(--cp-radius-lg);
+}
+
+/* The silhouette's head and shoulders in outline, at the scale the real portrait would be. */
+.photo-unset-mark {
+    width: 72px;
+    height: 72px;
+    border: 2px dashed var(--cp-muted);
+    border-radius: 50%;
+    opacity: 0.55;
+}
+
+.photo-unset-text {
+    margin: 0;
+    font-family: var(--cp-font-mono);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--cp-muted);
+}
