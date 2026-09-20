@@ -262,9 +262,11 @@
     border-top: 1px solid var(--cp-border);
 }
 
+/* Two columns since the socials came out: the brand and its tagline, then the nav links.
+   The tagline is the wider of the two, so it keeps the larger share. */
 .footer-grid {
     display: grid;
-    grid-template-columns: minmax(0, 4fr) minmax(0, 2fr) minmax(0, 6fr);
+    grid-template-columns: minmax(0, 5fr) minmax(0, 3fr);
     gap: 40px;
 }
 
@@ -294,8 +296,7 @@
     margin: 0 0 16px;
 }
 
-.footer-nav ul,
-.social-list {
+.footer-nav ul {
     margin: 0;
     padding: 0;
     list-style: none;
@@ -315,90 +316,6 @@
 .footer-link:hover {
     color: var(--cp-accent);
     text-shadow: 0 0 12px rgba(57, 255, 136, 0.5);
-}
-
-.social-list {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-}
-
-.social-link {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    height: 100%;
-    padding: 12px 14px;
-    background: var(--cp-surface);
-    border: 1px solid var(--cp-border);
-    border-radius: var(--cp-radius-md);
-    color: var(--cp-text);
-    text-decoration: none;
-    transition: transform 200ms ease, box-shadow 200ms ease;
-}
-
-/* A glow rather than a coloured edge: cards on this page keep neutral borders. */
-.social-link:hover,
-.social-link:focus-visible {
-    transform: translateY(-3px);
-    box-shadow: 0 0 14px rgba(57, 255, 136, 0.28);
-}
-
-.social-link:focus-visible {
-    outline: 2px solid var(--cp-accent);
-    outline-offset: 3px;
-}
-
-/* The logos are used as masks so they take the text colour and can glow with the
-   accent on hover, which a plain <img> of a coloured SVG can't do. */
-.social-icon {
-    width: 22px;
-    height: 22px;
-    flex: 0 0 auto;
-    background-color: currentColor;
-    -webkit-mask: var(--social-logo) center / contain no-repeat;
-    mask: var(--social-logo) center / contain no-repeat;
-    transition: background-color 200ms ease, filter 200ms ease;
-}
-
-.social-link:hover .social-icon,
-.social-link:focus-visible .social-icon {
-    background-color: var(--cp-accent);
-    filter: drop-shadow(0 0 6px rgba(57, 255, 136, 0.7));
-}
-
-.social-icon--instagram {
-    --social-logo: url("/Assets/ContentPage/logo-instagram.svg");
-}
-
-.social-icon--facebook {
-    --social-logo: url("/Assets/ContentPage/logo-facebook.svg");
-}
-
-.social-icon--github {
-    --social-logo: url("/Assets/ContentPage/logo-github.svg");
-}
-
-.social-icon--linkedin {
-    --social-logo: url("/Assets/ContentPage/logo-linkedin.svg");
-}
-
-.social-text {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-}
-
-.social-name {
-    font-weight: 700;
-    line-height: 1.3;
-}
-
-.social-note {
-    font-family: var(--cp-font-mono);
-    font-size: 0.78rem;
-    color: var(--cp-muted);
-    line-height: 1.4;
 }
 
 .footer-bottom {

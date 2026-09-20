@@ -4,6 +4,7 @@ using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Web.UI.WebControls;
 
 namespace _24_1444AdoteRonAdrian_Portfolio
@@ -29,6 +30,7 @@ namespace _24_1444AdoteRonAdrian_Portfolio
             }
 
             AccountRules.ApplyLimits(prfFirstName, prfMiddleName, prfLastName, prfAddress, prfEmail, prfSms, prfUser);
+            ApplyPortfolioLimits();
             prfCurrentPassword.MaxLength = AccountRules.PasswordMaxLength;
             prfPassword.MaxLength = AccountRules.PasswordMaxLength;
             prfConfirm.MaxLength = AccountRules.PasswordMaxLength;
@@ -36,7 +38,9 @@ namespace _24_1444AdoteRonAdrian_Portfolio
             if (!IsPostBack)
             {
                 AccountRules.FillSuffixes(prfSuffix);
+                ProfileRules.FillSexes(prfSex);
                 FillForm(UserSession.UserId(Session).Value);
+                FillPortfolio(UserSession.UserId(Session).Value);
             }
         }
 
@@ -115,6 +119,12 @@ namespace _24_1444AdoteRonAdrian_Portfolio
                 changingPassword ? AccountRules.ConfirmError(confirm, newPassword) : null);
             valid &= AccountRules.IsAllowedSuffix(suffix);
 
+            // Read and checked alongside the account fields so one failed save highlights every
+            // field at fault, not just the first half of the form.
+            bool portfolioValid;
+            ProfileContent portfolio = ReadPortfolio(out portfolioValid);
+            valid &= portfolioValid;
+
             if (!valid)
             {
                 ShowStatus("save failed. fix the highlighted fields and try again.", true);
@@ -176,6 +186,15 @@ namespace _24_1444AdoteRonAdrian_Portfolio
                 return;
             }
 
+            // A second write rather than part of the first: the portfolio lives in its own table,
+            // behind the stored procedure that upserts it. The row above has just been updated, so
+            // the account is there; a false here would mean it went in between the two.
+            if (!ProfileStore.Save(userId, portfolio))
+            {
+                SignOutTo("LoginPage.aspx");
+                return;
+            }
+
             // The navbar shows the name from the session, so it is refreshed along with the row.
             UserSession.SignIn(Session, userId, username, UserSession.FullName(firstName, middleName, lastName, suffix));
 
@@ -187,12 +206,159 @@ namespace _24_1444AdoteRonAdrian_Portfolio
             prfEmail.Text = email;
             prfSms.Text = sms;
             prfUser.Text = username;
+            ShowPortfolio(portfolio);
             ShowStatus(changingPassword ? "profile and password saved." : "profile saved.", false);
         }
 
         protected void profileLogout_Click(object sender, EventArgs e)
         {
             SignOutTo("LoginPage.aspx?" + SignedOutQuery + "=1");
+        }
+
+
+        // The portfolio's three runs of slots, each paired with the error labels under them, so the
+        // fill and the save can walk them rather than naming twenty-odd controls twice over. The
+        // order matches ProfileContent's arrays, and through them the numbered columns.
+        private TextBox[] HobbyBoxes => new[] { prfHobby1, prfHobby2, prfHobby3, prfHobby4 };
+
+        private Label[] HobbyErrors => new[] { prfHobby1Error, prfHobby2Error, prfHobby3Error, prfHobby4Error };
+
+        private TextBox[] SkillBoxes => new[] { prfSkill1, prfSkill2, prfSkill3, prfSkill4 };
+
+        private Label[] SkillErrors => new[] { prfSkill1Error, prfSkill2Error, prfSkill3Error, prfSkill4Error };
+
+        private TextBox[] ProjectBoxes => new[] { prfProject1, prfProject2, prfProject3, prfProject4, prfProject5 };
+
+        private Label[] ProjectErrors => new[] { prfProject1Error, prfProject2Error, prfProject3Error,
+            prfProject4Error, prfProject5Error };
+
+        private void ApplyPortfolioLimits()
+        {
+            prfNationality.MaxLength = ProfileRules.NationalityMaxLength;
+            prfJhs.MaxLength = ProfileRules.SchoolMaxLength;
+            prfShs.MaxLength = ProfileRules.SchoolMaxLength;
+            prfCollege.MaxLength = ProfileRules.SchoolMaxLength;
+            prfCourse.MaxLength = ProfileRules.CourseMaxLength;
+            SetMaxLength(HobbyBoxes, ProfileRules.HobbyMaxLength);
+            SetMaxLength(SkillBoxes, ProfileRules.SkillMaxLength);
+            SetMaxLength(ProjectBoxes, ProfileRules.ProjectMaxLength);
+        }
+
+        // FillForm has already signed a stale session out by the time this runs, so a missing row
+        // here needs no second redirect; the form is simply left with its placeholders.
+        private void FillPortfolio(int userId)
+        {
+            ProfileContent content = ProfileStore.Get(userId);
+
+            if (content != null)
+            {
+                ShowPortfolio(content);
+            }
+        }
+
+        private void ShowPortfolio(ProfileContent content)
+        {
+            // An <input type="date"> only accepts yyyy-MM-dd, whatever the browser then shows.
+            prfBirthdate.Text = content.Birthdate == null
+                ? ""
+                : content.Birthdate.Value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+            Select(prfSex, content.Sex);
+            prfNationality.Text = content.Nationality;
+            prfJhs.Text = content.JhsSchool;
+            prfShs.Text = content.ShsSchool;
+            prfCollege.Text = content.CollegeSchool;
+            prfCourse.Text = content.CollegeCourse;
+            ShowSlots(HobbyBoxes, content.Hobbies);
+            ShowSlots(SkillBoxes, content.Skills);
+            ShowSlots(ProjectBoxes, content.Projects);
+        }
+
+        // Reads the portfolio half of the form and reports on each field, the same way the account
+        // half is checked above it. Every field is optional, so the only thing that can fail is a
+        // value that couldn't have been typed into the form as it stands: a birthdate that isn't a
+        // date, or a value past the length the input caps at.
+        private ProfileContent ReadPortfolio(out bool valid)
+        {
+            var content = new ProfileContent();
+            valid = true;
+
+            DateTime? birthdate;
+            valid &= AccountRules.Report(prfBirthdateError,
+                ProfileRules.BirthdateError(prfBirthdate.Text, out birthdate));
+            content.Birthdate = birthdate;
+
+            // No error label: the sex list is a fixed set, so a value outside it can only come from
+            // a forged post, and the suffix list above is handled the same way.
+            content.Sex = prfSex.SelectedValue;
+            valid &= ProfileRules.IsAllowedSex(content.Sex);
+
+            content.Nationality = prfNationality.Text.Trim();
+            valid &= AccountRules.Report(prfNationalityError,
+                ProfileRules.TextError(content.Nationality, ProfileRules.NationalityMaxLength));
+
+            content.JhsSchool = prfJhs.Text.Trim();
+            valid &= AccountRules.Report(prfJhsError,
+                ProfileRules.TextError(content.JhsSchool, ProfileRules.SchoolMaxLength));
+
+            content.ShsSchool = prfShs.Text.Trim();
+            valid &= AccountRules.Report(prfShsError,
+                ProfileRules.TextError(content.ShsSchool, ProfileRules.SchoolMaxLength));
+
+            content.CollegeSchool = prfCollege.Text.Trim();
+            valid &= AccountRules.Report(prfCollegeError,
+                ProfileRules.TextError(content.CollegeSchool, ProfileRules.SchoolMaxLength));
+
+            content.CollegeCourse = prfCourse.Text.Trim();
+            valid &= AccountRules.Report(prfCourseError,
+                ProfileRules.TextError(content.CollegeCourse, ProfileRules.CourseMaxLength));
+
+            valid &= ReadSlots(HobbyBoxes, HobbyErrors, content.Hobbies, ProfileRules.HobbyMaxLength);
+            valid &= ReadSlots(SkillBoxes, SkillErrors, content.Skills, ProfileRules.SkillMaxLength);
+            valid &= ReadSlots(ProjectBoxes, ProjectErrors, content.Projects, ProfileRules.ProjectMaxLength);
+
+            return content;
+        }
+
+        private static bool ReadSlots(TextBox[] boxes, Label[] errors, string[] slots, int maxLength)
+        {
+            bool valid = true;
+
+            for (int i = 0; i < slots.Length; i++)
+            {
+                slots[i] = boxes[i].Text.Trim();
+                valid &= AccountRules.Report(errors[i], ProfileRules.TextError(slots[i], maxLength));
+            }
+
+            return valid;
+        }
+
+        private static void ShowSlots(TextBox[] boxes, string[] slots)
+        {
+            for (int i = 0; i < slots.Length; i++)
+            {
+                boxes[i].Text = slots[i];
+            }
+        }
+
+        private static void SetMaxLength(TextBox[] boxes, int maxLength)
+        {
+            foreach (TextBox box in boxes)
+            {
+                box.MaxLength = maxLength;
+            }
+        }
+
+        // A stored value outside the list (only possible if it was written straight to the database)
+        // can't be selected, so the list falls back to its first entry, as the suffix list does.
+        private static void Select(DropDownList list, string value)
+        {
+            ListItem item = list.Items.FindByValue(value ?? "");
+
+            if (item != null)
+            {
+                list.ClearSelection();
+                item.Selected = true;
+            }
         }
 
         private string StoredHash(int userId)

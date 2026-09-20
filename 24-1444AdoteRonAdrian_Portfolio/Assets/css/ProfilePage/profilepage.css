@@ -10,6 +10,18 @@
     grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
+/* The four school fields and the four hobby and skill slots each fill their row; the five
+   project slots take one more column. Narrower than the three-column default, but these are
+   all short values -- a school name, a hobby, a project title -- so the row still reads. */
+.profile-fields--education,
+.profile-fields--slots {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.profile-fields--projects {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
 .profile-links {
     display: flex;
     align-items: center;
@@ -60,6 +72,124 @@
     outline-offset: 3px;
 }
 
+/* ---------- Steps ---------- */
+
+/* The form asks for about thirty values, which is a wall to land on. profilepage.js splits it into
+   one screen at a time and builds the rail; the steps are only ever hidden under `.js`, so with
+   scripting off every group is on the page as before and the rail and Back/Next never appear. */
+.profile-steps,
+.profile-stepnav {
+    display: none;
+}
+
+.js .profile-steps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-bottom: 4px;
+}
+
+.profile-step {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1 1 auto;
+}
+
+.js .profile-step:not(.is-active) {
+    display: none;
+}
+
+/* The same chip as the portfolio's hobby and tech tags, in the terminal face the group labels use. */
+.profile-step-tab {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 7px 16px;
+    background: var(--cp-surface-alt);
+    border: 1px solid var(--cp-border);
+    border-radius: 999px;
+    font-family: var(--cp-font-mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--cp-muted);
+    cursor: pointer;
+    transition: color 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.profile-step-tab:hover {
+    color: var(--cp-text);
+    border-color: var(--cp-accent);
+}
+
+.profile-step-tab.is-current {
+    color: var(--cp-accent);
+    border-color: var(--cp-accent);
+    box-shadow: 0 0 14px rgba(57, 255, 136, 0.28);
+}
+
+.profile-step-index {
+    color: var(--cp-accent);
+}
+
+/* Last, so it wins on the current step too: a step the user has moved away from still has to be
+   able to say that something on it failed. */
+.profile-step-tab.has-error,
+.profile-step-tab.has-error .profile-step-index {
+    color: var(--cp-pastel-1);
+}
+
+.profile-step-tab.has-error {
+    border-color: var(--cp-pastel-1);
+    box-shadow: none;
+}
+
+.js .profile-stepnav {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-top: 4px;
+}
+
+/* Neutral, not accent: moving between steps saves nothing, and only Save should read as the
+   button that does something. */
+.profile-stepbtn {
+    padding: 10px 22px;
+    border: 1px solid var(--cp-border);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--cp-text);
+    font-family: var(--cp-font-mono);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    cursor: pointer;
+    transition: border-color 200ms ease, color 200ms ease, box-shadow 200ms ease;
+}
+
+.profile-stepbtn:hover:not(:disabled),
+.profile-stepbtn:focus-visible:not(:disabled) {
+    color: var(--cp-accent);
+    border-color: var(--cp-accent);
+    box-shadow: 0 0 14px rgba(57, 255, 136, 0.28);
+}
+
+/* Kept in place rather than hidden at the two ends, so the row doesn't shift as the user moves. */
+.profile-stepbtn:disabled {
+    opacity: 0.35;
+    cursor: default;
+}
+
+.profile-stepcount {
+    margin-right: auto;
+    font-family: var(--cp-font-mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--cp-muted);
+}
+
 /* ---------- Reduced motion ---------- */
 
 @media (prefers-reduced-motion: reduce) {
@@ -71,15 +201,27 @@
 
 /* ---------- Responsive ---------- */
 
-/* Same breakpoints as the portfolio. Like the name row, the account row keeps its four columns
-   down to 720px; this file loads after the sign-up stylesheet, so the fold to one column there
-   has to be repeated for it. */
+/* Same breakpoints as the portfolio. Like the name row, the account and portfolio rows keep
+   their columns down to 720px; this file loads after the sign-up stylesheet, so the fold to one
+   column there has to be repeated for them. */
 @media (max-width: 720px) {
-    .profile-fields--account {
+    .profile-fields--account,
+    .profile-fields--education,
+    .profile-fields--slots,
+    .profile-fields--projects {
         grid-template-columns: 1fr;
     }
 
     .profile-links {
+        justify-content: space-between;
+    }
+
+    /* The step count is the first thing to give up the row when Back and Next stop fitting. */
+    .profile-stepcount {
+        display: none;
+    }
+
+    .js .profile-stepnav {
         justify-content: space-between;
     }
 }

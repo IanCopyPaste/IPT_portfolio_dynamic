@@ -178,6 +178,7 @@
     <Content Include="Assets\js\Admin\Dashboard\users\managedialog.js" />
     <Content Include="Assets\js\Admin\Dashboard\users\userstable.js" />
     <Content Include="Database\Migrations\001_admin_dashboard.sql" />
+    <Content Include="Database\Migrations\002_profile_content.sql" />
     <Content Include="Database\Seeds\sample_users.sql" />
     <Content Include="Assets\css\ContentPage\about.css" />
     <Content Include="Assets\css\ContentPage\contact.css" />
@@ -192,6 +193,7 @@
     <Content Include="Assets\css\RegisterPage\registerpage.css" />
     <Content Include="Assets\js\ContentPage\contentpage.js" />
     <Content Include="Assets\js\LoginPage\loginpage.js" />
+    <Content Include="Assets\js\ProfilePage\profilepage.js" />
     <Content Include="Assets\js\RegisterPage\registerpage.js" />
     <Content Include="ContentPage.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
@@ -500,6 +502,9 @@
       <DependentUpon>LoginPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Accounts\AccountRules.cs" />
+    <Compile Include="Accounts\ProfileContent.cs" />
+    <Compile Include="Accounts\ProfileRules.cs" />
+    <Compile Include="Accounts\ProfileStore.cs" />
     <Compile Include="ProfilePage.aspx.cs">
       <DependentUpon>ProfilePage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

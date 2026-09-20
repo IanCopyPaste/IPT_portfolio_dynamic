@@ -63,6 +63,8 @@ namespace _24_1444AdoteRonAdrian_Portfolio.AdminServices
         // Null when there's no such account.
         public static UserDetail Find(int id)
         {
+            UserDetail detail;
+
             using (SqlConnection conn = Db.Open())
             using (var cmd = new SqlCommand(
                 "SELECT " + Db.SummaryColumns + ", address, sms FROM users WHERE id = @id", conn))
@@ -76,16 +78,20 @@ namespace _24_1444AdoteRonAdrian_Portfolio.AdminServices
                         return null;
                     }
 
-                    UserDetail detail = Db.ReadSummary(reader, new UserDetail());
+                    detail = Db.ReadSummary(reader, new UserDetail());
                     detail.FirstName = Db.Text(reader, 1);
                     detail.MiddleName = Db.Text(reader, 2);
                     detail.LastName = Db.Text(reader, 3);
                     detail.Suffix = Db.Text(reader, 4);
                     detail.Address = Db.Text(reader, 11);
                     detail.Sms = Db.Text(reader, 12);
-                    return detail;
                 }
             }
+
+            // A second read, through the portfolio's own stored procedure, so the dialog shows what
+            // the account has put on its page as well as what it signed up with.
+            detail.Portfolio = ProfileStore.Get(id) ?? new ProfileContent();
+            return detail;
         }
 
         // False when the account is gone or belongs to an admin.

@@ -24,6 +24,13 @@
                 <dl class="adm-details" id="manageDetails"></dl>
             </section>
 
+            <%-- What the account filled in on its own portfolio page, kept apart from the
+                 sign-up details above so it is clear which of the two the admin is reading. --%>
+            <section class="adm-dialog-section" aria-labelledby="managePortfolioTitle">
+                <h3 class="adm-section-title" id="managePortfolioTitle">Portfolio content</h3>
+                <dl class="adm-details" id="managePortfolio"></dl>
+            </section>
+
             <p class="adm-protected-note" id="manageProtected" hidden>
                 <dash:Icon runat="server" Name="shield" Size="18" />
                 Administrator accounts can't be deactivated or deleted from the dashboard.

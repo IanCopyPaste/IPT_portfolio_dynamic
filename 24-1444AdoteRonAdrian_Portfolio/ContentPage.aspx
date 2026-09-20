@@ -9,19 +9,19 @@
     <script>document.documentElement.className += " js";</script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= SiteBrandName %> - Portfolio</title>
+    <title><%: OwnerName %> - Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
     <%-- Order matters: tokens and base first, sections in page order, then the reveal
          and responsive overrides, which have to win over the section rules. --%>
-    <link href="/Assets/css/ContentPage/contentpage.css?v=19" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/contentpage.css?v=20" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/home.css?v=3" rel="stylesheet" />
-    <link href="/Assets/css/ContentPage/about.css?v=5" rel="stylesheet" />
-    <link href="/Assets/css/ContentPage/skills.css?v=3" rel="stylesheet" />
-    <link href="/Assets/css/ContentPage/contact.css?v=3" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/about.css?v=6" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/skills.css?v=4" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/contact.css?v=4" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/reveal.css?v=3" rel="stylesheet" />
-    <link href="/Assets/css/ContentPage/responsive.css?v=5" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/responsive.css?v=6" rel="stylesheet" />
     <link href="/DEV_PHOTO.png" rel="icon" type="image/png" />
 </head>
 <body>
@@ -30,7 +30,9 @@
 
         <nav class="navbar navbar--top" id="siteNavbar">
             <div class="navbar-inner">
-                <a class="navbar-brand" href="#home"><%= SiteBrandName %></a>
+                <%-- The portfolio is branded with whoever it belongs to, not with the site: the
+                     sign-in screens use SiteBrandName, this page uses its owner. --%>
+                <a class="navbar-brand" href="#home"><%: BrandName %></a>
 
                 <button type="button" class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navLinks">
                     <span></span>
@@ -64,8 +66,8 @@
                          the delays stage them into a name → bio → portrait sequence. --%>
                     <div class="home-heading-row reveal" data-reveal-delay="0">
                         <%-- The glitch layers read data-text, so it has to match the heading. --%>
-                        <div class="home-heading-wrap" data-text="<%= HomeHeadingName %>">
-                            <h1 class="home-heading"><%= HomeHeadingName %></h1>
+                        <div class="home-heading-wrap" data-text="<%: OwnerName %>">
+                            <h1 class="home-heading"><%: OwnerName %></h1>
                         </div>
                     </div>
                     <div class="home-stack">
@@ -81,7 +83,7 @@
                             ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
                         </p>
                         <div class="profile-photo profile-photo--home reveal" data-reveal-delay="320">
-                            <img src="/Assets/ContentPage/dev_photo.png" alt="<%= HomeHeadingName %>"
+                            <img src="/Assets/ContentPage/dev_photo.png" alt="<%: OwnerName %>"
                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
                             <div class="profile-photo-placeholder" aria-hidden="true">
                                 <span class="ph-head"></span>
@@ -98,51 +100,65 @@
                     <h2 class="section-heading reveal reveal--left" data-reveal-delay="60">Who am I?</h2>
                     <div class="about-content">
                         <div class="about-panels">
+                            <%-- Every value below is the signed-in user's own, and every one of them
+                                 can still be blank: a brand-new account has a name and an address and
+                                 nothing else, so each field falls back to its placeholder. --%>
                             <article class="about-panel reveal" data-reveal-delay="120">
                                 <h3><span class="about-panel-index" aria-hidden="true">01</span>Personal Information</h3>
                                 <dl class="about-details">
-                                    <div class="about-detail"><dt>Age</dt><dd><%= Age %> yrs Old</dd></div>
-                                    <div class="about-detail"><dt>Sex</dt><dd>Male</dd></div>
-                                    <div class="about-detail"><dt>Birthdate</dt><dd>April 16, 2006</dd></div>
-                                    <div class="about-detail"><dt>Nationality</dt><dd>Filipino</dd></div>
-                                    <div class="about-detail about-detail--wide"><dt>From</dt><dd>Baesa, Quezon City</dd></div>
+                                    <div class="about-detail"><dt>Age</dt><dd class="<%= UnsetClass(Owner.Age == null) %>"><%: AgeText %></dd></div>
+                                    <div class="about-detail"><dt>Sex</dt><dd class="<%= UnsetClass(Owner.Sex) %>"><%: Or(Owner.Sex) %></dd></div>
+                                    <div class="about-detail"><dt>Birthdate</dt><dd class="<%= UnsetClass(Owner.Birthdate == null) %>"><%: BirthdateText %></dd></div>
+                                    <div class="about-detail"><dt>Nationality</dt><dd class="<%= UnsetClass(Owner.Nationality) %>"><%: Or(Owner.Nationality) %></dd></div>
+                                    <div class="about-detail about-detail--wide"><dt>From</dt><dd class="<%= UnsetClass(Owner.Address) %>"><%: Or(Owner.Address) %></dd></div>
                                 </dl>
                             </article>
+                            <%-- Three fixed stages rather than a list the user can add to: the rail is
+                                 a path through school, and a missing stage still has to hold its place
+                                 on it or the two either side would read as consecutive. --%>
                             <article class="about-panel reveal" data-reveal-delay="230">
                                 <h3><span class="about-panel-index" aria-hidden="true">02</span>Educational Attainment</h3>
                                 <ol class="about-timeline">
                                     <li class="about-timeline-item">
                                         <abbr class="about-timeline-level" title="Junior High School">JHS</abbr>
-                                        <span class="about-timeline-school">Dr. Carlos S. Lanting College</span>
+                                        <span class="about-timeline-school <%= UnsetClass(Owner.JhsSchool) %>"><%: Or(Owner.JhsSchool) %></span>
                                     </li>
                                     <li class="about-timeline-item">
                                         <abbr class="about-timeline-level" title="Senior High School">SHS</abbr>
-                                        <span class="about-timeline-school">Ismael Mathay Sr. High School</span>
+                                        <span class="about-timeline-school <%= UnsetClass(Owner.ShsSchool) %>"><%: Or(Owner.ShsSchool) %></span>
                                     </li>
                                     <li class="about-timeline-item">
                                         <span class="about-timeline-level">College</span>
-                                        <span class="about-timeline-school">Quezon City University</span>
-                                        <abbr class="about-timeline-course" title="Bachelor of Science in Information Technology">BSIT</abbr>
+                                        <span class="about-timeline-school <%= UnsetClass(Owner.CollegeSchool) %>"><%: Or(Owner.CollegeSchool) %></span>
+                                        <%-- The course is the one part with no placeholder: an empty
+                                             second line under the school would read as a value that
+                                             went missing rather than one that was never asked for. --%>
+                                        <% if (Owner.CollegeCourse.Length > 0) { %>
+                                        <span class="about-timeline-course"><%: Owner.CollegeCourse %></span>
+                                        <% } %>
                                     </li>
                                 </ol>
                             </article>
                             <article class="about-panel reveal" data-reveal-delay="340">
                                 <h3><span class="about-panel-index" aria-hidden="true">03</span>Hobbies and Interest</h3>
-                                <%-- Emoji go in as character references, not literal characters: this file
-                                     carries no BOM and Web.config sets no fileEncoding, so ASP.NET reads it
-                                     as the system codepage and raw UTF-8 emoji bytes would come out mangled. --%>
+                                <%-- Four slots on the form, however many of them were filled in here.
+                                     No emoji any more: they were picked to suit one person's list, and
+                                     there is no guessing one for a hobby somebody types in. --%>
                                 <div class="hobbies">
-                                    <span class="hobby-tag"><span class="hobby-tag-emoji" aria-hidden="true">&#x2708;&#xFE0F;</span>Travelling</span>
-                                    <span class="hobby-tag"><span class="hobby-tag-emoji" aria-hidden="true">&#x1F697;</span>Driving</span>
-                                    <span class="hobby-tag"><span class="hobby-tag-emoji" aria-hidden="true">&#x1F3AE;</span>Gaming</span>
-                                    <span class="hobby-tag"><span class="hobby-tag-emoji" aria-hidden="true">&#x1F4BC;</span>Workaholism</span>
+                                    <% foreach (string hobby in Owner.FilledHobbies) { %>
+                                    <span class="hobby-tag"><%: hobby %></span>
+                                    <% } %>
+                                    <% if (!HasHobbies) { %>
+                                    <p class="cp-unset cp-unset--block">No hobbies added yet.</p>
+                                    <% } %>
                                 </div>
+                            </article>
                             </article>
                         </div>
                         <%-- Same cutout portrait treatment as the home hero, parked on the right.
                              Its delay lands it after the three panels have cascaded in. --%>
                         <div class="profile-photo profile-photo--about reveal" data-reveal-delay="450">
-                            <img src="/Assets/ContentPage/dev_photo2.png" alt="<%= HomeHeadingName %>"
+                            <img src="/Assets/ContentPage/dev_photo2.png" alt="<%: OwnerName %>"
                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
                             <div class="profile-photo-placeholder" aria-hidden="true">
                                 <span class="ph-head"></span>
@@ -155,38 +171,52 @@
 
             <section id="skills" class="section skills-section">
                 <div class="section-inner">
-                    <%-- Same hand-ordered cascade as the About section: heading, then the cards, then the
-                         panel. Each tag is observed on its own, so its delay is measured from when that
-                         tag scrolls in; the offsets hold the chips back until the panel has mostly landed. --%>
-                    <h2 class="section-heading reveal reveal--left" data-reveal-delay="60">Projects</h2>
-                    <div class="project-cards">
-                        <a class="project-card reveal" data-reveal-delay="120" href="https://github.com/IanCopyPaste/LibraryManagementSystem" target="_blank" rel="noopener noreferrer">
-                            <img class="project-card-image" src="/Assets/ContentPage/Library_Management_System.png" alt=""
-                                onerror="this.parentNode.classList.add('project-card--no-image'); this.style.display='none';" />
-                            <div class="project-card-overlay">
-                                <h3>Library Management System</h3>
-                                <p>A Management System made with VB.NET and MySQL for OOP Sub</p>
-                            </div>
-                        </a>
-                        <a class="project-card reveal" data-reveal-delay="230" href="https://mj-player.vercel.app/" target="_blank" rel="noopener noreferrer">
-                            <img class="project-card-image" src="/Assets/ContentPage/Michael_Jackson_Player.png" alt=""
-                                onerror="this.parentNode.classList.add('project-card--no-image'); this.style.display='none';" />
-                            <div class="project-card-overlay">
-                                <h3>Michael Jackson Player</h3>
-                                <p>A tribute web application dedicated to the King of Pop Michael Jackson. </p>
-                            </div>
-                        </a>
-                        <a class="project-card reveal" data-reveal-delay="340" href="https://github.com/IanCopyPaste/Event_Management_System" target="_blank" rel="noopener noreferrer">
-                            <img class="project-card-image" src="/Assets/ContentPage/Event_Management_System.png" alt=""
-                                onerror="this.parentNode.classList.add('project-card--no-image'); this.style.display='none';" />
-                            <div class="project-card-overlay">
-                                <h3>Event Management System</h3>
-                                <p>PHP-based event management system with admin, organizer, and sponsor roles</p>
-                            </div>
-                        </a>
+                    <%-- Same hand-ordered cascade as the About section: heading, then the chips, then
+                         the two panels. Each tag is observed on its own, so its delay is measured from
+                         when that tag scrolls in; the offsets hold the chips back until the panel has
+                         mostly landed. --%>
+                    <h2 class="section-heading reveal reveal--left" data-reveal-delay="60">Skills</h2>
+                    <div class="skill-tags">
+                        <%-- Stepped by hand at the tech tags' cadence rather than left to the automatic
+                             sibling stagger, so the chips carry on from the heading instead of
+                             restarting at zero underneath it. --%>
+                        <% int skillDelay = 120; %>
+                        <% foreach (string skill in Owner.FilledSkills) { %>
+                        <span class="skill-tag reveal" data-reveal-delay="<%= skillDelay %>"><%: skill %></span>
+                        <% skillDelay += 40; %>
+                        <% } %>
+                        <% if (!HasSkills) { %>
+                        <p class="cp-unset cp-unset--block reveal" data-reveal-delay="120">No skills added yet.</p>
+                        <% } %>
                     </div>
 
-                    <div class="tech-stack-panel reveal" data-reveal-delay="450">
+                    <%-- The projects are the user's own five lines of text, so they are listed rather
+                         than given the screenshot cards this section used to carry: there is no image
+                         to show for a project somebody has only named. The panel is the tech stack's
+                         terminal window, so the two read as one pair. --%>
+                    <div class="project-panel reveal" data-reveal-delay="230">
+                        <div class="terminal-bar" aria-hidden="true">
+                            <span class="terminal-dot"></span>
+                            <span class="terminal-dot"></span>
+                            <span class="terminal-dot"></span>
+                            <span class="terminal-path">~/portfolio/projects</span>
+                        </div>
+                        <div class="project-panel-body">
+                            <h3>Top Projects</h3>
+                            <p class="project-prompt" aria-hidden="true">$ cat ./projects --top <%= ProjectSlots %></p>
+                            <% if (HasProjects) { %>
+                            <ol class="project-list">
+                                <% foreach (string project in Owner.FilledProjects) { %>
+                                <li><%: project %></li>
+                                <% } %>
+                            </ol>
+                            <% } else { %>
+                            <p class="cp-unset cp-unset--block">No projects added yet.</p>
+                            <% } %>
+                        </div>
+                    </div>
+
+                    <div class="tech-stack-panel reveal" data-reveal-delay="340">
                         <div class="terminal-bar" aria-hidden="true">
                             <span class="terminal-dot"></span>
                             <span class="terminal-dot"></span>
@@ -233,9 +263,11 @@
                                     <dt>Status</dt>
                                     <dd><span class="status-dot" aria-hidden="true"></span>Open to internships &amp; freelance work</dd>
                                 </div>
+                                <%-- The same account address the About panel shows as "From": one
+                                     value, so the two can't contradict each other. --%>
                                 <div class="contact-fact">
                                     <dt>Based in</dt>
-                                    <dd>Quezon City, Philippines</dd>
+                                    <dd class="<%= UnsetClass(Owner.Address) %>"><%: Or(Owner.Address) %></dd>
                                 </div>
                                 <div class="contact-fact">
                                     <dt>Replies</dt>
@@ -296,7 +328,7 @@
                     <footer class="site-footer reveal" data-reveal-delay="340">
                         <div class="footer-grid">
                             <div class="footer-brand">
-                                <a class="footer-brand-name" href="#home" data-section="home"><%= SiteBrandName %></a>
+                                <a class="footer-brand-name" href="#home" data-section="home"><%: BrandName %></a>
                                 <p class="footer-tagline">
                                     A student developer from Quezon City building web apps, systems and the
                                     occasional music player &mdash; one commit at a time.
@@ -312,54 +344,10 @@
                                     <li><a class="footer-link" href="#contact" data-section="contact">Contact</a></li>
                                 </ul>
                             </nav>
-
-                            <div class="footer-socials">
-                                <h3 class="footer-heading">Find me on</h3>
-                                <%-- Placeholder hrefs: each points at the site's home page until the real profile
-                                     URL goes in. --%>
-                                <ul class="social-list">
-                                    <li>
-                                        <a class="social-link" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
-                                            <span class="social-icon social-icon--instagram" aria-hidden="true"></span>
-                                            <span class="social-text">
-                                                <span class="social-name">Instagram</span>
-                                                <span class="social-note">Snapshots &amp; behind the scenes</span>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="social-link" href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
-                                            <span class="social-icon social-icon--facebook" aria-hidden="true"></span>
-                                            <span class="social-text">
-                                                <span class="social-name">Facebook</span>
-                                                <span class="social-note">Say hello anytime</span>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="social-link" href="https://github.com/IanCopyPaste" target="_blank" rel="noopener noreferrer">
-                                            <span class="social-icon social-icon--github" aria-hidden="true"></span>
-                                            <span class="social-text">
-                                                <span class="social-name">GitHub</span>
-                                                <span class="social-note">Code, projects &amp; commits</span>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="social-link" href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">
-                                            <span class="social-icon social-icon--linkedin" aria-hidden="true"></span>
-                                            <span class="social-text">
-                                                <span class="social-name">LinkedIn</span>
-                                                <span class="social-note">Work &amp; experience</span>
-                                            </span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
                         </div>
 
                         <div class="footer-bottom">
-                            <p class="footer-copy">&copy; <%= DateTime.Today.Year %> <%= HomeHeadingName %>. All rights reserved.</p>
+                            <p class="footer-copy">&copy; <%= DateTime.Today.Year %> <%: OwnerName %>. All rights reserved.</p>
                             <p class="footer-built">Hand-built with ASP.NET, HTML, CSS &amp; JavaScript.</p>
                             <a class="footer-top-link" href="#home" data-section="home">Back to top <span aria-hidden="true">&uarr;</span></a>
                         </div>

@@ -11,6 +11,7 @@
     var loadingText = dash.byId("manageLoading");
     var content = dash.byId("manageContent");
     var details = dash.byId("manageDetails");
+    var portfolio = dash.byId("managePortfolio");
     var protectedNote = dash.byId("manageProtected");
     var statusSection = dash.byId("manageStatusSection");
     var statusLabel = dash.byId("manageStatusLabel");
@@ -75,6 +76,18 @@
             : "This account is refused at sign-in. Switch on to let it sign in again.";
     };
 
+    // The birthdate is a plain calendar date, not an instant: parsing the whole timestamp would
+    // shift it by a day for a viewer behind UTC, so only its yyyy-MM-dd part is read, as local.
+    var plainDate = function (iso) {
+        return iso ? dash.format.date(String(iso).slice(0, 10) + "T00:00:00") : "";
+    };
+
+    // The four-slot and five-slot lists come back with the blanks already dropped, so an account
+    // that filled in two of four reads as those two rather than as two values and two gaps.
+    var list = function (values) {
+        return (values || []).join(", ");
+    };
+
     var render = function () {
         renderHeader();
 
@@ -93,6 +106,25 @@
             detail("Last sign-in", user.lastLoginAt ? dash.format.dateTime(user.lastLoginAt) : "Never")
         ].forEach(function (row) {
             details.appendChild(row);
+        });
+
+        var page = user.portfolio || {};
+
+        dash.clear(portfolio);
+        [
+            detail("Age", page.age === null || page.age === undefined ? "" : String(page.age)),
+            detail("Birthdate", plainDate(page.birthdate)),
+            detail("Sex", page.sex),
+            detail("Nationality", page.nationality),
+            detail("Junior high", page.jhsSchool, true),
+            detail("Senior high", page.shsSchool, true),
+            detail("College", page.collegeSchool, true),
+            detail("Course", page.collegeCourse, true),
+            detail("Hobbies", list(page.filledHobbies), true),
+            detail("Skills", list(page.filledSkills), true),
+            detail("Top projects", list(page.filledProjects), true)
+        ].forEach(function (row) {
+            portfolio.appendChild(row);
         });
 
         protectedNote.hidden = !user.isProtected;

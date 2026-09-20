@@ -18,7 +18,7 @@ scaffold's conventions as this project's conventions.
 
 Dark "terminal / glitched CRT" aesthetic: near-black background, a single neon-green accent,
 generous glow, and deliberate instability (flicker, RGB split, character corruption). Cards (the
-About panels, project cards, the tech-stack panel) deliberately carry no coloured stripe or
+About panels, the projects and tech-stack panels) deliberately carry no coloured stripe or
 coloured border — keep their edges neutral (`--cp-border`). Keep new work inside that language —
 it is the point of the design, not decoration to be sanded off.
 
@@ -58,7 +58,7 @@ these have to be updated with it.
 ## Class naming
 
 - Lowercase, hyphen-separated, descriptive of the block: `.home-heading-row`, `.tech-stack-panel`,
-  `.project-card`.
+  `.project-list`.
 - Variants use a double-hyphen suffix on the base class, and the element carries both:
   `.profile-photo.profile-photo--home`, `.navbar.navbar--top`, `.reveal.reveal--left`.
 - State is a plain adjective class toggled from JS: `.active`, `.open`, `.is-visible`.
@@ -151,6 +151,35 @@ won't show up for anyone with the old copy cached.
 User-facing text that repeats lives as a `public const string` in the code-behind
 (`ContentPage.aspx.cs`) and is emitted with `<%= %>`, so it has one source of truth.
 Server-side comments in markup use `<%-- --%>`, not `<!-- -->`.
+
+Anything a user typed is emitted with `<%: %>`, which HTML-encodes; `<%= %>` is only for
+values the code itself produced (a year, a CSS class name).
+
+### The portfolio is per-user
+
+The portfolio is one account's page, not one person's: `ContentPage.aspx` reads the signed-in
+user and draws everything from their row. The account fields (name, address) live on `users`;
+everything else — birthdate, sex, nationality, the three schools, four hobbies, four skills,
+five projects — lives one-to-one in `user_profile`, and the user fills it in on `ProfilePage`.
+
+Every portfolio field is optional. A field that is still blank renders `ContentPage.UnsetText`
+with the `cp-unset` class, and a list that is entirely blank renders a short line in its place,
+so a brand-new account gets a complete page of placeholders rather than gaps. The slot counts
+(4 / 4 / 5 / 3) are fixed in `ProfileRules` and matched by the table's numbered columns; the
+blanks are dropped on the way out, so two hobbies render as two chips.
+
+The tech-stack panel in the Skills section is deliberately **not** per-user — it is the site's
+own list, with logos, and stays hard-coded.
+
+### SQL
+
+Sign-in, sign-up, the account half of `ProfilePage`, and the admin dashboard use inline
+parameterised SQL. The portfolio content is the exception: it goes through the two stored
+procedures in `Database/Migrations/002_profile_content.sql`, wrapped by `Accounts/ProfileStore.cs`.
+New work on the portfolio content belongs in a procedure; don't convert the rest.
+
+Migrations are numbered, idempotent, and name the database in a `USE` that has to match
+`Web.config`'s `portfolio_conn`. They are never edited after being run — add the next number.
 
 ## Comments
 

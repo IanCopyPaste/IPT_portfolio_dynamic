@@ -1,5 +1,5 @@
 /* ContentPage — the page's responsive block: the 900px and 720px breakpoints, plus the
-   hover-capability query. Loads last so its overrides win over the section files. */
+   page-scale query above them. Loads last so its overrides win over the section files. */
 
 /* ---------- Responsive ---------- */
 
@@ -20,14 +20,6 @@
     }
 }
 
-/* Touch screens can't hover, so the project name and description are always shown. */
-@media (hover: none) {
-    .project-card-overlay {
-        opacity: 1;
-        transform: none;
-    }
-}
-
 @media (max-width: 900px) {
     .profile-photo--home {
         width: min(320px, 74vw);
@@ -45,20 +37,8 @@
         width: min(320px, 74vw);
     }
 
-    .project-cards {
-        grid-template-columns: 1fr;
-    }
-
     .contact-layout {
         grid-template-columns: 1fr;
-    }
-
-    .footer-grid {
-        grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-    }
-
-    .footer-brand {
-        grid-column: 1 / -1;
     }
 }
 
@@ -111,6 +91,7 @@
         padding: 64px 20px;
     }
 
+    .project-panel-body,
     .tech-stack-body {
         padding: 22px 20px 24px;
     }
@@ -129,8 +110,7 @@
     }
 
     .contact-form-row,
-    .footer-grid,
-    .social-list {
+    .footer-grid {
         grid-template-columns: 1fr;
     }
 }

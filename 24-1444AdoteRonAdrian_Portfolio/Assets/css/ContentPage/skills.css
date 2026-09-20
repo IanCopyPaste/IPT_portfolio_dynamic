@@ -1,128 +1,133 @@
-/* ContentPage — Skills section (projects + tech stack). Tokens and base styles live in contentpage.css, which loads first. */
+/* ContentPage — Skills section (skills + projects + tech stack). Tokens and base styles live in contentpage.css, which loads first. */
 
 /* ---------- Skills section ---------- */
 
-.project-cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    margin-bottom: 48px;
+/* The user's own skills, in the same chip language as the hobby tags in the About section
+   and the tech-stack tags below, so all three read as one system. Four slots on the form,
+   so this never grows past a line or two. */
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 40px;
 }
 
-/* The overlay stays in flow so a long description grows the card instead of being
-   clipped at the top. aspect-ratio can't do that — the ratio also caps the box's
-   intrinsic height — so the 4:3 floor comes from the ::after spacer below.
-   Cards on this page carry no coloured stripe or border. */
-.project-card {
+.skill-tag {
+    display: inline-flex;
+    align-items: center;
+    background: var(--cp-surface-alt);
+    border: 1px solid var(--cp-border);
+    border-radius: 999px;
+    padding: 7px 16px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--cp-text);
+    transition: transform 200ms ease, border-color 200ms ease, color 200ms ease, box-shadow 200ms ease;
+}
+
+.skill-tag:hover {
+    transform: translateY(-3px);
+    border-color: var(--cp-accent);
+    color: var(--cp-accent);
+    box-shadow: 0 0 14px rgba(57, 255, 136, 0.28);
+}
+
+/* The projects panel and the tech-stack panel are the same terminal window and only differ
+   in what they hold, so they share the shell, the title and the prompt rather than each
+   carrying its own copy. */
+.project-panel,
+.tech-stack-panel {
     position: relative;
-    display: flex;
+    width: 100%;
     overflow: hidden;
-    background: var(--cp-surface);
+    background:
+        radial-gradient(520px circle at 100% 0%, rgba(57, 255, 136, 0.1), transparent 65%),
+        repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 0px, rgba(255, 255, 255, 0.02) 1px, transparent 1px, transparent 4px),
+        var(--cp-surface);
     border: 1px solid var(--cp-border);
     border-radius: var(--cp-radius-lg);
-    color: inherit;
-    text-decoration: none;
-    transition: transform 200ms ease, box-shadow 200ms ease;
+    box-shadow: inset 0 0 60px rgba(57, 255, 136, 0.05), 0 16px 40px rgba(0, 0, 0, 0.45);
 }
 
-/* Zero-width flex item whose percentage padding resolves against the card's width. */
-.project-card::after {
-    content: "";
-    padding-top: 75%;
+/* The two panels stack, so the upper one keeps them apart. */
+.project-panel {
+    margin-bottom: 24px;
 }
 
-.project-card:hover,
-.project-card:focus-visible {
-    transform: translateY(-6px);
-    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55);
+.project-panel-body,
+.tech-stack-body {
+    padding: 28px 32px 32px;
 }
 
-.project-card:focus-visible {
-    outline: 2px solid var(--cp-accent);
-    outline-offset: 3px;
-}
-
-/* Anchored top-left: the screenshots are app windows, and their title bar and
-   navigation are what identify the project when the card crops them. */
-.project-card-image {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top left;
-    transition: transform 320ms ease, filter 320ms ease;
-}
-
-/* Dimmed and desaturated hard enough that the neon copy on top owns the card. */
-.project-card:hover .project-card-image,
-.project-card:focus-visible .project-card-image {
-    transform: scale(1.05);
-    filter: brightness(0.4) saturate(0.6);
-}
-
-/* Faint scanlines over the dark wash keep the CRT texture on the card face. */
-.project-card-overlay {
-    position: relative;
-    z-index: 1;
-    flex: 1 1 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 32px 28px 28px;
-    background:
-        repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 0px, rgba(255, 255, 255, 0.03) 1px, transparent 1px, transparent 3px),
-        linear-gradient(to top, rgba(8, 9, 11, 0.97) 0%, rgba(8, 9, 11, 0.85) 50%, rgba(8, 9, 11, 0.35) 100%);
-    opacity: 0;
-    transform: translateY(12px);
-    transition: opacity 280ms ease, transform 280ms ease;
-}
-
-.project-card:hover .project-card-overlay,
-.project-card:focus-visible .project-card-overlay,
-.project-card--no-image .project-card-overlay {
-    opacity: 1;
-    transform: none;
-}
-
-/* The home bio's treatment in miniature — neon glow, an RGB-split edge and the same
-   flicker — so a hovered card reads as the glitched terminal rather than a caption. */
-.project-card h3 {
-    margin: 0 0 12px;
+/* No colour here: the hero gradient in home.css paints it, and this file loads later,
+   so a colour declared here would override that gradient's transparent fill. */
+.project-panel h3,
+.tech-stack-panel h3 {
+    margin: 0;
     font-family: var(--cp-font-display);
     font-weight: 400;
-    font-size: 1.75rem;
-    line-height: 1.05;
+    font-size: 2rem;
+    line-height: 1.1;
     text-transform: uppercase;
     letter-spacing: 0.04em;
+}
+
+/* The home bio's voice: same mono face, same glow, same flicker. */
+.project-prompt,
+.tech-stack-prompt {
+    margin: 6px 0 22px;
+    font-family: var(--cp-font-mono);
+    font-size: 1rem;
     color: var(--cp-accent);
     text-shadow:
-        -2px 0 rgba(255, 47, 110, 0.75),
-        2px 0 rgba(35, 213, 255, 0.75),
-        0 0 18px rgba(57, 255, 136, 0.6);
+        0 0 4px rgba(57, 255, 136, 0.85),
+        0 0 14px rgba(57, 255, 136, 0.55);
     animation: cp-text-flicker 6s infinite steps(1);
 }
 
-/* Monospace because it is dressed as terminal output, prompt and caret included. */
-.project-card p {
+/* Five lines of the user's own text, dressed as the output of the prompt above them. The
+   ranking is the point of a "top five", so the numbers are drawn rather than the browser's
+   markers: a counter can be styled in the terminal face, a list marker can't. */
+.project-list {
     margin: 0;
-    font-family: var(--cp-font-mono);
-    font-size: 1rem;
-    line-height: 1.6;
-    color: var(--cp-text);
-    text-shadow: 0 0 8px rgba(57, 255, 136, 0.35);
+    padding: 0;
+    list-style: none;
+    counter-reset: cp-project;
 }
 
-/* The second content value gives the decoration empty alt text where supported,
-   so screen readers don't announce the prompt or caret. */
-.project-card p::before {
-    content: "> ";
-    content: "> " / "";
+.project-list li {
+    counter-increment: cp-project;
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    column-gap: 12px;
+    align-items: baseline;
+    padding: 10px 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--cp-text);
+    border-top: 1px solid var(--cp-border);
+}
+
+.project-list li:first-child {
+    border-top: 0;
+    padding-top: 0;
+}
+
+/* "01", "02" ... in the terminal face, matching the About panels' section numbers. */
+.project-list li::before {
+    content: counter(cp-project, decimal-leading-zero);
+    font-family: var(--cp-font-mono);
+    font-size: 0.85rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
     color: var(--cp-accent);
+    text-shadow: 0 0 8px rgba(57, 255, 136, 0.6);
 }
 
 /* The same glowing block cursor the login and 403 terminals end on. */
-.project-card p::after,
+.project-prompt::after,
 .tech-stack-prompt::after {
     content: "";
     display: inline-block;
@@ -137,49 +142,6 @@
 
 @keyframes cp-caret-blink {
     50% { opacity: 0; }
-}
-
-/* Dressed as a terminal window so it belongs to the home hero's world: a title bar,
-   a flickering prompt, scanlines, and the accent bleeding in from one corner. */
-.tech-stack-panel {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    background:
-        radial-gradient(520px circle at 100% 0%, rgba(57, 255, 136, 0.1), transparent 65%),
-        repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 0px, rgba(255, 255, 255, 0.02) 1px, transparent 1px, transparent 4px),
-        var(--cp-surface);
-    border: 1px solid var(--cp-border);
-    border-radius: var(--cp-radius-lg);
-    box-shadow: inset 0 0 60px rgba(57, 255, 136, 0.05), 0 16px 40px rgba(0, 0, 0, 0.45);
-}
-
-.tech-stack-body {
-    padding: 28px 32px 32px;
-}
-
-/* No colour here: the hero gradient in home.css paints it, and this file loads later,
-   so a colour declared here would override that gradient's transparent fill. */
-.tech-stack-panel h3 {
-    margin: 0;
-    font-family: var(--cp-font-display);
-    font-weight: 400;
-    font-size: 2rem;
-    line-height: 1.1;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-}
-
-/* The home bio's voice: same mono face, same glow, same flicker. */
-.tech-stack-prompt {
-    margin: 6px 0 22px;
-    font-family: var(--cp-font-mono);
-    font-size: 1rem;
-    color: var(--cp-accent);
-    text-shadow:
-        0 0 4px rgba(57, 255, 136, 0.85),
-        0 0 14px rgba(57, 255, 136, 0.55);
-    animation: cp-text-flicker 6s infinite steps(1);
 }
 
 .tech-tags {

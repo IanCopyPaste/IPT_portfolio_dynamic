@@ -80,7 +80,7 @@
     <script src="/Assets/js/Admin/Dashboard/analytics/charts.js?v=2"></script>
     <script src="/Assets/js/Admin/Dashboard/analytics/analytics.js?v=1"></script>
     <script src="/Assets/js/Admin/Dashboard/users/userstable.js?v=1"></script>
-    <script src="/Assets/js/Admin/Dashboard/users/managedialog.js?v=1"></script>
+    <script src="/Assets/js/Admin/Dashboard/users/managedialog.js?v=2"></script>
     <script src="/Assets/js/Admin/Dashboard/settings/password.js?v=1"></script>
     <script src="/Assets/js/Admin/Dashboard/settings/preferences.js?v=1"></script>
     <script src="/Assets/js/Admin/Dashboard/main.js?v=1"></script>

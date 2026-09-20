@@ -365,3 +365,21 @@ img {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+/* Every portfolio field on the page belongs to the signed-in user and starts out empty, so each
+   one has a placeholder standing in for it. Greyed and italic so a page that is still mostly
+   unfilled reads as unfilled at a glance, rather than as a page of wrong answers. Lives here
+   rather than in a section file because the About panels and the Skills section both use it. */
+.cp-unset {
+    color: var(--cp-muted);
+    font-style: italic;
+    font-weight: 400;
+}
+
+/* For a placeholder that replaces a whole list rather than one value in it: the empty-state line
+   under the hobby chips, the skill chips and the project list. */
+.cp-unset--block {
+    margin: 0;
+    font-family: var(--cp-font-mono);
+    font-size: 0.9rem;
+}

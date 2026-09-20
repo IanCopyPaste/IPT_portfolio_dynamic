@@ -94,8 +94,39 @@
                 return requiredMessage;
             }
             return value !== passwordInput.value ? "The passwords don't match." : "";
+        },
+        // Only the profile form asks for a birthdate. The bounds mirror ProfileRules.MaxAgeYears.
+        Birthdate: function (value) {
+            if (!value) {
+                return "";
+            }
+            // A date input hands back yyyy-MM-dd, or "" for anything it couldn't parse; a browser
+            // with no date picker hands back whatever was typed, so it is parsed here either way.
+            var parsed = Date.parse(value);
+            if (isNaN(parsed)) {
+                return "Enter a date as YYYY-MM-DD.";
+            }
+            var date = new Date(parsed);
+            var oldest = new Date();
+            oldest.setFullYear(oldest.getFullYear() - 120);
+            if (date > new Date()) {
+                return "That date hasn't happened yet.";
+            }
+            return date < oldest ? "That date is too far back." : "";
         }
     };
+
+    // The profile form's school fields and its hobby, skill and project slots are all optional text
+    // capped by the input's own maxlength, so one rule covers them. They are named here rather than
+    // left out so that a value the server rejects gets its field highlighted like any other.
+    var optionalText = nameRule(false);
+
+    ["Nationality", "Jhs", "Shs", "College", "Course",
+        "Hobby1", "Hobby2", "Hobby3", "Hobby4",
+        "Skill1", "Skill2", "Skill3", "Skill4",
+        "Project1", "Project2", "Project3", "Project4", "Project5"].forEach(function (name) {
+            rules[name] = optionalText;
+        });
 
     var fields = Object.keys(rules).map(function (name) {
         return {
@@ -209,6 +240,12 @@
         if (firstInvalid) {
             event.preventDefault();
             setStatus(form.getAttribute("data-invalid-status"), true);
+            // The profile page splits this form into steps and hides all but one, and focus does
+            // nothing on a hidden input, so it is given the chance to bring the field forward
+            // first. Nothing registers this on the sign-up page, where the whole form is on screen.
+            if (window.AccountFormReveal) {
+                window.AccountFormReveal(firstInvalid);
+            }
             firstInvalid.focus();
             return;
         }

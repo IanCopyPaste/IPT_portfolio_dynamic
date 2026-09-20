@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
     <%-- Built on the login screen: its stylesheet supplies the panel, fields and button, and
          registerpage.css lays the longer form out to fit one screen. reveal.css loads last so its hidden state wins. --%>
-    <link href="/Assets/css/ContentPage/contentpage.css?v=19" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/contentpage.css?v=20" rel="stylesheet" />
     <link href="/Assets/css/LoginPage/loginpage.css?v=4" rel="stylesheet" />
     <link href="/Assets/css/RegisterPage/registerpage.css?v=7" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/reveal.css?v=3" rel="stylesheet" />
@@ -158,6 +158,6 @@
     </form>
     <%-- contentpage.js drives the navbar wash and the reveals; it skips the sections this page doesn't have. --%>
     <script src="/Assets/js/ContentPage/contentpage.js?v=6"></script>
-    <script src="/Assets/js/RegisterPage/registerpage.js?v=5"></script>
+    <script src="/Assets/js/RegisterPage/registerpage.js?v=7"></script>
 </body>
 </html>
