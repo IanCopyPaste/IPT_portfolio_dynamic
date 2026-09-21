@@ -1,6 +1,7 @@
 using _24_1444AdoteRonAdrian_Portfolio.Accounts;
 using _24_1444AdoteRonAdrian_Portfolio.Security;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
@@ -46,6 +47,8 @@ namespace _24_1444AdoteRonAdrian_Portfolio
                 Response.Redirect("~/LoginPage.aspx");
                 Response.End();
             }
+
+            Limits = ProfileLimits.Get();
         }
 
         // The page is branded with its owner: their first name in the navbar and the footer, their
@@ -54,11 +57,20 @@ namespace _24_1444AdoteRonAdrian_Portfolio
 
         protected string OwnerName => Owner.FullName;
 
+        // Filled in Page_Load alongside Owner.
+        private ProfileLimits Limits;
+
+        // No more than the admin's current limit. An account filled in before the admin lowered it
+        // keeps its extra rows until it next saves, but the page already shows the new number.
+        protected IEnumerable<string> Hobbies => Owner.FilledHobbies.Take(Limits.Hobbies);
+
+        protected IEnumerable<string> Skills => Owner.FilledSkills.Take(Limits.Skills);
+
         // The markup asks these rather than calling Any() itself, so the "nothing here yet" line
         // and the loop above it can never disagree.
-        protected bool HasHobbies => Owner.FilledHobbies.Any();
+        protected bool HasHobbies => Hobbies.Any();
 
-        protected bool HasSkills => Owner.FilledSkills.Any();
+        protected bool HasSkills => Skills.Any();
 
         protected bool HasProjects => Owner.FilledProjects.Any();
 
@@ -67,7 +79,7 @@ namespace _24_1444AdoteRonAdrian_Portfolio
         // The projects and skills prompts name how many the form has room for, so the two can't drift.
         protected static int ProjectSlots => ProfileRules.ProjectCount;
 
-        protected static int SkillSlots => ProfileRules.SkillCount;
+        protected int SkillSlots => Limits.Skills;
 
         protected string AgeText => Owner.Age == null
             ? UnsetText

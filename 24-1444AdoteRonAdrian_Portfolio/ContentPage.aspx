@@ -150,11 +150,11 @@
                         </article>
                         <article class="about-panel reveal" data-reveal-delay="340">
                             <h3><span class="about-panel-index" aria-hidden="true">03</span>Hobbies and Interest</h3>
-                            <%-- Four slots on the form, however many of them were filled in here.
+                            <%-- As many as the user added, up to the admin's limit; the chips wrap.
                                  No emoji any more: they were picked to suit one person's list, and
                                  there is no guessing one for a hobby somebody types in. --%>
                             <div class="hobbies">
-                                <% foreach (string hobby in Owner.FilledHobbies) { %>
+                                <% foreach (string hobby in Hobbies) { %>
                                 <span class="hobby-tag"><%: hobby %></span>
                                 <% } %>
                                 <% if (!HasHobbies) { %>
@@ -201,7 +201,7 @@
                     </div>
 
                     <%-- Where the site's own tech stack used to sit. That list was the same for
-                         everyone and carried logos; these are the user's own four skill slots, so
+                         everyone and carried logos; these are the user's own skills, so
                          they are plain chips, and an account that hasn't filled any in gets the
                          panel with a line saying so rather than an empty shelf of logos. --%>
                     <div class="highlight-panel reveal" data-reveal-delay="340">
@@ -220,7 +220,7 @@
                                      stagger, so the chips carry on from the panel instead of
                                      restarting at zero inside it. --%>
                                 <% int skillDelay = 550; %>
-                                <% foreach (string skill in Owner.FilledSkills) { %>
+                                <% foreach (string skill in Skills) { %>
                                 <span class="highlight-tag reveal" data-reveal-delay="<%= skillDelay %>"><%: skill %></span>
                                 <% skillDelay += 40; %>
                                 <% } %>

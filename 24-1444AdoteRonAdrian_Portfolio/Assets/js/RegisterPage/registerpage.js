@@ -116,14 +116,13 @@
         }
     };
 
-    // The profile form's school fields and its hobby, skill and project slots are all optional text
-    // capped by the input's own maxlength, so one rule covers them. They are named here rather than
-    // left out so that a value the server rejects gets its field highlighted like any other.
+    // The profile form's school fields and its project slots are all optional text capped by the
+    // input's own maxlength, so one rule covers them. They are named here rather than left out so
+    // that a value the server rejects gets its field highlighted like any other. The hobby and skill
+    // lists aren't: their rows come and go, so profilepage.js looks after them.
     var optionalText = nameRule(false);
 
     ["Nationality", "Jhs", "Shs", "College", "Course",
-        "Hobby1", "Hobby2", "Hobby3", "Hobby4",
-        "Skill1", "Skill2", "Skill3", "Skill4",
         "Project1", "Project2", "Project3", "Project4", "Project5"].forEach(function (name) {
             rules[name] = optionalText;
         });

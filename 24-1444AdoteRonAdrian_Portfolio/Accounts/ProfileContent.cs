@@ -6,15 +6,15 @@ using System.Linq;
 namespace _24_1444AdoteRonAdrian_Portfolio.Accounts
 {
     // One account's portfolio: the parts of the users row ContentPage puts on the page, and all of
-    // its user_profile row. The repeated fields are arrays rather than a property each, so the page
-    // and the form can loop over them; a slot the user left blank is "", never null, and the page
-    // skips it.
+    // its user_profile row, with its hobbies and skills. The projects are a fixed run of slots, so
+    // they are an array; a slot the user left blank is "", never null, and the page skips it. The
+    // hobbies and skills are lists as long as the user made them, up to ProfileLimits.
     public class ProfileContent
     {
         public ProfileContent()
         {
-            Hobbies = Slots(ProfileRules.HobbyCount);
-            Skills = Slots(ProfileRules.SkillCount);
+            Hobbies = new List<string>();
+            Skills = new List<string>();
             Projects = Slots(ProfileRules.ProjectCount);
             FirstName = "";
             MiddleName = "";
@@ -54,8 +54,8 @@ namespace _24_1444AdoteRonAdrian_Portfolio.Accounts
         public string CollegeSchool { get; set; }
         public string CollegeCourse { get; set; }
 
-        public string[] Hobbies { get; private set; }
-        public string[] Skills { get; private set; }
+        public List<string> Hobbies { get; private set; }
+        public List<string> Skills { get; private set; }
         public string[] Projects { get; private set; }
 
         // The hero portrait's path under the uploads folder, "" until the user has uploaded one,
@@ -112,9 +112,9 @@ namespace _24_1444AdoteRonAdrian_Portfolio.Accounts
             get { return Filled(Projects); }
         }
 
-        // Blank slots are dropped rather than rendered empty, so four hobby inputs with two filled
-        // in give two chips instead of two chips and two gaps.
-        private static IEnumerable<string> Filled(string[] slots)
+        // Blank slots are dropped rather than rendered empty, so five project inputs with two filled
+        // in give two lines instead of two lines and three gaps.
+        private static IEnumerable<string> Filled(IEnumerable<string> slots)
         {
             return slots.Where(value => !string.IsNullOrWhiteSpace(value)).Select(value => value.Trim());
         }

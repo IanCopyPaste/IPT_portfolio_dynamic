@@ -16,6 +16,21 @@
     grid-row: 1 / span 2;
 }
 
+/* The profile limits sit under both columns rather than alone in the left one, which would leave
+   an empty cell beside them. */
+.adm-settings-card--wide {
+    grid-column: 1 / -1;
+}
+
+/* Two small numbers side by side, kept to a width they read at rather than stretched across the
+   whole card. */
+.adm-settings-pair {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    max-width: 480px;
+}
+
 .adm-account {
     display: flex;
     align-items: center;

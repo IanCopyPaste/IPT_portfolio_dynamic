@@ -10,9 +10,8 @@ namespace _24_1444AdoteRonAdrian_Portfolio.Accounts
     // is still missing -- so the checks only ever object to a value that is too long or impossible.
     public static class ProfileRules
     {
-        // The page has room for exactly this many of each, and so does the table.
-        public const int HobbyCount = 4;
-        public const int SkillCount = 4;
+        // The page has room for exactly this many projects, and so does the table. Hobbies and
+        // skills have no fixed count: the admin sets theirs, and ProfileLimits holds it.
         public const int ProjectCount = 5;
 
         // Column widths, so a value that passes here can always be written.
@@ -80,6 +79,16 @@ namespace _24_1444AdoteRonAdrian_Portfolio.Accounts
         public static string TextError(string value, int maxLength)
         {
             return value.Length > maxLength ? "Keep it under " + maxLength + " characters." : null;
+        }
+
+        // For a list the admin has since capped lower than the user had already filled it: every row
+        // is still on the form, so the message says how many to take off rather than only naming
+        // the limit. profilepage.js words its own copy of this the same way.
+        public static string ListCountError(int count, int max, string plural)
+        {
+            return count > max
+                ? "You can list up to " + max + " " + plural + ". Remove " + (count - max) + " to save."
+                : null;
         }
     }
 }

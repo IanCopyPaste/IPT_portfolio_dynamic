@@ -42,7 +42,7 @@
     <link href="/Assets/css/Admin/Dashboard/analytics.css?v=1" rel="stylesheet" />
     <link href="/Assets/css/Admin/Dashboard/users.css?v=2" rel="stylesheet" />
     <link href="/Assets/css/Admin/Dashboard/dialog.css?v=1" rel="stylesheet" />
-    <link href="/Assets/css/Admin/Dashboard/settings.css?v=1" rel="stylesheet" />
+    <link href="/Assets/css/Admin/Dashboard/settings.css?v=2" rel="stylesheet" />
     <link href="/Assets/css/Admin/Dashboard/toast.css?v=1" rel="stylesheet" />
     <link href="/Assets/css/Admin/Dashboard/responsive.css?v=1" rel="stylesheet" />
     <link href="/DEV_PHOTO.png" rel="icon" type="image/png" />
@@ -82,6 +82,7 @@
     <script src="/Assets/js/Admin/Dashboard/users/userstable.js?v=1"></script>
     <script src="/Assets/js/Admin/Dashboard/users/managedialog.js?v=2"></script>
     <script src="/Assets/js/Admin/Dashboard/settings/password.js?v=1"></script>
+    <script src="/Assets/js/Admin/Dashboard/settings/limits.js?v=1"></script>
     <script src="/Assets/js/Admin/Dashboard/settings/preferences.js?v=1"></script>
     <script src="/Assets/js/Admin/Dashboard/main.js?v=1"></script>
 </body>

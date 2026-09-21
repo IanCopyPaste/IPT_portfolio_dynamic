@@ -159,14 +159,21 @@ values the code itself produced (a year, a CSS class name).
 
 The portfolio is one account's page, not one person's: `ContentPage.aspx` reads the signed-in
 user and draws everything from their row. The account fields (name, address) live on `users`;
-everything else — birthdate, sex, nationality, the three schools, four hobbies, four skills,
-five projects — lives one-to-one in `user_profile`, and the user fills it in on `ProfilePage`.
+birthdate, sex, nationality, the three schools and five projects live one-to-one in
+`user_profile`; hobbies and skills are rows in `user_profile_item`. The user fills all of it in
+on `ProfilePage`.
 
 Every portfolio field is optional. A field that is still blank renders `ContentPage.UnsetText`
 with the `cp-unset` class, and a list that is entirely blank renders a short line in its place,
-so a brand-new account gets a complete page of placeholders rather than gaps. The slot counts
-(4 / 4 / 5 / 3) are fixed in `ProfileRules` and matched by the table's numbered columns; the
-blanks are dropped on the way out, so two hobbies render as two chips.
+so a brand-new account gets a complete page of placeholders rather than gaps. The project and
+school counts (5 / 3) are fixed in `ProfileRules` and matched by the table's numbered columns;
+blanks are dropped on the way out.
+
+Hobbies and skills are growable lists (`Components/Profile/ListField.ascx`, driven by
+`profilepage.js`): a "+" adds a row, up to a maximum the admin sets in the dashboard's Settings
+view. The two maximums live in the single `site_settings` row, read through
+`Accounts/ProfileLimits.cs` (range 1–12). `ProfilePage` refuses a save over the limit, and
+`ContentPage` draws no more than it.
 
 The tech-stack panel in the Skills section is deliberately **not** per-user — it is the site's
 own list, with logos, and stays hard-coded.
@@ -175,7 +182,8 @@ own list, with logos, and stays hard-coded.
 
 Sign-in, sign-up, the account half of `ProfilePage`, and the admin dashboard use inline
 parameterised SQL. The portfolio content is the exception: it goes through the two stored
-procedures in `Database/Migrations/002_profile_content.sql`, wrapped by `Accounts/ProfileStore.cs`.
+procedures last recreated in `Database/Migrations/005_profile_lists.sql`, wrapped by
+`Accounts/ProfileStore.cs`.
 New work on the portfolio content belongs in a procedure; don't convert the rest.
 
 Migrations are numbered, idempotent, and name the database in a `USE` that has to match

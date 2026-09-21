@@ -227,17 +227,9 @@ namespace _24_1444AdoteRonAdrian_Portfolio
         }
 
 
-        // The portfolio's three runs of slots, each paired with the error labels under them, so the
-        // fill and the save can walk them rather than naming twenty-odd controls twice over. The
-        // order matches ProfileContent's arrays, and through them the numbered columns.
-        private TextBox[] HobbyBoxes => new[] { prfHobby1, prfHobby2, prfHobby3, prfHobby4 };
-
-        private Label[] HobbyErrors => new[] { prfHobby1Error, prfHobby2Error, prfHobby3Error, prfHobby4Error };
-
-        private TextBox[] SkillBoxes => new[] { prfSkill1, prfSkill2, prfSkill3, prfSkill4 };
-
-        private Label[] SkillErrors => new[] { prfSkill1Error, prfSkill2Error, prfSkill3Error, prfSkill4Error };
-
+        // The project slots, each paired with the error label under it, so the fill and the save
+        // can walk them rather than naming ten controls twice over. The order matches
+        // ProfileContent.Projects, and through it the numbered columns.
         private TextBox[] ProjectBoxes => new[] { prfProject1, prfProject2, prfProject3, prfProject4, prfProject5 };
 
         private Label[] ProjectErrors => new[] { prfProject1Error, prfProject2Error, prfProject3Error,
@@ -250,9 +242,15 @@ namespace _24_1444AdoteRonAdrian_Portfolio
             prfShs.MaxLength = ProfileRules.SchoolMaxLength;
             prfCollege.MaxLength = ProfileRules.SchoolMaxLength;
             prfCourse.MaxLength = ProfileRules.CourseMaxLength;
-            SetMaxLength(HobbyBoxes, ProfileRules.HobbyMaxLength);
-            SetMaxLength(SkillBoxes, ProfileRules.SkillMaxLength);
             SetMaxLength(ProjectBoxes, ProfileRules.ProjectMaxLength);
+
+            // Read on every request rather than cached, so a limit the admin has just changed
+            // applies from the user's next page load.
+            ProfileLimits limits = ProfileLimits.Get();
+            prfHobbies.Max = limits.Hobbies;
+            prfHobbies.MaxLength = ProfileRules.HobbyMaxLength;
+            prfSkills.Max = limits.Skills;
+            prfSkills.MaxLength = ProfileRules.SkillMaxLength;
         }
 
         // FillForm has already signed a stale session out by the time this runs, so a missing row
@@ -279,8 +277,8 @@ namespace _24_1444AdoteRonAdrian_Portfolio
             prfShs.Text = content.ShsSchool;
             prfCollege.Text = content.CollegeSchool;
             prfCourse.Text = content.CollegeCourse;
-            ShowSlots(HobbyBoxes, content.Hobbies);
-            ShowSlots(SkillBoxes, content.Skills);
+            prfHobbies.Show(content.Hobbies);
+            prfSkills.Show(content.Skills);
             ShowSlots(ProjectBoxes, content.Projects);
             ShowPhoto(content);
         }
@@ -340,8 +338,12 @@ namespace _24_1444AdoteRonAdrian_Portfolio
             valid &= AccountRules.Report(prfCourseError,
                 ProfileRules.TextError(content.CollegeCourse, ProfileRules.CourseMaxLength));
 
-            valid &= ReadSlots(HobbyBoxes, HobbyErrors, content.Hobbies, ProfileRules.HobbyMaxLength);
-            valid &= ReadSlots(SkillBoxes, SkillErrors, content.Skills, ProfileRules.SkillMaxLength);
+            // Each list reports on its own rows, and on having more of them than the admin allows.
+            valid &= prfHobbies.Read();
+            content.Hobbies.AddRange(prfHobbies.Values);
+            valid &= prfSkills.Read();
+            content.Skills.AddRange(prfSkills.Values);
+
             valid &= ReadSlots(ProjectBoxes, ProjectErrors, content.Projects, ProfileRules.ProjectMaxLength);
 
             return content;

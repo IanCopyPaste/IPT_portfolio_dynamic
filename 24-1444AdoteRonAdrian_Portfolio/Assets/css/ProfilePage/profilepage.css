@@ -10,7 +10,7 @@
     grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
-/* The four school fields and the four hobby and skill slots each fill their row; the five
+/* The four school fields and the hobby and skill rows fill four to a row; the five
    project slots take one more column. Narrower than the three-column default, but these are
    all short values -- a school name, a hobby, a project title -- so the row still reads. */
 .profile-fields--education,
@@ -20,6 +20,113 @@
 
 .profile-fields--projects {
     grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+/* ---------- Hobby and skill lists ---------- */
+
+/* ListField.ascx: the rows (four to a row, as the fixed slots were), then "+" and the count. The
+   limit tops out at twelve, three rows of each, so the Interests step still fits one screen. */
+.profile-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+}
+
+.profile-list-input {
+    position: relative;
+}
+
+/* Remove and "+" only work with script, so without it they aren't drawn at all; the server draws
+   a spare empty row instead, and clearing a row's text is how one is removed. */
+.profile-list-remove,
+.profile-list-add {
+    display: none;
+}
+
+.js .profile-list-input input {
+    padding-right: 44px;
+}
+
+/* Sits inside the input's right edge, as the password toggle does on the account step. */
+.js .profile-list-remove {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--cp-muted);
+    font-size: 1.2rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: color 200ms ease, background-color 200ms ease;
+}
+
+/* The error colour, as on Log out: this takes something away. */
+.profile-list-remove:hover,
+.profile-list-remove:focus-visible {
+    color: var(--cp-pastel-1);
+    background: rgba(255, 59, 92, 0.12);
+}
+
+.profile-list-remove:focus-visible {
+    outline: 2px solid var(--cp-pastel-1);
+    outline-offset: 1px;
+}
+
+.profile-list-foot {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+/* Dashed rather than solid: a slot waiting to be filled, not a button that saves anything. */
+.js .profile-list-add {
+    display: inline-flex;
+    padding: 8px 18px;
+    border: 1px dashed var(--cp-border);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--cp-text);
+    font-family: var(--cp-font-mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    cursor: pointer;
+    transition: color 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.profile-list-add:hover:not(:disabled),
+.profile-list-add:focus-visible:not(:disabled) {
+    color: var(--cp-accent);
+    border-color: var(--cp-accent);
+    box-shadow: 0 0 14px rgba(57, 255, 136, 0.28);
+}
+
+.profile-list-add:focus-visible {
+    outline: 2px solid var(--cp-accent);
+    outline-offset: 3px;
+}
+
+/* Left in place at the limit, like Back and Next at the ends, with the count beside it saying why. */
+.profile-list-add:disabled {
+    opacity: 0.35;
+    cursor: default;
+}
+
+.profile-list-count {
+    font-family: var(--cp-font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    color: var(--cp-muted);
 }
 
 .profile-links {

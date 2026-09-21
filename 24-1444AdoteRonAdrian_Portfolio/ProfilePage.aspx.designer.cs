@@ -257,148 +257,22 @@ namespace _24_1444AdoteRonAdrian_Portfolio
         protected global::System.Web.UI.WebControls.Label prfCourseError;
 
         /// <summary>
-        /// prfHobby1 control.
+        /// prfHobbies control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox prfHobby1;
+        protected global::_24_1444AdoteRonAdrian_Portfolio.Components.Profile.ListField prfHobbies;
 
         /// <summary>
-        /// prfHobby1Error control.
+        /// prfSkills control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prfHobby1Error;
-
-        /// <summary>
-        /// prfHobby2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox prfHobby2;
-
-        /// <summary>
-        /// prfHobby2Error control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prfHobby2Error;
-
-        /// <summary>
-        /// prfHobby3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox prfHobby3;
-
-        /// <summary>
-        /// prfHobby3Error control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prfHobby3Error;
-
-        /// <summary>
-        /// prfHobby4 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox prfHobby4;
-
-        /// <summary>
-        /// prfHobby4Error control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prfHobby4Error;
-
-        /// <summary>
-        /// prfSkill1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox prfSkill1;
-
-        /// <summary>
-        /// prfSkill1Error control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prfSkill1Error;
-
-        /// <summary>
-        /// prfSkill2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox prfSkill2;
-
-        /// <summary>
-        /// prfSkill2Error control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prfSkill2Error;
-
-        /// <summary>
-        /// prfSkill3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox prfSkill3;
-
-        /// <summary>
-        /// prfSkill3Error control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prfSkill3Error;
-
-        /// <summary>
-        /// prfSkill4 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox prfSkill4;
-
-        /// <summary>
-        /// prfSkill4Error control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prfSkill4Error;
+        protected global::_24_1444AdoteRonAdrian_Portfolio.Components.Profile.ListField prfSkills;
 
         /// <summary>
         /// prfProject1 control.

@@ -1,4 +1,5 @@
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ProfilePage.aspx.cs" Inherits="_24_1444AdoteRonAdrian_Portfolio.ProfilePage" %>
+<%@ Register TagPrefix="prf" TagName="ListField" Src="~/Components/Profile/ListField.ascx" %>
 
 <!DOCTYPE html>
 
@@ -19,7 +20,7 @@
     <link href="/Assets/css/ContentPage/contentpage.css?v=21" rel="stylesheet" />
     <link href="/Assets/css/LoginPage/loginpage.css?v=4" rel="stylesheet" />
     <link href="/Assets/css/RegisterPage/registerpage.css?v=7" rel="stylesheet" />
-    <link href="/Assets/css/ProfilePage/profilepage.css?v=5" rel="stylesheet" />
+    <link href="/Assets/css/ProfilePage/profilepage.css?v=6" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/reveal.css?v=4" rel="stylesheet" />
     <link href="/DEV_PHOTO.png" rel="icon" type="image/png" />
 </head>
@@ -172,58 +173,18 @@
                             </section>
 
                             <section class="profile-step" data-step-label="Interests">
-                                <%-- Four slots each, however many of them get used: ContentPage skips the
-                                     blanks rather than leaving gaps in the row of chips. --%>
+                                <%-- As many of each as the user adds, up to the limits the admin sets
+                                     in the dashboard's Settings view; ProfilePage.aspx.cs hands them over. --%>
                                 <div class="register-group" role="group" aria-labelledby="prfGroupHobbies">
                                     <p class="register-group-label" id="prfGroupHobbies">// hobbies</p>
-                                    <div class="register-fields profile-fields--slots">
-                                        <div class="login-field">
-                                            <label for="prfHobby1">Hobby 1</label>
-                                            <asp:TextBox ID="prfHobby1" runat="server" ClientIDMode="Static" placeholder="Travelling" />
-                                            <asp:Label ID="prfHobby1Error" runat="server" ClientIDMode="Static" CssClass="login-error" aria-live="polite" />
-                                        </div>
-                                        <div class="login-field">
-                                            <label for="prfHobby2">Hobby 2</label>
-                                            <asp:TextBox ID="prfHobby2" runat="server" ClientIDMode="Static" placeholder="Driving" />
-                                            <asp:Label ID="prfHobby2Error" runat="server" ClientIDMode="Static" CssClass="login-error" aria-live="polite" />
-                                        </div>
-                                        <div class="login-field">
-                                            <label for="prfHobby3">Hobby 3</label>
-                                            <asp:TextBox ID="prfHobby3" runat="server" ClientIDMode="Static" placeholder="Gaming" />
-                                            <asp:Label ID="prfHobby3Error" runat="server" ClientIDMode="Static" CssClass="login-error" aria-live="polite" />
-                                        </div>
-                                        <div class="login-field">
-                                            <label for="prfHobby4">Hobby 4</label>
-                                            <asp:TextBox ID="prfHobby4" runat="server" ClientIDMode="Static" placeholder="Reading" />
-                                            <asp:Label ID="prfHobby4Error" runat="server" ClientIDMode="Static" CssClass="login-error" aria-live="polite" />
-                                        </div>
-                                    </div>
+                                    <prf:ListField ID="prfHobbies" runat="server" FieldName="prfHobby"
+                                        Noun="Hobby" Plural="hobbies" Placeholder="Travelling" />
                                 </div>
 
                                 <div class="register-group" role="group" aria-labelledby="prfGroupSkills">
                                     <p class="register-group-label" id="prfGroupSkills">// skills</p>
-                                    <div class="register-fields profile-fields--slots">
-                                        <div class="login-field">
-                                            <label for="prfSkill1">Skill 1</label>
-                                            <asp:TextBox ID="prfSkill1" runat="server" ClientIDMode="Static" placeholder="Web design" />
-                                            <asp:Label ID="prfSkill1Error" runat="server" ClientIDMode="Static" CssClass="login-error" aria-live="polite" />
-                                        </div>
-                                        <div class="login-field">
-                                            <label for="prfSkill2">Skill 2</label>
-                                            <asp:TextBox ID="prfSkill2" runat="server" ClientIDMode="Static" placeholder="Databases" />
-                                            <asp:Label ID="prfSkill2Error" runat="server" ClientIDMode="Static" CssClass="login-error" aria-live="polite" />
-                                        </div>
-                                        <div class="login-field">
-                                            <label for="prfSkill3">Skill 3</label>
-                                            <asp:TextBox ID="prfSkill3" runat="server" ClientIDMode="Static" placeholder="Problem solving" />
-                                            <asp:Label ID="prfSkill3Error" runat="server" ClientIDMode="Static" CssClass="login-error" aria-live="polite" />
-                                        </div>
-                                        <div class="login-field">
-                                            <label for="prfSkill4">Skill 4</label>
-                                            <asp:TextBox ID="prfSkill4" runat="server" ClientIDMode="Static" placeholder="Teamwork" />
-                                            <asp:Label ID="prfSkill4Error" runat="server" ClientIDMode="Static" CssClass="login-error" aria-live="polite" />
-                                        </div>
-                                    </div>
+                                    <prf:ListField ID="prfSkills" runat="server" FieldName="prfSkill"
+                                        Noun="Skill" Plural="skills" Placeholder="Web design" />
                                 </div>
                             </section>
 
@@ -349,9 +310,9 @@
     </form>
     <%-- contentpage.js drives the navbar wash and the reveals; it skips the sections this page doesn't have. --%>
     <script src="/Assets/js/ContentPage/contentpage.js?v=6"></script>
-    <script src="/Assets/js/RegisterPage/registerpage.js?v=8"></script>
+    <script src="/Assets/js/RegisterPage/registerpage.js?v=9"></script>
     <%-- Loads after registerpage.js: it wraps that form in steps and hands it a way to bring
          a failed field back on screen. --%>
-    <script src="/Assets/js/ProfilePage/profilepage.js?v=2"></script>
+    <script src="/Assets/js/ProfilePage/profilepage.js?v=3"></script>
 </body>
 </html>
