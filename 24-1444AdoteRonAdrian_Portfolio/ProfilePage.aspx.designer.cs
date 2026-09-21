@@ -257,6 +257,24 @@ namespace _24_1444AdoteRonAdrian_Portfolio
         protected global::System.Web.UI.WebControls.Label prfCourseError;
 
         /// <summary>
+        /// prfTagline control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox prfTagline;
+
+        /// <summary>
+        /// prfTaglineError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prfTaglineError;
+
+        /// <summary>
         /// prfHobbies control.
         /// </summary>
         /// <remarks>

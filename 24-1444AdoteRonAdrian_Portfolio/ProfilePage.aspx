@@ -20,7 +20,7 @@
     <link href="/Assets/css/ContentPage/contentpage.css?v=21" rel="stylesheet" />
     <link href="/Assets/css/LoginPage/loginpage.css?v=4" rel="stylesheet" />
     <link href="/Assets/css/RegisterPage/registerpage.css?v=7" rel="stylesheet" />
-    <link href="/Assets/css/ProfilePage/profilepage.css?v=6" rel="stylesheet" />
+    <link href="/Assets/css/ProfilePage/profilepage.css?v=7" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/reveal.css?v=4" rel="stylesheet" />
     <link href="/DEV_PHOTO.png" rel="icon" type="image/png" />
 </head>
@@ -186,6 +186,20 @@
                                     <prf:ListField ID="prfSkills" runat="server" FieldName="prfSkill"
                                         Noun="Skill" Plural="skills" Placeholder="Web design" />
                                 </div>
+
+                                <%-- The line under the brand in ContentPage's footer. --%>
+                                <div class="register-group" role="group" aria-labelledby="prfGroupTagline">
+                                    <p class="register-group-label" id="prfGroupTagline">// tagline</p>
+                                    <div class="register-fields profile-fields--stack">
+                                        <div class="login-field">
+                                            <label for="prfTagline">Tagline <span class="register-optional">optional</span></label>
+                                            <asp:TextBox ID="prfTagline" runat="server" ClientIDMode="Static" TextMode="MultiLine"
+                                                Rows="3" CssClass="profile-tagline"
+                                                placeholder="A student developer building web apps, one commit at a time." />
+                                            <asp:Label ID="prfTaglineError" runat="server" ClientIDMode="Static" CssClass="login-error" aria-live="polite" />
+                                        </div>
+                                    </div>
+                                </div>
                             </section>
 
                             <section class="profile-step" data-step-label="Projects">
@@ -310,7 +324,7 @@
     </form>
     <%-- contentpage.js drives the navbar wash and the reveals; it skips the sections this page doesn't have. --%>
     <script src="/Assets/js/ContentPage/contentpage.js?v=6"></script>
-    <script src="/Assets/js/RegisterPage/registerpage.js?v=9"></script>
+    <script src="/Assets/js/RegisterPage/registerpage.js?v=10"></script>
     <%-- Loads after registerpage.js: it wraps that form in steps and hands it a way to bring
          a failed field back on screen. --%>
     <script src="/Assets/js/ProfilePage/profilepage.js?v=3"></script>

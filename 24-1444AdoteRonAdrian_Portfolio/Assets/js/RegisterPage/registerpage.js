@@ -123,7 +123,7 @@
     var optionalText = nameRule(false);
 
     ["Nationality", "Jhs", "Shs", "College", "Course",
-        "Project1", "Project2", "Project3", "Project4", "Project5"].forEach(function (name) {
+        "Project1", "Project2", "Project3", "Project4", "Project5", "Tagline"].forEach(function (name) {
             rules[name] = optionalText;
         });
 

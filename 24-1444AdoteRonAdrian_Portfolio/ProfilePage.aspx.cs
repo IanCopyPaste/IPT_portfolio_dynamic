@@ -242,6 +242,9 @@ namespace _24_1444AdoteRonAdrian_Portfolio
             prfShs.MaxLength = ProfileRules.SchoolMaxLength;
             prfCollege.MaxLength = ProfileRules.SchoolMaxLength;
             prfCourse.MaxLength = ProfileRules.CourseMaxLength;
+            // A multi-line TextBox renders a <textarea> and drops MaxLength, so the attribute is
+            // written by hand; the script's length check reads it off the element like the others.
+            prfTagline.Attributes["maxlength"] = ProfileRules.TaglineMaxLength.ToString(CultureInfo.InvariantCulture);
             SetMaxLength(ProjectBoxes, ProfileRules.ProjectMaxLength);
 
             // Read on every request rather than cached, so a limit the admin has just changed
@@ -279,6 +282,7 @@ namespace _24_1444AdoteRonAdrian_Portfolio
             prfCourse.Text = content.CollegeCourse;
             prfHobbies.Show(content.Hobbies);
             prfSkills.Show(content.Skills);
+            prfTagline.Text = content.Tagline;
             ShowSlots(ProjectBoxes, content.Projects);
             ShowPhoto(content);
         }
@@ -343,6 +347,10 @@ namespace _24_1444AdoteRonAdrian_Portfolio
             content.Hobbies.AddRange(prfHobbies.Values);
             valid &= prfSkills.Read();
             content.Skills.AddRange(prfSkills.Values);
+
+            content.Tagline = prfTagline.Text.Trim();
+            valid &= AccountRules.Report(prfTaglineError,
+                ProfileRules.TextError(content.Tagline, ProfileRules.TaglineMaxLength));
 
             valid &= ReadSlots(ProjectBoxes, ProjectErrors, content.Projects, ProfileRules.ProjectMaxLength);
 

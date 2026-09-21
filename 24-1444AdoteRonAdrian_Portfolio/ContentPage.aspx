@@ -316,10 +316,7 @@
                         <div class="footer-grid">
                             <div class="footer-brand">
                                 <a class="footer-brand-name" href="#home" data-section="home"><%: BrandName %></a>
-                                <p class="footer-tagline">
-                                    A student developer from Quezon City building web apps, systems and the
-                                    occasional music player &mdash; one commit at a time.
-                                </p>
+                                <p class="footer-tagline<%= UnsetClass(Owner.Tagline) %>"><%: Or(Owner.Tagline) %></p>
                             </div>
 
                             <nav class="footer-nav" aria-label="Footer">

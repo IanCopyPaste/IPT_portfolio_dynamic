@@ -159,7 +159,7 @@ values the code itself produced (a year, a CSS class name).
 
 The portfolio is one account's page, not one person's: `ContentPage.aspx` reads the signed-in
 user and draws everything from their row. The account fields (name, address) live on `users`;
-birthdate, sex, nationality, the three schools and five projects live one-to-one in
+birthdate, sex, nationality, the footer tagline, the three schools and five projects live one-to-one in
 `user_profile`; hobbies and skills are rows in `user_profile_item`. The user fills all of it in
 on `ProfilePage`.
 
@@ -182,7 +182,7 @@ own list, with logos, and stays hard-coded.
 
 Sign-in, sign-up, the account half of `ProfilePage`, and the admin dashboard use inline
 parameterised SQL. The portfolio content is the exception: it goes through the two stored
-procedures last recreated in `Database/Migrations/005_profile_lists.sql`, wrapped by
+procedures last recreated in `Database/Migrations/006_profile_tagline.sql`, wrapped by
 `Accounts/ProfileStore.cs`.
 New work on the portfolio content belongs in a procedure; don't convert the rest.
 

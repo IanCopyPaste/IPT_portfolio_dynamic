@@ -158,6 +158,6 @@
     </form>
     <%-- contentpage.js drives the navbar wash and the reveals; it skips the sections this page doesn't have. --%>
     <script src="/Assets/js/ContentPage/contentpage.js?v=6"></script>
-    <script src="/Assets/js/RegisterPage/registerpage.js?v=9"></script>
+    <script src="/Assets/js/RegisterPage/registerpage.js?v=10"></script>
 </body>
 </html>

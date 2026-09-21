@@ -22,6 +22,7 @@ namespace _24_1444AdoteRonAdrian_Portfolio.Accounts
         public const int HobbyMaxLength = 40;
         public const int SkillMaxLength = 40;
         public const int ProjectMaxLength = 120;
+        public const int TaglineMaxLength = 200;
 
         // A fixed list keeps sex to values that belong in the column, the same way suffixes work.
         private static readonly string[] Sexes = { "Male", "Female", "Other" };

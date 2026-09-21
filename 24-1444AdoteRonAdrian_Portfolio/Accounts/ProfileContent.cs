@@ -30,6 +30,7 @@ namespace _24_1444AdoteRonAdrian_Portfolio.Accounts
             ShsSchool = "";
             CollegeSchool = "";
             CollegeCourse = "";
+            Tagline = "";
         }
 
         // From the users row, so the page shows the name and address as they are now rather than as
@@ -53,6 +54,9 @@ namespace _24_1444AdoteRonAdrian_Portfolio.Accounts
         public string ShsSchool { get; set; }
         public string CollegeSchool { get; set; }
         public string CollegeCourse { get; set; }
+
+        // The line under the brand in the footer.
+        public string Tagline { get; set; }
 
         public List<string> Hobbies { get; private set; }
         public List<string> Skills { get; private set; }

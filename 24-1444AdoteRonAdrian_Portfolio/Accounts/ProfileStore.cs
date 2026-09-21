@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 namespace _24_1444AdoteRonAdrian_Portfolio.Accounts
 {
     // Reads and writes a user_profile row, and the account's hobbies and skills, through the two
-    // stored procedures, as last recreated by Database/Migrations/005_profile_lists.sql. ContentPage reads the signed-in user's row,
+    // stored procedures, as last recreated by Database/Migrations/006_profile_tagline.sql. ContentPage reads the signed-in user's row,
     // ProfilePage writes it, and the admin dashboard reads anyone's. The users columns the read
     // brings back with it are read-only here: ProfilePage saves those with its own UPDATE.
     public static class ProfileStore
@@ -34,6 +34,8 @@ namespace _24_1444AdoteRonAdrian_Portfolio.Accounts
         private const int FirstProjectColumn = 14;
         // Last, after the run of project slots.
         private const int HomePhotoColumn = 19;
+        // Added by 006 after everything 005 returned, so nothing above it moved.
+        private const int TaglineColumn = 20;
 
         // The width of the home_photo column.
         private const int PhotoPathMaxLength = 260;
@@ -82,6 +84,7 @@ namespace _24_1444AdoteRonAdrian_Portfolio.Accounts
                     ReadSlots(reader, FirstProjectColumn, content.Projects);
 
                     content.HomePhoto = Text(reader, HomePhotoColumn);
+                    content.Tagline = Text(reader, TaglineColumn);
 
                     // The second result set is the two lists, already in the order they are shown.
                     reader.NextResult();
@@ -120,6 +123,7 @@ namespace _24_1444AdoteRonAdrian_Portfolio.Accounts
                 Add(cmd, "@college_course", ProfileRules.CourseMaxLength, content.CollegeCourse);
                 AddSlots(cmd, "@project_", ProfileRules.ProjectMaxLength, content.Projects);
                 Add(cmd, "@home_photo", PhotoPathMaxLength, content.HomePhoto);
+                Add(cmd, "@tagline", ProfileRules.TaglineMaxLength, content.Tagline);
 
                 SqlParameter items = cmd.Parameters.Add("@items", SqlDbType.Structured);
                 items.TypeName = "dbo.ProfileItemList";

@@ -4,22 +4,28 @@
 
 /* ---------- Profile section ---------- */
 
-/* Username and the three password fields share the account row, as the four name fields
-   share the name row, so the form stays three rows tall and still fits one screen. */
-.profile-fields--account {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-/* The four school fields and the hobby and skill rows fill four to a row; the five
-   project slots take one more column. Narrower than the three-column default, but these are
-   all short values -- a school name, a hobby, a project title -- so the row still reads. */
+/* The four school fields and the hobby and skill rows fill four to a row. Narrower than the
+   three-column default, but these are all short values -- a school name, a hobby -- so the row
+   still reads. */
 .profile-fields--education,
 .profile-fields--slots {
     grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
-.profile-fields--projects {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+/* One field per line. Each of these has a step to itself, so there is the height for it, and a
+   project title or a password is easier to check read down a column than squeezed five across.
+   Capped so a single input doesn't run the full width of a wide screen. */
+.profile-fields--projects,
+.profile-fields--account,
+.profile-fields--stack {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 560px;
+}
+
+/* A sentence rather than a word, so it gets a few lines and can only grow downwards. */
+.profile-tagline {
+    min-height: 96px;
+    resize: vertical;
 }
 
 /* ---------- Hobby and skill lists ---------- */
@@ -365,10 +371,8 @@
    their columns down to 720px; this file loads after the sign-up stylesheet, so the fold to one
    column there has to be repeated for them. */
 @media (max-width: 720px) {
-    .profile-fields--account,
     .profile-fields--education,
-    .profile-fields--slots,
-    .profile-fields--projects {
+    .profile-fields--slots {
         grid-template-columns: 1fr;
     }
 
