@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<preserve resultType="3" virtualPath="/C:/Program Files/Git/Components/Dashboard/Settings/AccountCard.ascx" hash="a35cf5edc" filehash="2e76d20ba7856a13" flags="110000" assembly="App_Web_etitsuwk" type="ASP.components_dashboard_settings_accountcard_ascx">
+    <filedeps>
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Settings/AccountCard.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Shared/Icon.ascx" />
+    </filedeps>
+</preserve>

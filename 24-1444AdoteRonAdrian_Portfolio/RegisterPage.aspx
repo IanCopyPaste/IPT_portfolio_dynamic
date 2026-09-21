@@ -24,12 +24,6 @@
     <form id="form1" runat="server">
     <div>
 
-        <nav class="navbar navbar--top" id="siteNavbar">
-            <div class="navbar-inner">
-                <a class="navbar-brand" href="LoginPage.aspx"><%= SiteBrandName %></a>
-            </div>
-        </nav>
-
         <main>
             <section id="register" class="section login-section register-section">
                 <div class="section-inner">
@@ -158,6 +152,6 @@
     </form>
     <%-- contentpage.js drives the navbar wash and the reveals; it skips the sections this page doesn't have. --%>
     <script src="/Assets/js/ContentPage/contentpage.js?v=6"></script>
-    <script src="/Assets/js/RegisterPage/registerpage.js?v=10"></script>
+    <script src="/Assets/js/RegisterPage/registerpage.js?v=11"></script>
 </body>
 </html>

@@ -13,6 +13,7 @@ namespace _24_1444AdoteRonAdrian_Portfolio
 
     public partial class ProfilePage
     {
+
         /// <summary>
         /// form1 control.
         /// </summary>
@@ -21,6 +22,15 @@ namespace _24_1444AdoteRonAdrian_Portfolio
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+
+        /// <summary>
+        /// profileStep control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField profileStep;
 
         /// <summary>
         /// prfFirstName control.
@@ -257,24 +267,6 @@ namespace _24_1444AdoteRonAdrian_Portfolio
         protected global::System.Web.UI.WebControls.Label prfCourseError;
 
         /// <summary>
-        /// prfTagline control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox prfTagline;
-
-        /// <summary>
-        /// prfTaglineError control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prfTaglineError;
-
-        /// <summary>
         /// prfHobbies control.
         /// </summary>
         /// <remarks>
@@ -291,6 +283,24 @@ namespace _24_1444AdoteRonAdrian_Portfolio
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::_24_1444AdoteRonAdrian_Portfolio.Components.Profile.ListField prfSkills;
+
+        /// <summary>
+        /// prfTagline control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox prfTagline;
+
+        /// <summary>
+        /// prfTaglineError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prfTaglineError;
 
         /// <summary>
         /// prfProject1 control.
@@ -383,6 +393,33 @@ namespace _24_1444AdoteRonAdrian_Portfolio
         protected global::System.Web.UI.WebControls.Label prfProject5Error;
 
         /// <summary>
+        /// prfHomePreview control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image prfHomePreview;
+
+        /// <summary>
+        /// prfHomePhoto control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload prfHomePhoto;
+
+        /// <summary>
+        /// prfHomePhotoError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prfHomePhotoError;
+
+        /// <summary>
         /// prfUser control.
         /// </summary>
         /// <remarks>
@@ -455,40 +492,22 @@ namespace _24_1444AdoteRonAdrian_Portfolio
         protected global::System.Web.UI.WebControls.Label prfConfirmError;
 
         /// <summary>
-        /// prfHomePreview control.
+        /// prfShareRenew control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image prfHomePreview;
+        protected global::System.Web.UI.WebControls.Button prfShareRenew;
 
         /// <summary>
-        /// prfHomePhoto control.
+        /// prfShareRevoke control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload prfHomePhoto;
-
-        /// <summary>
-        /// prfHomePhotoError control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prfHomePhotoError;
-
-        /// <summary>
-        /// profileStep control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField profileStep;
+        protected global::System.Web.UI.WebControls.Button prfShareRevoke;
 
         /// <summary>
         /// profileSave control.

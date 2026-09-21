@@ -1,9 +1,6 @@
 using _24_1444AdoteRonAdrian_Portfolio.Accounts;
 using _24_1444AdoteRonAdrian_Portfolio.Security;
 using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 
 namespace _24_1444AdoteRonAdrian_Portfolio
 {
@@ -11,20 +8,17 @@ namespace _24_1444AdoteRonAdrian_Portfolio
     {
         // The site's own name, on the sign-in, sign-up and 403 screens and in the dashboard footer,
         // where there is no user to name. The portfolio itself is branded with its owner instead.
-        public const string SiteBrandName = "IAN";
+        public const string SiteBrandName = "USER";
 
         // Stands in for any portfolio field the user hasn't filled in yet. ContentPage is one
         // account's page, so a brand-new account sees this in most of it until they visit
-        // ProfilePage; UnsetClass greys each one out so a filled page is obvious at a glance.
+        // ProfilePage; the cp-unset class greys each one out so a filled page is obvious at a glance.
         public const string UnsetText = "Not set yet";
 
         // Filled in Page_Load, which runs before the markup is rendered.
         protected ProfileContent Owner;
 
-        // Shown when the account button is hovered. A session signed in before the full name was
-        // stored has only the username, so that stands in until the user signs in again.
-        protected string AccountName =>
-            Session[UserSession.FullNameKey] as string ?? Session[UserSession.UsernameKey] as string ?? "";
+        protected string OwnerName => Owner.FullName;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -37,10 +31,11 @@ namespace _24_1444AdoteRonAdrian_Portfolio
             }
 
             int? userId = UserSession.UserId(Session);
-            Owner = userId == null ? null : ProfileStore.Get(userId.Value);
+            Owner = userId == null || !AccountStatus.IsActive(userId.Value) ? null : ProfileStore.Get(userId.Value);
 
-            // No row means the account was deleted while this session was open, so the session is
-            // stale and there is no portfolio to draw.
+            // No row means the account was deleted while this session was open, and an inactive one
+            // was deactivated by an admin; either way the session is stale and there is no portfolio
+            // to draw.
             if (Owner == null)
             {
                 UserSession.SignOut(Session);
@@ -48,66 +43,8 @@ namespace _24_1444AdoteRonAdrian_Portfolio
                 Response.End();
             }
 
-            Limits = ProfileLimits.Get();
-        }
-
-        // The page is branded with its owner: their first name in the navbar and the footer, their
-        // full name in the hero and the copyright line.
-        protected string BrandName => Owner.FirstName;
-
-        protected string OwnerName => Owner.FullName;
-
-        // Filled in Page_Load alongside Owner.
-        private ProfileLimits Limits;
-
-        // No more than the admin's current limit. An account filled in before the admin lowered it
-        // keeps its extra rows until it next saves, but the page already shows the new number.
-        protected IEnumerable<string> Hobbies => Owner.FilledHobbies.Take(Limits.Hobbies);
-
-        protected IEnumerable<string> Skills => Owner.FilledSkills.Take(Limits.Skills);
-
-        // The markup asks these rather than calling Any() itself, so the "nothing here yet" line
-        // and the loop above it can never disagree.
-        protected bool HasHobbies => Hobbies.Any();
-
-        protected bool HasSkills => Skills.Any();
-
-        protected bool HasProjects => Owner.FilledProjects.Any();
-
-        protected bool HasHomePhoto => Owner.HomePhotoUrl.Length > 0;
-
-        // The projects and skills prompts name how many the form has room for, so the two can't drift.
-        protected static int ProjectSlots => ProfileRules.ProjectCount;
-
-        protected int SkillSlots => Limits.Skills;
-
-        protected string AgeText => Owner.Age == null
-            ? UnsetText
-            : Owner.Age.Value + (Owner.Age.Value == 1 ? " yr Old" : " yrs Old");
-
-        // Written out in full ("April 16, 2006") rather than as the form's yyyy-MM-dd, and in a
-        // fixed culture so the month name doesn't follow the server's locale.
-        protected string BirthdateText => Owner.Birthdate == null
-            ? UnsetText
-            : Owner.Birthdate.Value.ToString("MMMM d, yyyy", CultureInfo.InvariantCulture);
-
-        // The placeholder and the class that greys it go together: a field is shown as unset in
-        // both or in neither.
-        protected static string Or(string value)
-        {
-            return string.IsNullOrWhiteSpace(value) ? UnsetText : value.Trim();
-        }
-
-        protected static string UnsetClass(string value)
-        {
-            return UnsetClass(string.IsNullOrWhiteSpace(value));
-        }
-
-        // For the two values that aren't plain strings: the age and the birthdate are unset when no
-        // birthdate has been saved.
-        protected static string UnsetClass(bool isUnset)
-        {
-            return isUnset ? " cp-unset" : "";
+            portfolio.Owner = Owner;
+            portfolio.Limits = ProfileLimits.Get();
         }
     }
 }

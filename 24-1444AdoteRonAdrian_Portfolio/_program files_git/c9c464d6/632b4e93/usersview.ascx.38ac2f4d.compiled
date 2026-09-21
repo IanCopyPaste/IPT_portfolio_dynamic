@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<preserve resultType="3" virtualPath="/C:/Program Files/Git/Components/Dashboard/Users/UsersView.ascx" hash="a35cf5edc" filehash="70d504b7232771a8" flags="110000" assembly="App_Web_pdgvwbkl" type="ASP.components_dashboard_users_usersview_ascx">
+    <filedeps>
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Shared/Icon.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Users/UsersPagination.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Users/UsersTable.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Users/UsersToolbar.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Users/UsersView.ascx" />
+    </filedeps>
+</preserve>

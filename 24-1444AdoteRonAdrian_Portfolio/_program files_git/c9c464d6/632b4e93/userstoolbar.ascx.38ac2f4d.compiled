@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<preserve resultType="3" virtualPath="/C:/Program Files/Git/Components/Dashboard/Users/UsersToolbar.ascx" hash="a35cf5edc" filehash="4f0c9d73a09a7c2b" flags="110000" assembly="App_Web_frv1ywqn" type="ASP.components_dashboard_users_userstoolbar_ascx">
+    <filedeps>
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Shared/Icon.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Users/UsersToolbar.ascx" />
+    </filedeps>
+</preserve>

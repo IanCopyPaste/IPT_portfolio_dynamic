@@ -43,13 +43,25 @@ namespace _24_1444AdoteRonAdrian_Portfolio.Components.Profile
         // simply one the user added and didn't use.
         public bool Read()
         {
-            string[] posted = Request.Form.GetValues(FieldName) ?? new string[0];
-
-            Values = posted.Select(value => value.Trim()).Where(value => value.Length > 0).ToList();
+            Values = Posted();
             Errors = Values.Select(value => ProfileRules.TextError(value, MaxLength)).ToList();
             CountError = ProfileRules.ListCountError(Values.Count, Max, Plural);
 
             return CountError == null && Errors.All(error => error == null);
+        }
+
+        // For a post-back that isn't a save, such as the share buttons: the rows aren't in view state,
+        // so without this they would be drawn empty, and the user's next Save would wipe the list.
+        // Nothing is checked, since nothing is being saved.
+        public void Keep()
+        {
+            Show(Posted());
+        }
+
+        private List<string> Posted()
+        {
+            string[] posted = Request.Form.GetValues(FieldName) ?? new string[0];
+            return posted.Select(value => value.Trim()).Where(value => value.Length > 0).ToList();
         }
     }
 }

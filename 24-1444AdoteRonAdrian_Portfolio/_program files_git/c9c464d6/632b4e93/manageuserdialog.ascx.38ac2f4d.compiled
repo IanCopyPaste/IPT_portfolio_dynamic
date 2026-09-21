@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<preserve resultType="3" virtualPath="/C:/Program Files/Git/Components/Dashboard/Users/ManageUserDialog.ascx" hash="a35cf5edc" filehash="b0f360011a5b2c23" flags="110000" assembly="App_Web_frv1ywqn" type="ASP.components_dashboard_users_manageuserdialog_ascx">
+    <filedeps>
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Shared/Icon.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Users/ManageUserDialog.ascx" />
+    </filedeps>
+</preserve>

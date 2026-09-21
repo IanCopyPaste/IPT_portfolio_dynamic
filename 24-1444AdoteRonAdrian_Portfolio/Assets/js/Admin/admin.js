@@ -27,6 +27,11 @@
         if (!value) {
             return input === userInput ? "Enter your username." : "Enter your password.";
         }
+        // ASP.NET's request validation would refuse the whole post over this and show an error
+        // page instead of the form, so it is caught here.
+        if (/<[a-z!\/?]|&#/i.test(value)) {
+            return "Can't contain \"<\" before a letter or symbol, or \"&#\".";
+        }
         return "";
     };
 

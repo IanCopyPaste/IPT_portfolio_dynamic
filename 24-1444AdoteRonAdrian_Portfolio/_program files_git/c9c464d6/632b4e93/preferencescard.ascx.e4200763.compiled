@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<preserve resultType="3" virtualPath="/C:/Program Files/Git/Components/Dashboard/Settings/PreferencesCard.ascx" hash="a35cf5edc" filehash="eb5ab69fb6f85889" flags="110000" assembly="App_Web_etitsuwk" type="ASP.components_dashboard_settings_preferencescard_ascx">
+    <filedeps>
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Settings/PreferencesCard.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Shared/Icon.ascx" />
+    </filedeps>
+</preserve>

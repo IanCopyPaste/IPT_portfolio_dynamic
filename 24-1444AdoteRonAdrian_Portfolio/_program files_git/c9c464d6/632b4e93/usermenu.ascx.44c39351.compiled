@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<preserve resultType="3" virtualPath="/C:/Program Files/Git/Components/Dashboard/Layout/UserMenu.ascx" hash="a35cf5edc" filehash="c9391c67ba2278c1" flags="110000" assembly="App_Web_3ylbtnrw" type="ASP.components_dashboard_layout_usermenu_ascx">
+    <filedeps>
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Layout/UserMenu.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Shared/Icon.ascx" />
+    </filedeps>
+</preserve>

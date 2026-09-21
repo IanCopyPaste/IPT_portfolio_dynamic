@@ -17,5 +17,21 @@ namespace _24_1444AdoteRonAdrian_Portfolio
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+        // Web.config's customErrors shows the visitor ErrorPage, which says nothing specific on
+        // purpose, so this is the only record of what actually went wrong. A missing page is
+        // ordinary traffic, not a fault, and isn't logged.
+        void Application_Error(object sender, EventArgs e)
+        {
+            Exception error = Server.GetLastError();
+            var http = error as HttpException;
+
+            if (error == null || (http != null && http.GetHttpCode() == 404))
+            {
+                return;
+            }
+
+            System.Diagnostics.Trace.TraceError("Unhandled error on {0}: {1}", Request.RawUrl, error);
+        }
     }
 }

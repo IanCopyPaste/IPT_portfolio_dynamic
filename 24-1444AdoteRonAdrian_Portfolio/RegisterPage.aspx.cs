@@ -94,6 +94,14 @@ namespace _24_1444AdoteRonAdrian_Portfolio
                 ShowStatus("sign-up failed. pick a different username.");
                 return;
             }
+            // As on LoginPage: the raw exception can name the server or the schema, so it goes to
+            // the trace log and the visitor keeps the form with a generic line.
+            catch (SqlException ex)
+            {
+                Trace.Warn("RegisterPage", "Sign-up insert failed", ex);
+                ShowStatus("can't reach the server right now. try again in a moment.");
+                return;
+            }
 
             // Signed straight in, the same way LoginPage does it.
             UserSession.SignIn(Session, userId, username,

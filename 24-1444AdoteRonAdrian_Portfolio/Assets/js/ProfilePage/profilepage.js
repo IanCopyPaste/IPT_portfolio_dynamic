@@ -134,6 +134,49 @@
 
     Array.prototype.slice.call(form.querySelectorAll("[data-profile-list]")).forEach(setUpList);
 
+    // ---------- Share link ----------
+
+    // Copy puts the public link on the clipboard. The async clipboard API only exists on a secure
+    // origin, which plain http on a LAN address is not, so the old select-and-copy is the fallback;
+    // either way the link is left selected, so a manual Ctrl+C still works if both refuse.
+    var shareUrl = document.getElementById("prfShareUrl");
+    var shareCopy = document.getElementById("prfShareCopy");
+    var shareStatus = document.getElementById("prfShareStatus");
+
+    if (shareUrl && shareCopy && shareStatus) {
+        var copied = function (ok) {
+            shareStatus.textContent = ok ? "Copied to clipboard." : "Couldn't copy. Press Ctrl+C to copy it.";
+        };
+
+        var copyBySelection = function () {
+            var ok = false;
+            try {
+                ok = document.execCommand("copy");
+            } catch (e) {
+                ok = false;
+            }
+            copied(ok);
+        };
+
+        shareCopy.addEventListener("click", function () {
+            shareUrl.focus();
+            shareUrl.select();
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(shareUrl.value).then(function () {
+                    copied(true);
+                }, copyBySelection);
+            } else {
+                copyBySelection();
+            }
+        });
+
+        // Clicking into the box selects the whole link, since a part of it is no use to anyone.
+        shareUrl.addEventListener("focus", function () {
+            shareUrl.select();
+        });
+    }
+
     // ---------- Steps ----------
 
     var rail = document.getElementById("profileSteps");

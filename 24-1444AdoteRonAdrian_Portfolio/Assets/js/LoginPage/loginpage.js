@@ -37,6 +37,11 @@
         if (input === passwordInput && value.length < 8) {
             return "At least 8 characters.";
         }
+        // ASP.NET's request validation would refuse the whole post over this and show an error
+        // page instead of the form, so it is caught here. registerpage.js makes the same check.
+        if (/<[a-z!\/?]|&#/i.test(value)) {
+            return "Can't contain \"<\" right before a letter or symbol, or \"&#\".";
+        }
         return "";
     };
 

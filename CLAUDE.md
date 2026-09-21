@@ -175,8 +175,40 @@ view. The two maximums live in the single `site_settings` row, read through
 `Accounts/ProfileLimits.cs` (range 1–12). `ProfilePage` refuses a save over the limit, and
 `ContentPage` draws no more than it.
 
-The tech-stack panel in the Skills section is deliberately **not** per-user — it is the site's
-own list, with logos, and stays hard-coded.
+The Skills section's lower panel (`.highlight-panel`) used to be the site's own hard-coded tech
+stack with logos; it now shows the user's own skills as plain chips.
+
+### Errors and stale sessions
+
+Nothing a user does should end on the yellow ASP.NET screen. `Web.config`'s `customErrors` and
+`httpErrors` send anything uncaught, and any unknown address, to `ErrorPage.aspx` (500 / 404, and
+400 for a post ASP.NET's request validation refused); `Global.Application_Error` logs the real
+exception to the trace. A page still catches the failures it can explain — a `SqlException` on a
+form post becomes a status line on that form, not an error page.
+
+Request validation stays on. Every form's script refuses `<` before a letter or symbol, and `&#`,
+before posting, so a user sees which field is at fault instead of losing the form to a 400.
+
+Status is checked at sign-in *and* by every page that shows the signed-in user's own data
+(`AccountStatus.IsActive`), so an account an admin deactivates is signed out on its next request.
+
+Portraits are written before the row and the replaced one is deleted only after the row commits
+(`ProfilePhotos.Store`, then `Delete`), so a failed save never leaves the row naming a missing
+file. Deleting an account also removes its `uploads/<id>-*` files.
+
+### Sharing
+
+The portfolio's navbar and sections live in one user control,
+`Components/Portfolio/PortfolioView.ascx`, rendered by both `ContentPage.aspx` (the signed-in
+owner) and `SharePage.aspx` (anyone holding the link, no sign-in). Change the portfolio there, not
+in either page. `Shared="true"` leaves out the owner-only parts: the account button and the
+contact form.
+
+The link is `SharePage?t=<token>`: 32 random hex characters in `users.share_token`, read and
+written by `Accounts/ShareLinks.cs`, and created, replaced or turned off from the Account step on
+`ProfilePage`. A bad, withdrawn or deactivated link returns the same 404, so it gives nothing away.
+The filtered unique index on that column means any session writing to `users` needs
+`QUOTED_IDENTIFIER ON` (SqlClient's default; pass `-I` to sqlcmd).
 
 ### SQL
 
@@ -188,6 +220,8 @@ New work on the portfolio content belongs in a procedure; don't convert the rest
 
 Migrations are numbered, idempotent, and name the database in a `USE` that has to match
 `Web.config`'s `portfolio_conn`. They are never edited after being run — add the next number.
+A fresh database is built by running `000_users_table.sql`, then `002` through `007` in order;
+`001` is folded into `000` and still names the retired `IPT_portfolio` database, so skip it.
 
 ## Comments
 

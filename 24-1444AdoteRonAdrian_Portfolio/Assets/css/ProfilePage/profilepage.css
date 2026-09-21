@@ -28,6 +28,37 @@
     resize: vertical;
 }
 
+/* ---------- Share link ---------- */
+
+/* The link, then Copy and Open beside it. The link is set by the server and only read here, so
+   it is drawn in the mono face and muted, like terminal output rather than a field to type in. */
+.profile-share-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.login-field .profile-share-url {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-family: var(--cp-font-mono);
+    font-size: 0.82rem;
+    color: var(--cp-muted);
+}
+
+/* Open is a link drawn as one of the step buttons, so it needs the underline taken off. */
+.profile-share-row .profile-stepbtn {
+    flex: 0 0 auto;
+    text-decoration: none;
+}
+
+.profile-share-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+}
+
 /* ---------- Hobby and skill lists ---------- */
 
 /* ListField.ascx: the rows (four to a row, as the fixed slots were), then "+" and the count. The
@@ -378,6 +409,15 @@
 
     .profile-links {
         justify-content: space-between;
+    }
+
+    /* The link keeps a full row of its own; Copy and Open wrap underneath it. */
+    .profile-share-row {
+        flex-wrap: wrap;
+    }
+
+    .login-field .profile-share-url {
+        flex-basis: 100%;
     }
 
     /* The step count is the first thing to give up the row when Back and Next stop fitting. */

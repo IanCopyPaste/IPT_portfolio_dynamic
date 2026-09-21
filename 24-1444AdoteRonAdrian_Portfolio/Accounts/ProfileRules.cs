@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Web.UI.WebControls;
 
@@ -57,8 +58,12 @@ namespace _24_1444AdoteRonAdrian_Portfolio.Accounts
                 return null;
             }
 
+            // The picker's own format first, then the invariant culture rather than the server's,
+            // so "04/05/2006" means the same date whichever locale the host happens to run in.
             DateTime date;
-            if (!DateTime.TryParse(value.Trim(), out date))
+            if (!DateTime.TryParseExact(value.Trim(), "yyyy-MM-dd", CultureInfo.InvariantCulture,
+                    DateTimeStyles.None, out date) &&
+                !DateTime.TryParse(value.Trim(), CultureInfo.InvariantCulture, DateTimeStyles.None, out date))
             {
                 return "Enter a date as YYYY-MM-DD.";
             }

@@ -25,14 +25,33 @@ namespace _24_1444AdoteRonAdrian_Portfolio.Security
             return Iterations + "." + Convert.ToBase64String(salt) + "." + Convert.ToBase64String(hash);
         }
 
+        // A stored value that isn't in Hash's format (hand-edited, truncated, or blank) is a failed
+        // check rather than an exception, so a damaged row can't take a sign-in page down with it.
         public static bool Verify(string password, string stored)
         {
+            if (password == null || string.IsNullOrEmpty(stored)) return false;
+
             var parts = stored.Split('.');
             if (parts.Length != 3) return false;
 
-            int iterations = int.Parse(parts[0]);
-            byte[] salt = Convert.FromBase64String(parts[1]);
-            byte[] expected = Convert.FromBase64String(parts[2]);
+            int iterations;
+            byte[] salt;
+            byte[] expected;
+
+            if (!int.TryParse(parts[0], out iterations) || iterations <= 0) return false;
+
+            try
+            {
+                salt = Convert.FromBase64String(parts[1]);
+                expected = Convert.FromBase64String(parts[2]);
+            }
+            catch (FormatException)
+            {
+                return false;
+            }
+
+            // Rfc2898DeriveBytes refuses a salt under 8 bytes.
+            if (salt.Length < 8 || expected.Length == 0) return false;
 
             byte[] actual;
             using (var pbkdf2 = new Rfc2898DeriveBytes(password, salt, iterations, HashAlgorithmName.SHA256))

@@ -10,7 +10,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex" />
-    <title>Profile - <%= SiteBrandName %></title>
+    <title>Profile - <%= SiteBrandName %></title>   
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
@@ -20,19 +20,13 @@
     <link href="/Assets/css/ContentPage/contentpage.css?v=21" rel="stylesheet" />
     <link href="/Assets/css/LoginPage/loginpage.css?v=4" rel="stylesheet" />
     <link href="/Assets/css/RegisterPage/registerpage.css?v=7" rel="stylesheet" />
-    <link href="/Assets/css/ProfilePage/profilepage.css?v=7" rel="stylesheet" />
+    <link href="/Assets/css/ProfilePage/profilepage.css?v=8" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/reveal.css?v=4" rel="stylesheet" />
     <link href="/DEV_PHOTO.png" rel="icon" type="image/png" />
 </head>
 <body>
     <form id="form1" runat="server">
     <div>
-
-        <nav class="navbar navbar--top" id="siteNavbar">
-            <div class="navbar-inner">
-                <a class="navbar-brand" href="ContentPage.aspx"><%= SiteBrandName %></a>
-            </div>
-        </nav>
 
         <main>
             <section id="profile" class="section login-section register-section">
@@ -164,7 +158,7 @@
                                             <asp:Label ID="prfCollegeError" runat="server" ClientIDMode="Static" CssClass="login-error" aria-live="polite" />
                                         </div>
                                         <div class="login-field">
-                                            <label for="prfCourse">Course <span class="register-optional">optional</span></label>
+                                            <label for="prfCourse">Program <span class="register-optional">optional</span></label>
                                             <asp:TextBox ID="prfCourse" runat="server" ClientIDMode="Static" placeholder="BSIT" />
                                             <asp:Label ID="prfCourseError" runat="server" ClientIDMode="Static" CssClass="login-error" aria-live="polite" />
                                         </div>
@@ -290,6 +284,41 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <%-- The public link to SharePage. Its buttons post back on their own and
+                                     change nothing else on the form, so an unsaved edit above is left as
+                                     typed rather than saved or lost. UseSubmitBehavior="false" draws them
+                                     as plain buttons: they sit before Save in the markup, and Enter in a
+                                     field must still press Save, never replace the link. --%>
+                                <div class="register-group" role="group" aria-labelledby="prfGroupShare">
+                                    <p class="register-group-label" id="prfGroupShare">// share</p>
+                                    <div class="register-fields profile-fields--stack">
+                                        <div class="login-field">
+                                            <label for="prfShareUrl">Public link</label>
+                                            <p class="profile-photo-note">
+                                                Anyone with this link sees your portfolio, without signing in.
+                                                A new link, or turning it off, stops the old one working.
+                                            </p>
+                                            <%-- No name, so it never posts: the link is the server's to
+                                                 set, and it is only here to be read and copied. --%>
+                                            <div class="profile-share-row">
+                                                <input type="text" id="prfShareUrl" class="profile-share-url" readonly="readonly"
+                                                    value="<%: ShareUrl %>" placeholder="No link yet" spellcheck="false" />
+                                                <% if (HasShareLink) { %>
+                                                <button type="button" class="profile-stepbtn" id="prfShareCopy">Copy</button>
+                                                <a class="profile-stepbtn" href="<%: ShareUrl %>" target="_blank" rel="noopener">Open</a>
+                                                <% } %>
+                                            </div>
+                                            <span class="login-hint" id="prfShareStatus" aria-live="polite"></span>
+                                        </div>
+                                        <div class="profile-share-actions">
+                                            <asp:Button ID="prfShareRenew" runat="server" ClientIDMode="Static" CssClass="profile-stepbtn"
+                                                UseSubmitBehavior="false" OnClick="prfShareRenew_Click" />
+                                            <asp:Button ID="prfShareRevoke" runat="server" ClientIDMode="Static" CssClass="profile-logout"
+                                                Text="Turn off" UseSubmitBehavior="false" OnClick="prfShareRevoke_Click" />
+                                        </div>
+                                    </div>
+                                </div>
                             </section>
 
                             <%-- Hidden without script, where there are no steps to move between. --%>
@@ -324,9 +353,9 @@
     </form>
     <%-- contentpage.js drives the navbar wash and the reveals; it skips the sections this page doesn't have. --%>
     <script src="/Assets/js/ContentPage/contentpage.js?v=6"></script>
-    <script src="/Assets/js/RegisterPage/registerpage.js?v=10"></script>
+    <script src="/Assets/js/RegisterPage/registerpage.js?v=11"></script>
     <%-- Loads after registerpage.js: it wraps that form in steps and hands it a way to bring
          a failed field back on screen. --%>
-    <script src="/Assets/js/ProfilePage/profilepage.js?v=3"></script>
+    <script src="/Assets/js/ProfilePage/profilepage.js?v=4"></script>
 </body>
 </html>

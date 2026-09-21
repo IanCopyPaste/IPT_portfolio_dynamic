@@ -101,9 +101,17 @@ namespace _24_1444AdoteRonAdrian_Portfolio.AdminServices
                 cmd => cmd.Parameters.Add("@status", SqlDbType.VarChar, 10).Value = status);
         }
 
+        // The profile rows go with the account through the cascading foreign keys; the portraits are
+        // files, which no cascade reaches, so they are removed here once the row is gone.
         public static bool Delete(int id)
         {
-            return Execute("DELETE FROM users WHERE id = @id AND role <> @admin", id, null);
+            if (!Execute("DELETE FROM users WHERE id = @id AND role <> @admin", id, null))
+            {
+                return false;
+            }
+
+            ProfilePhotos.DeleteAll(id);
+            return true;
         }
 
         private static bool Execute(string sql, int id, Action<SqlCommand> addParameters)

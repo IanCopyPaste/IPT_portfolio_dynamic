@@ -1,9 +1,9 @@
 -- Sample accounts so the admin dashboard has something to show: sign-ups spread over the last year,
 -- a few inactive accounts, a mix of recent and old sign-ins, and optional fields left blank on some.
--- Run 001_admin_dashboard.sql first. Safe to run more than once: a username that already exists is
--- skipped. Every account signs in with the password Sample#2026.
+-- Run the migrations first (000, then 002 to 007). Safe to run more than once: a username that
+-- already exists is skipped. Every account signs in with the password Sample#2026.
 
-USE IPT_portfolio;
+USE IPT_portfolio_dynamic;
 GO
 
 SET ANSI_NULLS ON;

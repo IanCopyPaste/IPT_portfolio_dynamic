@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<preserve resultType="3" virtualPath="/C:/Program Files/Git/Components/Dashboard/Layout/Header.ascx" hash="a35cf5edc" filehash="43ff245bc455a2f5" flags="110000" assembly="App_Web_p3ppqo5e" type="ASP.components_dashboard_layout_header_ascx">
+    <filedeps>
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Layout/Header.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Layout/UserMenu.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Shared/Icon.ascx" />
+    </filedeps>
+</preserve>

@@ -135,19 +135,53 @@
     <Content Include="bin\24-1444AdoteRonAdrian_Portfolio.dll" />
     <Content Include="bin\24-1444AdoteRonAdrian_Portfolio.pdb" />
     <Content Include="bin\Antlr3.Runtime.dll" />
-    <Content Include="bin\Antlr3.Runtime.pdb" />
     <Content Include="bin\Microsoft.AspNet.FriendlyUrls.dll" />
-    <Content Include="bin\Microsoft.AspNet.FriendlyUrls.xml" />
     <Content Include="bin\Microsoft.AspNet.Web.Optimization.WebForms.dll" />
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
-    <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml" />
     <Content Include="bin\Microsoft.ScriptManager.MSAjax.dll" />
     <Content Include="bin\Microsoft.ScriptManager.WebForms.dll" />
     <Content Include="bin\Microsoft.Web.Infrastructure.dll" />
     <Content Include="bin\Newtonsoft.Json.dll" />
-    <Content Include="bin\Newtonsoft.Json.xml" />
+    <Content Include="bin\roslyn\csc.exe" />
+    <Content Include="bin\roslyn\csi.exe" />
+    <Content Include="bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll" />
+    <Content Include="bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll" />
+    <Content Include="bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll" />
+    <Content Include="bin\roslyn\Microsoft.CodeAnalysis.dll" />
+    <Content Include="bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll" />
+    <Content Include="bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll" />
+    <Content Include="bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll" />
+    <Content Include="bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll" />
+    <Content Include="bin\roslyn\Microsoft.Win32.Primitives.dll" />
+    <Content Include="bin\roslyn\System.AppContext.dll" />
+    <Content Include="bin\roslyn\System.Collections.Immutable.dll" />
+    <Content Include="bin\roslyn\System.Console.dll" />
+    <Content Include="bin\roslyn\System.Diagnostics.DiagnosticSource.dll" />
+    <Content Include="bin\roslyn\System.Diagnostics.FileVersionInfo.dll" />
+    <Content Include="bin\roslyn\System.Diagnostics.StackTrace.dll" />
+    <Content Include="bin\roslyn\System.Globalization.Calendars.dll" />
+    <Content Include="bin\roslyn\System.IO.Compression.dll" />
+    <Content Include="bin\roslyn\System.IO.Compression.ZipFile.dll" />
+    <Content Include="bin\roslyn\System.IO.FileSystem.dll" />
+    <Content Include="bin\roslyn\System.IO.FileSystem.Primitives.dll" />
+    <Content Include="bin\roslyn\System.Net.Http.dll" />
+    <Content Include="bin\roslyn\System.Net.Sockets.dll" />
+    <Content Include="bin\roslyn\System.Reflection.Metadata.dll" />
+    <Content Include="bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll" />
+    <Content Include="bin\roslyn\System.Security.Cryptography.Algorithms.dll" />
+    <Content Include="bin\roslyn\System.Security.Cryptography.Encoding.dll" />
+    <Content Include="bin\roslyn\System.Security.Cryptography.Primitives.dll" />
+    <Content Include="bin\roslyn\System.Security.Cryptography.X509Certificates.dll" />
+    <Content Include="bin\roslyn\System.Text.Encoding.CodePages.dll" />
+    <Content Include="bin\roslyn\System.Threading.Tasks.Extensions.dll" />
+    <Content Include="bin\roslyn\System.ValueTuple.dll" />
+    <Content Include="bin\roslyn\System.Xml.ReaderWriter.dll" />
+    <Content Include="bin\roslyn\System.Xml.XmlDocument.dll" />
+    <Content Include="bin\roslyn\System.Xml.XPath.dll" />
+    <Content Include="bin\roslyn\System.Xml.XPath.XDocument.dll" />
+    <Content Include="bin\roslyn\vbc.exe" />
+    <Content Include="bin\roslyn\VBCSCompiler.exe" />
     <Content Include="bin\System.Web.Optimization.dll" />
-    <Content Include="bin\System.Web.Optimization.xml" />
     <Content Include="bin\WebGrease.dll" />
     <Content Include="Components\Dashboard\Analytics\AnalyticsView.ascx" />
     <Content Include="Components\Dashboard\Analytics\ChartCard.ascx" />
@@ -199,11 +233,13 @@
     <Content Include="Assets\js\Admin\Dashboard\users\managedialog.js" />
     <Content Include="Assets\js\Admin\Dashboard\users\userstable.js" />
     <Content Include="Database\Migrations\001_admin_dashboard.sql" />
+    <Content Include="Database\Migrations\000_users_table.sql" />
     <Content Include="Database\Migrations\002_profile_content.sql" />
     <Content Include="Database\Migrations\003_profile_photos.sql" />
     <Content Include="Database\Migrations\004_profile_contact.sql" />
     <Content Include="Database\Migrations\005_profile_lists.sql" />
     <Content Include="Database\Migrations\006_profile_tagline.sql" />
+    <Content Include="Database\Migrations\007_share_links.sql" />
     <Content Include="Database\Seeds\sample_users.sql" />
     <Content Include="Assets\css\ContentPage\about.css" />
     <Content Include="Assets\css\ContentPage\contact.css" />
@@ -239,7 +275,10 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
+    <Content Include="ErrorPage.aspx" />
     <Content Include="ForbiddenPage.aspx" />
+    <Content Include="SharePage.aspx" />
+    <Content Include="Components\Portfolio\PortfolioView.ascx" />
     <Content Include="DEV_PHOTO.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -275,8 +314,17 @@
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Database\IPT_portfolio.bak" />
-    <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <Content Include="bin\24-1444AdoteRonAdrian_Portfolio.dll.config" />
+    <Content Include="bin\roslyn\csc.exe.config" />
+    <Content Include="bin\roslyn\csc.rsp" />
+    <Content Include="bin\roslyn\csi.exe.config" />
+    <Content Include="bin\roslyn\csi.rsp" />
+    <Content Include="bin\roslyn\Microsoft.CSharp.Core.targets" />
+    <Content Include="bin\roslyn\Microsoft.Managed.Core.targets" />
+    <Content Include="bin\roslyn\Microsoft.VisualBasic.Core.targets" />
+    <Content Include="bin\roslyn\vbc.exe.config" />
+    <Content Include="bin\roslyn\vbc.rsp" />
+    <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
     <None Include="Properties\PublishProfiles\ian-adote - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
@@ -310,7 +358,7 @@
     <Content Include="uploads\7-home-20260920060004522.jpg" />
     <Content Include="uploads\70-about-20260920061911401.png" />
     <Content Include="uploads\70-home-20260921152305590.jpg" />
-    <Content Include="uploads\72-home-20260921153750792.png" />
+    <Content Include="uploads\72-home-20260921170604511.png" />
     <Content Include="uploads\README.txt" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
@@ -534,6 +582,13 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ErrorPage.aspx.cs">
+      <DependentUpon>ErrorPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ErrorPage.aspx.designer.cs">
+      <DependentUpon>ErrorPage.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ForbiddenPage.aspx.cs">
       <DependentUpon>ForbiddenPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -557,6 +612,21 @@
     <Compile Include="Accounts\ProfileRules.cs" />
     <Compile Include="Accounts\ProfileLimits.cs" />
     <Compile Include="Accounts\ProfileStore.cs" />
+    <Compile Include="Accounts\ShareLinks.cs" />
+    <Compile Include="SharePage.aspx.cs">
+      <DependentUpon>SharePage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SharePage.aspx.designer.cs">
+      <DependentUpon>SharePage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Portfolio\PortfolioView.ascx.cs">
+      <DependentUpon>PortfolioView.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Components\Portfolio\PortfolioView.ascx.designer.cs">
+      <DependentUpon>PortfolioView.ascx</DependentUpon>
+    </Compile>
     <Compile Include="ProfilePage.aspx.cs">
       <DependentUpon>ProfilePage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

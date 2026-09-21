@@ -119,7 +119,8 @@
     // The profile form's school fields and its project slots are all optional text capped by the
     // input's own maxlength, so one rule covers them. They are named here rather than left out so
     // that a value the server rejects gets its field highlighted like any other. The hobby and skill
-    // lists aren't: their rows come and go, so profilepage.js looks after them.
+    // lists aren't: their rows come and go, so profilepage.js looks after them, and only the
+    // markup check below reaches them.
     var optionalText = nameRule(false);
 
     ["Nationality", "Jhs", "Shs", "College", "Course",
@@ -182,11 +183,41 @@
         field.input.setAttribute("aria-invalid", message ? "true" : "false");
     };
 
+    // ASP.NET's request validation refuses the whole post when any field holds "<" right before a
+    // letter, "!", "/" or "?", or holds "&#", and the user would lose everything they typed to an
+    // error page. It is checked here first, on every field including the passwords, so the one
+    // field at fault is named instead.
+    var markupMessage = "Can't contain \"<\" right before a letter or symbol, or \"&#\".";
+
+    var looksLikeMarkup = function (value) {
+        return /<[a-z!\/?]|&#/i.test(value);
+    };
+
     var showFieldError = function (field) {
         var value = isPasswordField(field) ? field.input.value : field.input.value.trim();
-        var message = field.rule(value, field.input);
+        var message = field.rule(value, field.input) ||
+            (field.input.type !== "file" && looksLikeMarkup(field.input.value) ? markupMessage : "");
         markField(field, message);
         return !message;
+    };
+
+    // The profile's hobby and skill rows come and go, so they are found when the form is sent
+    // rather than listed up front. profilepage.js clears a row's message once it is edited.
+    var firstBadListRow = function () {
+        var firstBad = null;
+
+        Array.prototype.slice.call(form.querySelectorAll(".profile-list-row input")).forEach(function (input) {
+            var row = fieldOf(input);
+            var bad = looksLikeMarkup(input.value);
+
+            if (bad) {
+                row.classList.add("is-invalid");
+                row.querySelector(".login-error").textContent = markupMessage;
+                firstBad = firstBad || input;
+            }
+        });
+
+        return firstBad;
     };
 
     var setStatus = function (text, isError) {
@@ -270,6 +301,8 @@
                 firstInvalid = field.input;
             }
         });
+
+        firstInvalid = firstInvalid || firstBadListRow();
 
         if (firstInvalid) {
             event.preventDefault();

@@ -10,6 +10,13 @@
     align-items: start;
 }
 
+/* SharePage has no form, so the details column is all there is; left in the 5fr track it would
+   leave the right side of the screen empty. */
+.contact-layout--solo {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 640px;
+}
+
 /* No colour here: the hero gradient in home.css paints it, and this file loads later,
    so a colour declared here would override that gradient's transparent fill. */
 .contact-lead {

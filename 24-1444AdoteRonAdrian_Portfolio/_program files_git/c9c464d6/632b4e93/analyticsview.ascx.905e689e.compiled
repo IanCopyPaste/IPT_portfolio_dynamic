@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<preserve resultType="3" virtualPath="/C:/Program Files/Git/Components/Dashboard/Analytics/AnalyticsView.ascx" hash="a35cf5edc" filehash="26955f8b90473490" flags="110000" assembly="App_Web_hugwiymt" type="ASP.components_dashboard_analytics_analyticsview_ascx">
+    <filedeps>
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Analytics/AnalyticsView.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Analytics/ChartCard.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Analytics/RecentSignups.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Analytics/StatTile.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Shared/Icon.ascx" />
+    </filedeps>
+</preserve>

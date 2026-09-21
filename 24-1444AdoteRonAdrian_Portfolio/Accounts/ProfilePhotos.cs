@@ -59,8 +59,6 @@ namespace _24_1444AdoteRonAdrian_Portfolio.Accounts
             return string.IsNullOrWhiteSpace(storedPath) ? "" : "/" + storedPath.Replace(Path.DirectorySeparatorChar, '/');
         }
 
-        // Writes the upload and returns its stored path, deleting the portrait it replaces once
-        // the new file is safely on disk.
         // The message for a file that can't be accepted, or null when there is nothing to object
         // to -- including when no file was chosen at all, which just means "keep the current one".
         // Separate from Save so the whole form can be checked before anything is written to disk.
@@ -94,12 +92,16 @@ namespace _24_1444AdoteRonAdrian_Portfolio.Accounts
                 ? TypeMessage : null;
         }
 
-        public static string Save(FileUpload upload, int userId, string slot, string current)
+        // Writes the upload and returns its stored path, or null when no file was chosen. The
+        // portrait it replaces is left where it is: the caller deletes that only once the new path
+        // is in the database, so a save that fails part-way never leaves the row naming a file
+        // that has already gone.
+        public static string Store(FileUpload upload, int userId, string slot)
         {
             // Check has already passed by the time this runs, so a file here is one we will keep.
             if (upload == null || !upload.HasFile)
             {
-                return current;
+                return null;
             }
 
             string extension = Extension(upload.FileName);
@@ -114,8 +116,36 @@ namespace _24_1444AdoteRonAdrian_Portfolio.Accounts
             Directory.CreateDirectory(folder);
             upload.PostedFile.SaveAs(Path.Combine(folder, name));
 
-            Delete(current);
             return Folder + "/" + name;
+        }
+
+        // Every portrait an account ever left in the folder, for when the account itself is
+        // deleted. Found by the "<id>-" prefix Store names them with rather than by the row, so the
+        // About portraits 004 stopped reading, and any a failed save left behind, go too. The
+        // hyphen is what keeps account 7 from matching account 70's files.
+        public static void DeleteAll(int userId)
+        {
+            try
+            {
+                string folder = HttpContext.Current.Server.MapPath("~/" + Folder);
+
+                if (!Directory.Exists(folder))
+                {
+                    return;
+                }
+
+                foreach (string path in Directory.GetFiles(folder,
+                    userId.ToString(CultureInfo.InvariantCulture) + "-*"))
+                {
+                    Delete(Folder + "/" + Path.GetFileName(path));
+                }
+            }
+            catch (IOException)
+            {
+            }
+            catch (UnauthorizedAccessException)
+            {
+            }
         }
 
         // Best effort: a portrait left behind is untidy, not broken, so a file that is locked or

@@ -87,6 +87,6 @@
 
     </div>
     </form>
-    <script src="/Assets/js/Admin/admin.js?v=2"></script>
+    <script src="/Assets/js/Admin/admin.js?v=3"></script>
 </body>
 </html>

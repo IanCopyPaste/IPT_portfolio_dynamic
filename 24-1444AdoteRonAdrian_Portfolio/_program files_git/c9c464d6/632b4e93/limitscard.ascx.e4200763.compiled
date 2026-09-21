@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<preserve resultType="3" virtualPath="/C:/Program Files/Git/Components/Dashboard/Settings/LimitsCard.ascx" hash="a35cf5edc" filehash="e4467c4177e913b3" flags="110000" assembly="App_Web_etitsuwk" type="ASP.components_dashboard_settings_limitscard_ascx">
+    <filedeps>
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Settings/LimitsCard.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Shared/Icon.ascx" />
+    </filedeps>
+</preserve>

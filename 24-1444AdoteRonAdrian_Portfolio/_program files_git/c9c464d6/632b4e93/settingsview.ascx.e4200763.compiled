@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<preserve resultType="3" virtualPath="/C:/Program Files/Git/Components/Dashboard/Settings/SettingsView.ascx" hash="a35cf5edc" filehash="d0bf133ad4ad0f0" flags="110000" assembly="App_Web_2qxgbw5i" type="ASP.components_dashboard_settings_settingsview_ascx">
+    <filedeps>
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Settings/AccountCard.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Settings/LimitsCard.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Settings/PasswordCard.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Settings/PreferencesCard.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Settings/SettingsView.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Shared/Icon.ascx" />
+    </filedeps>
+</preserve>

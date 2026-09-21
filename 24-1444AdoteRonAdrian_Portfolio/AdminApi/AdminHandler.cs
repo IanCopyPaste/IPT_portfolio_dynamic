@@ -35,7 +35,7 @@ namespace _24_1444AdoteRonAdrian_Portfolio.AdminApi
             // Account data must not be kept by the browser or a proxy after the admin signs out.
             response.Cache.SetCacheability(HttpCacheability.NoCache);
             response.Cache.SetNoStore();
-            response.AddHeader("X-Content-Type-Options", "nosniff");
+            // X-Content-Type-Options comes from Web.config's customHeaders, on every response.
 
             // 401, not a redirect: the caller is script, and it sends the admin to the sign-in page
             // itself when it sees this.

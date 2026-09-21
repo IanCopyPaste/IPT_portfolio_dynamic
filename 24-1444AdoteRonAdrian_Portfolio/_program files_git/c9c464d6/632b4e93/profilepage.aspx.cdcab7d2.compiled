@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<preserve resultType="3" virtualPath="/C:/Program Files/Git/ProfilePage.aspx" hash="a35cf5edc" filehash="620658b9e33eb782" flags="110000" assembly="App_Web_op4irpz0" type="ASP.profilepage_aspx">
+    <filedeps>
+        <filedep name="/C:/Program Files/Git/Components/Profile/ListField.ascx" />
+        <filedep name="/C:/Program Files/Git/ProfilePage.aspx" />
+    </filedeps>
+</preserve>

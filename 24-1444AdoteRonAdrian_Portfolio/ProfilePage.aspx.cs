@@ -5,6 +5,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
+using System.IO;
 using System.Web.UI.WebControls;
 
 namespace _24_1444AdoteRonAdrian_Portfolio
@@ -29,12 +30,26 @@ namespace _24_1444AdoteRonAdrian_Portfolio
                 return;
             }
 
+            // Asked on post-backs too, before any click handler can act for an account an admin has
+            // since deactivated or deleted. The ending Redirect, like the one above, so no handler
+            // runs against the session it has just cleared.
+            if (!AccountStatus.IsActive(UserSession.UserId(Session).Value))
+            {
+                UserSession.SignOut(Session);
+                Response.Redirect("~/LoginPage.aspx");
+                return;
+            }
+
             AccountRules.ApplyLimits(prfFirstName, prfMiddleName, prfLastName, prfAddress, prfEmail, prfSms, prfUser);
             ApplyPortfolioLimits();
             ProfilePhotos.Apply(prfHomePhoto);
             prfCurrentPassword.MaxLength = AccountRules.PasswordMaxLength;
             prfPassword.MaxLength = AccountRules.PasswordMaxLength;
             prfConfirm.MaxLength = AccountRules.PasswordMaxLength;
+
+            // Read on every request, post-backs included: the link isn't a form field, so there is
+            // no posted value to fall back on, and the share buttons below may be about to change it.
+            ShareToken = ShareLinks.Get(UserSession.UserId(Session).Value);
 
             if (!IsPostBack)
             {
@@ -139,21 +154,24 @@ namespace _24_1444AdoteRonAdrian_Portfolio
 
             string newHash = null;
 
-            if (changingPassword)
-            {
-                if (!PasswordHasher.Verify(currentPassword, StoredHash(userId) ?? ""))
-                {
-                    AccountRules.Report(prfCurrentPasswordError, "That isn't your current password.");
-                    ShowStatus("save failed. check your current password.", true);
-                    return;
-                }
-                newHash = PasswordHasher.Hash(newPassword);
-            }
-
             int updated;
+            // The portrait the row points at before this save, and the file this save wrote, if any.
+            string previousPhoto = "";
+            string storedPhoto = null;
 
             try
             {
+                if (changingPassword)
+                {
+                    if (!PasswordHasher.Verify(currentPassword, StoredHash(userId)))
+                    {
+                        AccountRules.Report(prfCurrentPasswordError, "That isn't your current password.");
+                        ShowStatus("save failed. check your current password.", true);
+                        return;
+                    }
+                    newHash = PasswordHasher.Hash(newPassword);
+                }
+
                 using (var conn = new SqlConnection(PortfolioConn))
                 using (var cmd = new SqlCommand(
                     "UPDATE users SET first_name = @first_name, middle_name = @middle_name, last_name = @last_name, " +
@@ -178,6 +196,29 @@ namespace _24_1444AdoteRonAdrian_Portfolio
                     conn.Open();
                     updated = cmd.ExecuteNonQuery();
                 }
+
+                if (updated == 0)
+                {
+                    SignOutTo("LoginPage.aspx");
+                    return;
+                }
+
+                // A second write rather than part of the first: the portfolio lives in its own table,
+                // behind the stored procedure that upserts it. The row above has just been updated, so
+                // the account is there; a false here would mean it went in between the two.
+                // Everything has passed and the account is still there, so the upload can be written.
+                // The path of the portrait it replaces comes from the stored row, not the form: a
+                // picker posts nothing when no file was chosen, so the row is the only record of it.
+                previousPhoto = (ProfileStore.Get(userId) ?? new ProfileContent()).HomePhoto;
+                storedPhoto = ProfilePhotos.Store(prfHomePhoto, userId, ProfilePhotos.HomeSlot);
+                portfolio.HomePhoto = storedPhoto ?? previousPhoto;
+
+                if (!ProfileStore.Save(userId, portfolio))
+                {
+                    ProfilePhotos.Delete(storedPhoto);
+                    SignOutTo("LoginPage.aspx");
+                    return;
+                }
             }
             catch (SqlException ex) when (AccountRules.IsDuplicateKey(ex))
             {
@@ -185,25 +226,22 @@ namespace _24_1444AdoteRonAdrian_Portfolio
                 ShowStatus("save failed. pick a different username.", true);
                 return;
             }
-
-            if (updated == 0)
+            // The database or the uploads folder refused the write. The raw exception can name the
+            // server or a path, so it goes to the trace and the user keeps the form as they typed it.
+            catch (Exception ex) when (ex is SqlException || ex is IOException || ex is UnauthorizedAccessException)
             {
-                SignOutTo("LoginPage.aspx");
+                Trace.Warn("ProfilePage", "Profile save failed", ex);
+                // Never recorded in the row, so nothing would ever point at it.
+                ProfilePhotos.Delete(storedPhoto);
+                ShowStatus("couldn't save right now. try again in a moment.", true);
                 return;
             }
 
-            // A second write rather than part of the first: the portfolio lives in its own table,
-            // behind the stored procedure that upserts it. The row above has just been updated, so
-            // the account is there; a false here would mean it went in between the two.
-            // Everything has passed and the account is still there, so the upload can be written.
-            // The path of the portrait it replaces comes from the stored row, not the form: a
-            // picker posts nothing when no file was chosen, so the row is the only record of it.
-            ApplyPhoto(portfolio, userId, ProfileStore.Get(userId) ?? new ProfileContent());
-
-            if (!ProfileStore.Save(userId, portfolio))
+            // Only now that the row points at the new portrait is the old one safe to remove: done
+            // any earlier, a failed save would leave the row naming a file that is gone.
+            if (storedPhoto != null)
             {
-                SignOutTo("LoginPage.aspx");
-                return;
+                ProfilePhotos.Delete(previousPhoto);
             }
 
             // The navbar shows the name from the session, so it is refreshed along with the row.
@@ -224,6 +262,77 @@ namespace _24_1444AdoteRonAdrian_Portfolio
         protected void profileLogout_Click(object sender, EventArgs e)
         {
             SignOutTo("LoginPage.aspx?" + SignedOutQuery + "=1");
+        }
+
+        // ---------- Share link ----------
+
+        // The account's current token, "" when it has no link.
+        private string ShareToken = "";
+
+        protected bool HasShareLink => ShareToken.Length > 0;
+
+        protected string ShareUrl => ShareLinks.Url(Request.Url, ShareToken);
+
+        // Makes the first link, or replaces the one there is.
+        protected void prfShareRenew_Click(object sender, EventArgs e)
+        {
+            KeepLists();
+            bool replacing = HasShareLink;
+            string token;
+
+            try
+            {
+                token = ShareLinks.Renew(UserSession.UserId(Session).Value);
+            }
+            catch (Exception ex) when (ex is SqlException || ex is InvalidOperationException)
+            {
+                Trace.Warn("ProfilePage", "Share link renew failed", ex);
+                ShowStatus("couldn't make a link right now. try again in a moment.", true);
+                return;
+            }
+
+            if (token == null)
+            {
+                SignOutTo("LoginPage.aspx");
+                return;
+            }
+
+            ShareToken = token;
+            ShowStatus(replacing ? "new share link made. the old one no longer works." : "share link made.", false);
+        }
+
+        protected void prfShareRevoke_Click(object sender, EventArgs e)
+        {
+            KeepLists();
+
+            try
+            {
+                ShareLinks.Revoke(UserSession.UserId(Session).Value);
+            }
+            catch (SqlException ex)
+            {
+                Trace.Warn("ProfilePage", "Share link revoke failed", ex);
+                ShowStatus("couldn't turn sharing off right now. try again in a moment.", true);
+                return;
+            }
+
+            ShareToken = "";
+            ShowStatus("sharing turned off. the link no longer works.", false);
+        }
+
+        // Every other field survives a post-back through the posted form or view state; the two
+        // lists are drawn by hand, so they are redrawn from the post here.
+        private void KeepLists()
+        {
+            prfHobbies.Keep();
+            prfSkills.Keep();
+        }
+
+        // After the click handlers, so the buttons describe the link as it now is.
+        protected void Page_PreRender(object sender, EventArgs e)
+        {
+            prfShareRenew.Text = HasShareLink ? "New link" : "Create link";
+            prfShareRevoke.Visible = HasShareLink;
         }
 
 
@@ -293,14 +402,6 @@ namespace _24_1444AdoteRonAdrian_Portfolio
         {
             prfHomePreview.Visible = content.HomePhotoUrl.Length > 0;
             prfHomePreview.ImageUrl = content.HomePhotoUrl;
-        }
-
-        // Writes the file if one was chosen and puts its path on the content about to be saved, so
-        // every path in the database already has a file behind it. A picker left empty keeps the
-        // portrait that is there; one that was replaced is deleted by Save.
-        private void ApplyPhoto(ProfileContent content, int userId, ProfileContent saved)
-        {
-            content.HomePhoto = ProfilePhotos.Save(prfHomePhoto, userId, ProfilePhotos.HomeSlot, saved.HomePhoto);
         }
 
         // Reads the portfolio half of the form and reports on each field, the same way the account

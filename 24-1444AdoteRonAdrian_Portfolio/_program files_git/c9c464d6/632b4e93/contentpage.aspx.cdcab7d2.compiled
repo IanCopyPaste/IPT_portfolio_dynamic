@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<preserve resultType="3" virtualPath="/C:/Program Files/Git/ContentPage.aspx" hash="a35cf5edc" filehash="2f6b71e3f5deb107" flags="110000" assembly="App_Web_op4irpz0" type="ASP.contentpage_aspx">
+    <filedeps>
+        <filedep name="/C:/Program Files/Git/Components/Portfolio/PortfolioView.ascx" />
+        <filedep name="/C:/Program Files/Git/ContentPage.aspx" />
+    </filedeps>
+</preserve>

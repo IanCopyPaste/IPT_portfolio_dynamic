@@ -55,42 +55,55 @@ namespace _24_1444AdoteRonAdrian_Portfolio
             string fullName = null;
             string status = null;
 
-            using (var conn = new SqlConnection(PortfolioConn))
-            using (var cmd = new SqlCommand(
-                "SELECT id, password_hash, username, role, first_name, middle_name, last_name, suffix, status " +
-                "FROM users WHERE username = @username", conn))
+            try
             {
-                cmd.Parameters.AddWithValue("@username", username);
-                conn.Open();
-
-                using (SqlDataReader reader = cmd.ExecuteReader())
+                using (var conn = new SqlConnection(PortfolioConn))
+                using (var cmd = new SqlCommand(
+                    "SELECT id, password_hash, username, role, first_name, middle_name, last_name, suffix, status " +
+                    "FROM users WHERE username = @username", conn))
                 {
-                    if (reader.Read())
+                    cmd.Parameters.AddWithValue("@username", username);
+                    conn.Open();
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        userId = reader.GetInt32(0);
-                        storedHash = TextOrNull(reader, 1);
-                        username = reader.GetString(2);
-                        role = TextOrNull(reader, 3);
-                        fullName = UserSession.FullName(
-                            TextOrNull(reader, 4), TextOrNull(reader, 5), TextOrNull(reader, 6), TextOrNull(reader, 7));
-                        status = reader.GetString(8);
+                        if (reader.Read())
+                        {
+                            userId = reader.GetInt32(0);
+                            storedHash = TextOrNull(reader, 1);
+                            username = reader.GetString(2);
+                            role = TextOrNull(reader, 3);
+                            fullName = UserSession.FullName(
+                                TextOrNull(reader, 4), TextOrNull(reader, 5), TextOrNull(reader, 6), TextOrNull(reader, 7));
+                            status = reader.GetString(8);
+                        }
                     }
                 }
+
+                // The hash is checked before the role, so a non-admin costs the same PBKDF2 work as an
+                // admin and the response time doesn't give the role away.
+                bool passwordOk = storedHash != null && PasswordHasher.Verify(adminPassword.Text, storedHash);
+                bool isAdmin = string.Equals(role, UserSession.AdminRole, StringComparison.OrdinalIgnoreCase);
+
+                if (!passwordOk || !isAdmin || status != AccountStatus.Active)
+                {
+                    adminStatus.Text = InvalidLoginMessage;
+                    adminStatus.CssClass = "adm-alert is-visible";
+                    return;
+                }
+
+                AccountActivity.RecordSignIn(userId);
             }
-
-            // The hash is checked before the role, so a non-admin costs the same PBKDF2 work as an
-            // admin and the response time doesn't give the role away.
-            bool passwordOk = storedHash != null && PasswordHasher.Verify(adminPassword.Text, storedHash);
-            bool isAdmin = string.Equals(role, UserSession.AdminRole, StringComparison.OrdinalIgnoreCase);
-
-            if (!passwordOk || !isAdmin || status != AccountStatus.Active)
+            // The raw exception can name the server or the schema, so it goes to the trace log.
+            catch (SqlException ex)
             {
-                adminStatus.Text = InvalidLoginMessage;
+                Trace.Warn("Admin", "Admin sign-in query failed", ex);
+                // Short enough for the alert's single line, like InvalidLoginMessage.
+                adminStatus.Text = "Server unavailable. Try again shortly.";
                 adminStatus.CssClass = "adm-alert is-visible";
                 return;
             }
 
-            AccountActivity.RecordSignIn(userId);
             UserSession.SignIn(Session, userId, username, fullName, UserSession.AdminRole);
             Response.Redirect(AdminHomeUrl, false);
             Context.ApplicationInstance.CompleteRequest();

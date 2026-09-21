@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<preserve resultType="3" virtualPath="/C:/Program Files/Git/AdminDashboard.aspx" hash="a35cf5edc" filehash="e99c45ea7c122d8c" flags="110000" assembly="App_Web_op4irpz0" type="ASP.admindashboard_aspx">
+    <filedeps>
+        <filedep name="/C:/Program Files/Git/AdminDashboard.aspx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Analytics/AnalyticsView.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Analytics/ChartCard.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Analytics/RecentSignups.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Analytics/StatTile.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Layout/Header.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Layout/NavItem.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Layout/Sidebar.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Layout/UserMenu.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Settings/AccountCard.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Settings/LimitsCard.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Settings/PasswordCard.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Settings/PreferencesCard.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Settings/SettingsView.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Shared/Icon.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Shared/ToastRegion.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Users/ManageUserDialog.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Users/UsersPagination.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Users/UsersTable.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Users/UsersToolbar.ascx" />
+        <filedep name="/C:/Program Files/Git/Components/Dashboard/Users/UsersView.ascx" />
+    </filedeps>
+</preserve>
