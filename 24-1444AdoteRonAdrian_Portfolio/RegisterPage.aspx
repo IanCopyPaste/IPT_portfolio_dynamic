@@ -23,7 +23,11 @@
 <body>
     <form id="form1" runat="server">
     <div>
-
+                <nav class="navbar navbar--top" id="siteNavbar">
+    <div class="navbar-inner">
+        <a class="navbar-brand" href="LoginPage.aspx">Portfolio Generator</a>
+    </div>
+</nav>
         <main>
             <section id="register" class="section login-section register-section">
                 <div class="section-inner">

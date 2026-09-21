@@ -8,7 +8,7 @@
     <script>document.documentElement.className += " js";</script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sign in - <%= SiteBrandName %></title>
+    <title>PORTFOLIO MAKER by Ian</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
@@ -22,6 +22,12 @@
 <body>
     <form id="form1" runat="server">
     <div>
+
+        <nav class="navbar navbar--top" id="siteNavbar">
+    <div class="navbar-inner">
+        <a class="navbar-brand" href="LoginPage.aspx">Portfolio Generator</a>
+    </div>
+</nav>
 
         <main>
             <section id="login" class="section login-section login-section--signin">
