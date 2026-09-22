@@ -17,7 +17,7 @@
     <%-- The same account form as the sign-up page, filled in, so it borrows that page's stylesheet
          (and, through it, the login page's); profilepage.css only adds the profile's own parts.
          reveal.css loads last so its hidden state wins. --%>
-    <link href="/Assets/css/ContentPage/contentpage.css?v=21" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/contentpage.css?v=22" rel="stylesheet" />
     <link href="/Assets/css/LoginPage/loginpage.css?v=4" rel="stylesheet" />
     <link href="/Assets/css/RegisterPage/registerpage.css?v=7" rel="stylesheet" />
     <link href="/Assets/css/ProfilePage/profilepage.css?v=8" rel="stylesheet" />

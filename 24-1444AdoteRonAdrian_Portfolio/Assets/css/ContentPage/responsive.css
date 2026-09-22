@@ -35,8 +35,16 @@
         display: flex;
     }
 
+    /* The phone navbar also carries the menu toggle, so the button drops its label and goes
+       back to a round icon; the pencil still reads as "edit". */
     .icon-btn {
         margin-left: 0;
+        width: 40px;
+        padding: 0;
+    }
+
+    .icon-btn-text {
+        display: none;
     }
 
     .nav-links {

@@ -16,13 +16,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
     <%-- Order matters: tokens and base first, sections in page order, then the reveal
          and responsive overrides, which have to win over the section rules. --%>
-    <link href="/Assets/css/ContentPage/contentpage.css?v=21" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/contentpage.css?v=22" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/home.css?v=4" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/about.css?v=9" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/skills.css?v=5" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/contact.css?v=6" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/reveal.css?v=4" rel="stylesheet" />
-    <link href="/Assets/css/ContentPage/responsive.css?v=8" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/responsive.css?v=9" rel="stylesheet" />
     <link href="/DEV_PHOTO.png" rel="icon" type="image/png" />
 </head>
 <body>

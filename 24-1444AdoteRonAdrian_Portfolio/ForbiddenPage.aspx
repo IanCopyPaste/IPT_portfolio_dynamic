@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
     <%-- Shared tokens, navbar and terminal bar come from the portfolio, as on the login page.
          reveal.css loads last so its hidden state wins. --%>
-    <link href="/Assets/css/ContentPage/contentpage.css?v=21" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/contentpage.css?v=22" rel="stylesheet" />
     <link href="/Assets/css/ForbiddenPage/forbiddenpage.css?v=1" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/reveal.css?v=4" rel="stylesheet" />
     <link href="/DEV_PHOTO.png" rel="icon" type="image/png" />

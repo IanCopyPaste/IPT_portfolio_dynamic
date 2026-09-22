@@ -22,12 +22,17 @@
             <li><a href="#contact" class="nav-link" data-section="contact">Contact</a></li>
         </ul>
 
-        <%-- The account button opens the profile page. Hovering or focusing it names the
-             signed-in user. The name is user-entered, so it goes out HTML-encoded. A visitor on
-             a shared link isn't signed in as anyone, so there is nothing for it to open. --%>
+        <%-- The account button opens the profile page, where everything on this page is edited,
+             so it says so outright rather than relying on a bare icon. Hovering or focusing it
+             names the signed-in user. The name is user-entered, so it goes out HTML-encoded. A
+             visitor on a shared link isn't signed in as anyone, so there is nothing for it to open. --%>
         <% if (!Shared) { %>
-        <a class="icon-btn" id="navIconBtn" href="ProfilePage.aspx" aria-label="Your profile: <%: AccountName %>">
-            <span class="icon-btn-glyph"></span>
+        <a class="icon-btn" id="navIconBtn" href="ProfilePage.aspx" aria-label="Edit your profile: <%: AccountName %>">
+            <svg class="icon-btn-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M4 20h4L19 9l-4-4L4 16z" />
+                <path d="M13 7l4 4" />
+            </svg>
+            <span class="icon-btn-text" aria-hidden="true">Edit profile</span>
             <span class="icon-btn-tooltip" aria-hidden="true">
                 <span class="icon-btn-tooltip-label">signed in as</span>
                 <span class="icon-btn-tooltip-name"><%: AccountName %></span>

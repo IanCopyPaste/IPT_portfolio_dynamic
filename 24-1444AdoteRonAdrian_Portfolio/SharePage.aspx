@@ -21,14 +21,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
     <%-- The portfolio's own stylesheets, in ContentPage's order; a dead link borrows the 403
          screen's instead. reveal.css loads after the section files either way. --%>
-    <link href="/Assets/css/ContentPage/contentpage.css?v=21" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/contentpage.css?v=22" rel="stylesheet" />
     <% if (Found) { %>
     <link href="/Assets/css/ContentPage/home.css?v=4" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/about.css?v=9" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/skills.css?v=5" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/contact.css?v=6" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/reveal.css?v=4" rel="stylesheet" />
-    <link href="/Assets/css/ContentPage/responsive.css?v=8" rel="stylesheet" />
+    <link href="/Assets/css/ContentPage/responsive.css?v=9" rel="stylesheet" />
     <% } else { %>
     <link href="/Assets/css/ForbiddenPage/forbiddenpage.css?v=1" rel="stylesheet" />
     <link href="/Assets/css/ContentPage/reveal.css?v=4" rel="stylesheet" />

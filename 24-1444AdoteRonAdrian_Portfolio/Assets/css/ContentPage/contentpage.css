@@ -152,11 +152,13 @@ img {
 
 .icon-btn {
     position: relative;
-    width: 40px;
     height: 40px;
-    border-radius: 50%;
+    padding: 0 16px 0 14px;
+    gap: 8px;
+    border-radius: 999px;
     border: 1px solid var(--cp-border);
     background: var(--cp-surface);
+    color: var(--cp-accent);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -181,8 +183,20 @@ img {
 .icon-btn-glyph {
     width: 16px;
     height: 16px;
-    border-radius: 50%;
-    border: 2px solid var(--cp-accent);
+    flex: 0 0 auto;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.icon-btn-text {
+    font-family: var(--cp-font-mono);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
 }
 
 /* The signed-in user's name, dropped below the account button on hover or keyboard focus.
